@@ -60,15 +60,29 @@ Options, pick one:
 - [ ] Who controls DNS / current WordPress hosting?
 - [ ] Any email tied to the domain that DNS changes must not disturb?
 
-## Assets needed from you (cannot be scraped)
+## Image assets
 
-- **Logo** — vector (SVG/AI) ideally; the round gradient mark in the header is a stand-in
-- **Brand colors/fonts** if any exist (current palette is a proposal: lac red `#8c2f39`, turmeric `#d98e04`, plum `#2b1b2c`, ivory `#faf6ef`)
-- **Hero photo** — one great wide shot (≥1920px): the space, a class, or a performance
-- **12–24 gallery photos** at full resolution (social-media copies are compressed)
-- **Headshots** for team/board
-- **Temple photos or original artwork** for the five Pancha Bhuta Sthalam sections
-- **Program flyers/schedules** for the current session
+All images live under `assets/img/`, organized by purpose (duplicates were removed by checksum):
+
+| Folder | Contents |
+|---|---|
+| `logo/` | RACC logo (`racc-logo.png` header, `racc-logo-white.png` footer — cropped from the "AN RACC PRODUCTION" lockups), ABV logos |
+| `banners/` | Hero slider banners (`banner-1..5.jpg`), Arudra 2025 banners, animated GIFs |
+| `home/` | Homepage section photos (`home-1..7.jpg`) |
+| `gallery/` | ~60 performance photos (HG series + gallery series) |
+| `events/` | Event flyers (Arudra 2025/2026, Bollywood Night, Navtar Jugalbandi, Baroque–Carnatic, Sound Workshop, Margazhi, Guruguha Vaibhavam) + Arudra 2026 artist cards |
+| `artists/` | Featured artist headshots |
+| `about/` | About-page photo |
+| `misc/` | Shiva/mandala art (`final.jpg`, used on Pancha Bhuta Sthalam hero), design PNGs, misc |
+
+Site colors are now sampled from the real logo: rust `#884820`, amber `#f0a838`, charcoal `#303030`.
+
+## Assets still needed
+
+- **Vector logo** (SVG/AI) — currently using cropped PNGs
+- **Temple photos or artwork** for the five Pancha Bhuta Sthalam sections
+- **Headshots + bios** for board/leadership (About page)
+- **Product photos** for the Shop (pending the e-commerce decision)
 
 ## What was scraped / recovered from public sources
 
