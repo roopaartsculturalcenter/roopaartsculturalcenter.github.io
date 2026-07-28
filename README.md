@@ -20,11 +20,9 @@ python3 -m http.server 8000
 | Events | `events.html` | Events source needed (manual / Google Calendar / Eventbrite); links to production sub-pages |
 | Archive | `archive.html` | Hub for past series — currently holds Golu Series 2024 and past festivals |
 | Pancha Bhuta Sthalam | `pancha-bhuta-sthalam.html` | Archived as Golu Series 2024; Fire/Water/Earth need the original write-ups |
-| Arudra 2026 | `productions/arudra-2026.html` | Festival sub-page — program lineup and flyers; recap copy needed |
-| Navagrahamum Navakailasamum | `productions/navagrahamum-navakailasamum.html` | Production sub-page — all 12 artist cards; synopsis needed |
+| Arudra 2026 | `productions/arudra-2026.html` | Festival sub-page — program, flyers, and Navagrahamum Navakailasamum company (merged in) |
 | Arudra Festival 2025 | `productions/arudra-2025.html` | Festival sub-page — flyers/banners; recap copy needed |
 | Gallery | `gallery.html` | Skeleton — 12–24 curated photos / YouTube embeds needed |
-| Shop | `shop.html` | Skeleton — **e-commerce decision needed** (see §4) |
 | Donate | `donate.html` | **Done** — Zelle QR + roopaartsculturalcenter@gmail.com + Zelle login link, dark design like the old site |
 | Contact | `contact.html` | Skeleton — address/phone/email + form backend needed |
 
@@ -35,7 +33,7 @@ Placeholder content is marked in two ways:
 ## §1–5 Content questionnaire (what we need answered)
 
 ### §1 Organization basics
-- [ ] Street address, ZIP, phone, hours
+- [x] No physical address published — site says "Texas" only (per owner)
 - [x] Public email: roopaartsculturalcenter@gmail.com
 - [x] EIN: not published (per owner)
 - [ ] Founding story: when, by whom, why (founder Roopali Kambo's bio?)
@@ -53,12 +51,8 @@ Placeholder content is marked in two ways:
 - [ ] Sponsorship tiers / corporate giving?
 - [ ] Volunteer roles to advertise?
 
-### §4 Shop (decision required)
-The current site runs WooCommerce (WordPress). GitHub Pages is static — no cart/checkout.
-Options, pick one:
-1. Keep WooCommerce alive at `shop.roopaartsculturalcenter.org` and link out (least work)
-2. Move to Shopify "Buy Button" / Printful / Fourthwall embeds (works on static hosting)
-3. Drop the shop for now
+### §4 Shop
+- [x] No shop yet (per owner) — page and links removed; revisit when merchandise exists
 
 ### §5 Domain & hosting
 - [ ] Will `roopaartsculturalcenter.org` point at GitHub Pages? (needs a `CNAME` file here + DNS change — **not added yet** so nothing breaks prematurely)
