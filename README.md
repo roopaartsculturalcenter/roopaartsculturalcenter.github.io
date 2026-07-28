@@ -17,11 +17,15 @@ python3 -m http.server 8000
 | Home | `index.html` | Skeleton — hero photo + real events needed |
 | About | `about.html` | Skeleton — founding story, team bios/headshots needed |
 | Programs | `programs.html` | Skeleton — **real program catalog needed** |
-| Events | `events.html` | Skeleton — events source needed (manual / Google Calendar / Eventbrite) |
-| Pancha Bhuta Sthalam | `pancha-bhuta-sthalam.html` | Skeleton — Space & Wind copy drafted from public sources; Fire/Water/Earth need the original write-ups |
+| Events | `events.html` | Events source needed (manual / Google Calendar / Eventbrite); links to production sub-pages |
+| Archive | `archive.html` | Hub for past series — currently holds Golu Series 2024 and past festivals |
+| Pancha Bhuta Sthalam | `pancha-bhuta-sthalam.html` | Archived as Golu Series 2024; Fire/Water/Earth need the original write-ups |
+| Arudra 2026 | `productions/arudra-2026.html` | Festival sub-page — program lineup and flyers; recap copy needed |
+| Navagrahamum Navakailasamum | `productions/navagrahamum-navakailasamum.html` | Production sub-page — all 12 artist cards; synopsis needed |
+| Arudra Festival 2025 | `productions/arudra-2025.html` | Festival sub-page — flyers/banners; recap copy needed |
 | Gallery | `gallery.html` | Skeleton — 12–24 curated photos / YouTube embeds needed |
 | Shop | `shop.html` | Skeleton — **e-commerce decision needed** (see §4) |
-| Donate | `donate.html` | Skeleton — GoFundMe linked; confirm other channels |
+| Donate | `donate.html` | **Done** — Zelle QR + roopaartsculturalcenter@gmail.com + Zelle login link, dark design like the old site |
 | Contact | `contact.html` | Skeleton — address/phone/email + form backend needed |
 
 Placeholder content is marked in two ways:
@@ -31,20 +35,21 @@ Placeholder content is marked in two ways:
 ## §1–5 Content questionnaire (what we need answered)
 
 ### §1 Organization basics
-- [ ] Street address, ZIP, phone, public email, hours
-- [ ] EIN (for the footer / donation tax language)
+- [ ] Street address, ZIP, phone, hours
+- [x] Public email: roopaartsculturalcenter@gmail.com
+- [x] EIN: not published (per owner)
 - [ ] Founding story: when, by whom, why (founder Roopali Kambo's bio?)
 - [ ] Board / team: names, titles, short bios
 - [ ] Preferred tagline (current placeholder: "Where art, culture, and community come together")
 
 ### §2 Programs
-- [ ] Actual list of classes/programs (the three categories on the site now — visual, media, performing — come from the mission statement, not a catalog)
-- [ ] Age groups, schedules, instructors, fees
-- [ ] How people register today (form? email? in person?)
-- [ ] Scholarships / financial aid policy, if any
+- [x] Performing arts only — no visual/media arts programs (per owner). Site now shows: stage productions, concerts, workshops, community series
+- [ ] How performers apply / audition (Margazhi flyer invites applications)
+- [ ] Any classes offered, schedules, fees
 
 ### §3 Donations
-- [ ] Besides GoFundMe, what channels? (Zeffy, PayPal Giving Fund, Stripe, checks?)
+- [x] Zelle only — to roopaartsculturalcenter@gmail.com, plus link to https://enroll.zellepay.com/
+- [ ] **Verify the Zelle QR** (`assets/img/misc/zelle-qr.png`): it was regenerated with the standard Zelle QR payload for that email — scan it once to confirm it resolves to the RACC account, or replace it with the QR image from the old site
 - [ ] Sponsorship tiers / corporate giving?
 - [ ] Volunteer roles to advertise?
 
