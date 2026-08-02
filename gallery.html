@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/style.css">
 </head>
-<body>
+<body class="gallery-page">
 
 <header class="site-header">
   <div class="container">
@@ -34,17 +34,18 @@
 </header>
 
 <main>
-  <section class="page-hero with-photo" style="background-image:url('/assets/img/banners/banner-2.jpg')">
+  <section class="gallery-hero">
     <div class="container">
+      <p class="gallery-eyebrow">Roopa Arts Cultural Center</p>
       <h1>Gallery</h1>
-      <p>Moments from our performances, productions, and celebrations.</p>
+      <p>A collection of moments from our performances, productions, and community celebrations.</p>
     </div>
   </section>
 
 
-  <section class="section">
+  <section class="section gallery-showcase">
     <div class="container">
-      <div class="masonry">
+      <div class="gallery-grid" id="gallery-grid">
         <img src="/assets/img/gallery/gallery3.jpg" alt="Roopa Arts Cultural Center performance" loading="lazy">
         <img src="/assets/img/gallery/gallery4.jpg" alt="Roopa Arts Cultural Center performance" loading="lazy">
         <img src="/assets/img/gallery/hg-203.jpg" alt="Roopa Arts Cultural Center performance" loading="lazy">
@@ -109,9 +110,16 @@
         <img src="/assets/img/gallery/racc-gallery7.jpg" alt="Roopa Arts Cultural Center performance" loading="lazy">
         <img src="/assets/img/gallery/racc-gallery8.jpg" alt="Roopa Arts Cultural Center performance" loading="lazy">
       </div>
-      <p style="margin-top:2rem;color:var(--ink-soft);font-size:0.9rem">Want to see more? Follow us on
-        <a href="https://www.instagram.com/roopaartsculturalcenter/">Instagram</a> and
-        <a href="https://www.youtube.com/@RoopaArtsCulturalCenter">YouTube</a> for performance videos.</p>
+      <div class="gallery-actions">
+        <div class="gallery-pagination" aria-label="Gallery pages">
+          <button class="gallery-page-button gallery-prev" type="button" aria-controls="gallery-grid">Previous</button>
+          <span class="gallery-page-status" aria-live="polite">1 / 11</span>
+          <button class="gallery-page-button gallery-next" type="button" aria-controls="gallery-grid">Next</button>
+        </div>
+        <p>More from Roopa Arts on
+          <a href="https://www.instagram.com/roopaartsculturalcenter/">Instagram</a> and
+          <a href="https://www.youtube.com/@RoopaArtsCulturalCenter">YouTube</a>.</p>
+      </div>
     </div>
   </section>
 

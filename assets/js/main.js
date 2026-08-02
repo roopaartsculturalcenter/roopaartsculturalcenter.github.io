@@ -43,4 +43,38 @@ document.addEventListener('DOMContentLoaded', () => {
     const path = new URL(a.href).pathname.replace(/\/$/, '') || '/';
     if (path === here) a.setAttribute('aria-current', 'page');
   });
+
+  // Show the photo archive in focused groups of six.
+  const gallery = document.querySelector('.gallery-grid');
+  const galleryPrev = document.querySelector('.gallery-prev');
+  const galleryNext = document.querySelector('.gallery-next');
+  const galleryStatus = document.querySelector('.gallery-page-status');
+  if (gallery && galleryPrev && galleryNext && galleryStatus) {
+    const galleryImages = [...gallery.querySelectorAll('img')];
+    const pageSize = 6;
+    const pageCount = Math.ceil(galleryImages.length / pageSize);
+    let galleryPage = 0;
+
+    const showGalleryPage = (page) => {
+      galleryPage = page;
+      galleryImages.forEach((image, index) => {
+        const visible = Math.floor(index / pageSize) === galleryPage;
+        image.hidden = !visible;
+        image.tabIndex = visible ? 0 : -1;
+      });
+      galleryStatus.textContent = `${galleryPage + 1} / ${pageCount}`;
+      galleryPrev.disabled = galleryPage === 0;
+      galleryNext.disabled = galleryPage === pageCount - 1;
+    };
+
+    gallery.classList.add('is-paginated');
+    const changeGalleryPage = (page) => {
+      showGalleryPage(page);
+      gallery.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    galleryPrev.addEventListener('click', () => changeGalleryPage(galleryPage - 1));
+    galleryNext.addEventListener('click', () => changeGalleryPage(galleryPage + 1));
+    showGalleryPage(0);
+  }
 });
