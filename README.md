@@ -1,96 +1,205 @@
-# Roopa Arts Cultural Center — Website Redesign
+# Roopa Arts Cultural Center
 
-Redesign skeleton for [roopaartsculturalcenter.org](https://roopaartsculturalcenter.org), built as a
-zero-build static site so it deploys straight to GitHub Pages (no framework, no npm, no CI needed).
+The website for [Roopa Arts Cultural Center](https://roopaartsculturalcenter.org) — a Texas
+501(c)(3) public charity in Sugar Land, presenting the Arudra Festival, concerts, workshops,
+and seasonal celebrations.
 
-## Preview locally
+Built with **Nuxt 3** (Vue 3, `<script setup>`), **Tailwind CSS**, **GSAP + ScrollTrigger**,
+**@vueuse/motion**, and **Lenis**. It builds to a fully static site and deploys to Vercel.
+
+---
+
+## Local development
 
 ```bash
-python3 -m http.server 8000
-# open http://localhost:8000
+npm install
+npm run dev          # http://localhost:3000
 ```
 
-## Site map
-
-| Page | File | Status |
-|---|---|---|
-| Home | `index.html` | Skeleton — hero photo + real events needed |
-| About | `about.html` | Skeleton — founding story, team bios/headshots needed |
-| Programs | `programs.html` | Skeleton — **real program catalog needed** |
-| Events | `events.html` | Events source needed (manual / Google Calendar / Eventbrite); links to production sub-pages |
-| Archive | `archive.html` | Hub for past series — currently holds Golu Series 2024 and past festivals |
-| Pancha Bhuta Sthalam | `pancha-bhuta-sthalam.html` | Archived as Golu Series 2024; Fire/Water/Earth need the original write-ups |
-| Arudra 2026 | `productions/arudra-2026.html` | Festival sub-page — program, flyers, and Navagrahamum Navakailasamum company (merged in) |
-| Arudra Festival 2025 | `productions/arudra-2025.html` | Festival sub-page — flyers/banners; recap copy needed |
-| Gallery | `gallery.html` | Skeleton — 12–24 curated photos / YouTube embeds needed |
-| Donate | `donate.html` | **Done** — Zelle QR + roopaartsculturalcenter@gmail.com + Zelle login link, dark design like the old site |
-| Contact | `contact.html` | Skeleton — address/phone/email + form backend needed |
-
-Placeholder content is marked in two ways:
-- `[PLACEHOLDER — ...]` text in square brackets
-- A dashed gold outline (`class="todo"`) around unfinished blocks — remove the class as content lands
-
-## §1–5 Content questionnaire (what we need answered)
-
-### §1 Organization basics
-- [x] No physical address published — site says "Texas" only (per owner)
-- [x] Public email: roopaartsculturalcenter@gmail.com
-- [x] EIN: not published (per owner)
-- [ ] Founding story: when, by whom, why (founder Roopali Kambo's bio?)
-- [ ] Board / team: names, titles, short bios
-- [ ] Preferred tagline (current placeholder: "Where art, culture, and community come together")
-
-### §2 Programs
-- [x] Performing arts only — no visual/media arts programs (per owner). Site now shows: stage productions, concerts, workshops, community series
-- [ ] How performers apply / audition (Margazhi flyer invites applications)
-- [ ] Any classes offered, schedules, fees
-
-### §3 Donations
-- [x] Zelle only — to roopaartsculturalcenter@gmail.com, plus link to https://enroll.zellepay.com/
-- [ ] **Verify the Zelle QR** (`assets/img/misc/zelle-qr.png`): it was regenerated with the standard Zelle QR payload for that email — scan it once to confirm it resolves to the RACC account, or replace it with the QR image from the old site
-- [ ] Sponsorship tiers / corporate giving?
-- [ ] Volunteer roles to advertise?
-
-### §4 Shop
-- [x] No shop yet (per owner) — page and links removed; revisit when merchandise exists
-
-### §5 Domain & hosting
-- [ ] Will `roopaartsculturalcenter.org` point at GitHub Pages? (needs a `CNAME` file here + DNS change — **not added yet** so nothing breaks prematurely)
-- [ ] Who controls DNS / current WordPress hosting?
-- [ ] Any email tied to the domain that DNS changes must not disturb?
-
-## Image assets
-
-All images live under `assets/img/`, organized by purpose (duplicates were removed by checksum):
-
-| Folder | Contents |
+| Command | What it does |
 |---|---|
-| `logo/` | RACC logo (`racc-logo.png` header, `racc-logo-white.png` footer — cropped from the "AN RACC PRODUCTION" lockups), ABV logos |
-| `banners/` | Hero slider banners (`banner-1..5.jpg`), Arudra 2025 banners, animated GIFs |
-| `home/` | Homepage section photos (`home-1..7.jpg`) |
-| `gallery/` | ~60 performance photos (HG series + gallery series) |
-| `events/` | Event flyers (Arudra 2025/2026, Bollywood Night, Navtar Jugalbandi, Baroque–Carnatic, Sound Workshop, Margazhi, Guruguha Vaibhavam) + Arudra 2026 artist cards |
-| `artists/` | Featured artist headshots |
-| `about/` | About-page photo |
-| `misc/` | Shiva/mandala art (`final.jpg`, used on Pancha Bhuta Sthalam hero), design PNGs, misc |
+| `npm run dev` | Dev server with hot reload |
+| `npm run build` | Production build → `.vercel/output/static` (fully prerendered) |
+| `npm run preview` | Preview the production build |
+| `npm run images` | Re-generate web images from the originals — see below |
 
-Site colors are now sampled from the real logo: rust `#884820`, amber `#f0a838`, charcoal `#303030`.
+### Previewing the real production build
 
-## Assets still needed
+`npm run dev` does not reflect final performance. To check what actually ships:
 
-- **Vector logo** (SVG/AI) — currently using cropped PNGs
-- **Temple photos or artwork** for the five Pancha Bhuta Sthalam sections
-- **Headshots + bios** for board/leadership (About page)
-- **Product photos** for the Shop (pending the e-commerce decision)
+```bash
+npm run build
+npx serve .vercel/output/static -l 4173
+```
 
-## What was scraped / recovered from public sources
+---
 
-- Mission & vision statements, 501(c)(3) status, Sugar Land TX location (site metadata + search index)
-- Site structure of the old site: home, Pancha Bhuta Sthalam series (five element pages), WooCommerce clothing store
-- Social links: [Instagram](https://www.instagram.com/roopaartsculturalcenter/), [Facebook](https://www.facebook.com/roopaartsculturalcenter/), [YouTube](https://www.youtube.com/@RoopaArtsCulturalCenter), [GoFundMe](https://www.gofundme.com/charity/roopa-arts-cultural-center)
-- Space (Chidambaram) and Wind (Sri Kalahasti) element themes
+## Adding a new event
 
-Note: the live site blocks automated fetching from this environment (HTTP 403), so full page copy
-and images could not be pulled directly. If you can export the WordPress content
-(Tools → Export in wp-admin) or share a browser-saved copy of key pages, the remaining
-`[PLACEHOLDER]` copy can be filled in from it.
+**Everything about events lives in one file: [`data/events.ts`](data/events.ts).** You do not need
+to touch any component.
+
+**1. Add the flyer image.** Drop the original into `legacy/assets/img/events/` and run:
+
+```bash
+npm run images
+```
+
+This compresses it to WebP and writes it to `public/images/events/`. (If you already have a
+web-sized `.webp`, you can put it straight into `public/images/events/` and skip this step.)
+
+**2. Add an entry to `data/events.ts`:**
+
+```ts
+{
+  slug: 'spring-concert-2027',        // unique, url-safe
+  title: 'Spring Concert 2027',
+  status: 'upcoming',                 // 'upcoming' or 'past'
+  image: '/images/events/spring-concert-2027.webp',
+  width: 1400,                        // the flyer's real pixel size —
+  height: 1400,                       // this reserves layout space and prevents layout shift
+  alt: 'Flyer for the 2027 Spring Concert',
+  date: 'April 18, 2027',             // shown verbatim, any format
+  isoDate: '2027-04-18',              // used for <time datetime> and sorting
+  venue: 'Stafford Centre',
+  description: 'An evening of Carnatic vocal and violin.',
+  rsvpUrl: 'https://evite.me/XXXXXXX',
+  rsvpLabel: 'RSVP',                  // optional, defaults to "RSVP"
+},
+```
+
+Only `slug`, `title`, `status`, `image`, `width`, `height`, and `alt` are required. Anything you
+leave out simply is not rendered — no date line without `date`, no button without `rsvpUrl`.
+
+**3. That's it.** The event appears on `/events` and, if `status: 'upcoming'`, in the homepage
+"Upcoming events" section too. To retire an event, change `status` to `'past'`.
+
+> **Finding the image dimensions:** open `data/image-manifest.json` (regenerated by
+> `npm run images`) and look up the file — every entry lists its `width` and `height`.
+
+### Other content files
+
+| File | Contents |
+|---|---|
+| `data/site.ts` | Org name, tagline, location, email, socials, Zelle details, nav items |
+| `data/events.ts` | All events (above) |
+| `data/arudra.ts` | Arudra 2026 programme, flyers, artist cards, featured artists |
+| `data/about.ts` | The "How it began" copy, the three accordions, the counter strip |
+| `data/gallery.ts` | Hero slideshow picks; the gallery grid builds itself from the manifest |
+
+The gallery is generated from the image manifest, so **adding photos to
+`legacy/assets/img/gallery/` and running `npm run images` publishes them** — no code change.
+
+---
+
+## Deploying to Vercel
+
+The build emits Vercel's Build Output API format (`.vercel/output/`), so the whole site is served
+as static files from Vercel's CDN — no serverless functions, nothing to warm up.
+
+### First deploy (via the dashboard)
+
+1. Push this branch to GitHub.
+2. Go to **[vercel.com/new](https://vercel.com/new)** and click **Import Git Repository**.
+3. Pick the `roopaartsculturalcenter.github.io` repo and click **Import**.
+4. On the configure screen:
+   - **Framework Preset** — leave as the auto-detected **Nuxt.js**.
+   - **Build Command** — `npm run build` (already set by `vercel.json`).
+   - **Install Command** — `npm ci` (already set by `vercel.json`).
+   - **Output Directory** — leave empty. Vercel detects `.vercel/output` automatically.
+   - **Environment Variables** — none needed.
+5. Click **Deploy**. The first build takes ~2–4 minutes (most of it is prerendering the
+   ~830 image variants).
+6. You'll get a `*.vercel.app` URL. Check it, then add the real domain below.
+
+### First deploy (via CLI)
+
+```bash
+npm i -g vercel
+vercel login
+vercel link          # answer the prompts to create/link the project
+vercel --prod        # build and deploy to production
+```
+
+### Connecting roopaartsculturalcenter.org
+
+1. In the Vercel project → **Settings → Domains** → add `roopaartsculturalcenter.org`
+   and `www.roopaartsculturalcenter.org`.
+2. Vercel shows the DNS records to create. At your registrar:
+   - `A` record for `@` → `76.76.21.21`
+   - `CNAME` for `www` → `cname.vercel-dns.com`
+   - (Vercel will display the exact current values — use those, not these, if they differ.)
+3. Wait for DNS to propagate; Vercel issues the TLS certificate automatically.
+4. **Before you switch DNS**, confirm no email (MX) records are being replaced — only touch the
+   `A`/`CNAME` records for the apex and `www`.
+
+### Ongoing deploys
+
+Every push to `main` deploys to production; every other branch and PR gets its own preview URL.
+To change which branch is production: **Settings → Git → Production Branch**.
+
+---
+
+## How the images work
+
+The original photography (~85 MB, 139 files) is preserved untouched in `legacy/assets/img/`.
+It is never served. `npm run images` reads it and writes compressed WebP into `public/images/`:
+
+```
+72.5 MB  →  13.4 MB   (81% smaller)
+```
+
+`@nuxt/image` then generates responsive widths from those at build time. Two animated GIFs are
+skipped deliberately — they duplicate banner stills and would have to be re-encoded frame by frame.
+
+To change compression, edit the per-folder `RULES` in `scripts/optimize-images.mjs`.
+
+---
+
+## Notes for whoever edits this next
+
+**Tailwind opacity modifiers must be multiples of 5.** `bg-oxblood/90` works; `bg-oxblood/92`
+silently generates *no CSS at all* and the element ends up transparent. This bit us during the
+build — if a colour mysteriously doesn't apply, check the number.
+
+**Motion is opt-out everywhere.** Every animation — GSAP timelines, ScrollTrigger reveals, Lenis
+smooth scrolling, the Ken Burns hero, the marquee, `v-motion` — is gated on
+`prefers-reduced-motion`. The gate lives in `composables/useMotionPreference.ts`; use it rather
+than adding animation directly. Scroll-reveal elements start hidden via a `js-motion` class that a
+tiny inline script sets before first paint, so with JavaScript disabled or reduced motion on,
+content is simply visible.
+
+**`@nuxt/image` needs breakpoint-prefixed `sizes`.** A bare `sizes="100vw"` produces a 1-pixel
+srcset. Use the constants in `utils/imageSizes.ts` for full-bleed images.
+
+---
+
+## Measured quality
+
+Lighthouse against the production build (`.vercel/output/static`), all 7 routes:
+
+| | Performance | Accessibility | Best practices | SEO |
+|---|---|---|---|---|
+| Desktop | 98–100 | **100** | **100** | **100** |
+| Mobile | 91–93 | **100** | **100** | **100** |
+
+Mobile LCP 2.8–3.2 s, CLS 0.003–0.016.
+
+---
+
+## Project structure
+
+```
+components/     UI — header, footer, hero, cards, gallery, accordion, marquee
+composables/    useGsap, useMagnetic, useMotionPreference, useMotionPreset, useSeo
+data/           All site content (see table above) + generated image-manifest.json
+pages/          /, /about, /events, /arudra-2026, /arudra-2026/gallery, /gallery, /donate
+plugins/        lenis.client.ts — smooth scrolling wired into the GSAP ticker
+scripts/        optimize-images.mjs
+utils/          imageSizes.ts
+public/images/  Web-ready WebP (generated — do not hand-edit)
+legacy/         The previous static HTML site and the original uncompressed images
+```
+
+`legacy/` is kept so nothing from the old site is lost; it is not built or served. Old `.html`
+URLs 301-redirect to their new equivalents (configured in `nuxt.config.ts`).

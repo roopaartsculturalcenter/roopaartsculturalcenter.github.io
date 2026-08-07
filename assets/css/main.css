@@ -1,0 +1,145 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --header-h: 4.5rem;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-ivory font-sans text-ink antialiased;
+    /* Lenis drives scrolling; this keeps anchor jumps sane if it is disabled. */
+    scroll-behavior: auto;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* A visible focus ring everywhere, tuned per surface. */
+  :focus-visible {
+    @apply outline-none ring-2 ring-gold ring-offset-2 ring-offset-ivory;
+  }
+
+  .on-dark :focus-visible {
+    @apply ring-offset-oxblood;
+  }
+
+  ::selection {
+    @apply bg-gold text-maroon-deep;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-content px-5 sm:px-8 lg:px-12;
+  }
+
+  .kicker {
+    @apply font-sans text-xs font-semibold uppercase tracking-[0.22em] text-gold-deep;
+  }
+
+  .on-dark .kicker {
+    @apply text-gold;
+  }
+
+  /* Buttons -------------------------------------------------------------- */
+  .btn {
+    @apply relative inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5
+           text-sm font-semibold tracking-wide transition-[transform,background-color,color,box-shadow]
+           duration-300 ease-silk will-change-transform;
+  }
+
+  .btn-gold {
+    @apply btn bg-gold text-maroon-deep shadow-[0_4px_20px_-6px_rgba(240,168,56,0.7)]
+           hover:bg-gold-pale hover:shadow-[0_10px_30px_-8px_rgba(240,168,56,0.85)];
+  }
+
+  .btn-outline {
+    @apply btn border border-current text-maroon hover:bg-maroon hover:text-ivory;
+  }
+
+  .on-dark .btn-outline {
+    @apply border-ivory/45 text-ivory hover:bg-ivory hover:text-maroon-deep;
+  }
+
+  /* Cards ---------------------------------------------------------------- */
+  .card-lift {
+    @apply transition-[transform,box-shadow] duration-500 ease-silk will-change-transform;
+  }
+
+  .card-lift:hover {
+    @apply -translate-y-1.5 shadow-[0_24px_60px_-24px_rgba(42,10,14,0.45)];
+  }
+
+  /* A thin gold rule used under section kickers. */
+  .rule-gold::after {
+    content: '';
+    @apply mt-4 block h-px w-14 bg-gradient-to-r from-gold to-transparent;
+  }
+}
+
+@layer utilities {
+  .text-shadow-hero {
+    text-shadow: 0 2px 30px rgba(24, 6, 9, 0.55);
+  }
+}
+
+/* Pre-animation resting state -------------------------------------------------
+   `js-motion` is set on <html> by a tiny inline script before first paint, and
+   only when JavaScript is running AND the user has not asked for reduced motion.
+   So with JS disabled, or with reduced motion on, this rule never applies and
+   every element is simply visible. GSAP leaves an inline opacity behind when it
+   finishes, which outranks this rule and keeps the element revealed. */
+.js-motion [data-reveal],
+.js-motion [data-photo] {
+  opacity: 0;
+  transform: translate3d(0, 2rem, 0);
+}
+
+/* Lenis ------------------------------------------------------------------ */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Reduced motion --------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Anything waiting on GSAP must be visible immediately instead. */
+  [data-reveal],
+  [data-photo] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .card-lift:hover {
+    transform: none !important;
+  }
+}

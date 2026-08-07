@@ -1,0 +1,73 @@
+export default defineNuxtConfig({
+  compatibilityDate: '2026-08-01',
+  devtools: { enabled: false },
+
+  modules: ['@nuxtjs/tailwindcss', '@nuxt/image', '@vueuse/motion/nuxt'],
+
+  css: ['~/assets/css/main.css'],
+
+  // Images are pre-compressed to WebP by `npm run images`, so the runtime
+  // optimizer only has to produce the responsive widths.
+  image: {
+    quality: 78,
+    format: ['webp'],
+    screens: { xs: 360, sm: 640, md: 768, lg: 1024, xl: 1280, xxl: 1536, '2xl': 1536 },
+  },
+
+  app: {
+    head: {
+      htmlAttrs: { lang: 'en' },
+      meta: [
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { name: 'theme-color', content: '#2A0A0E' },
+      ],
+      link: [
+        { rel: 'icon', type: 'image/webp', href: '/images/logo/racc-logo.webp' },
+        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
+        {
+          rel: 'stylesheet',
+          href:
+            'https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700' +
+            '&family=Inter:wght@400;500;600;700&display=swap',
+        },
+      ],
+      script: [
+        {
+          // Runs before first paint so scroll-reveal targets start hidden without
+          // a flash. Deliberately skipped when the user prefers reduced motion, and
+          // never runs at all with JS disabled — in both cases content stays visible.
+          innerHTML:
+            "if(!matchMedia('(prefers-reduced-motion: reduce)').matches)" +
+            "document.documentElement.classList.add('js-motion')",
+          tagPosition: 'head',
+        },
+      ],
+    },
+  },
+
+  // Static output: no server functions needed, so Vercel serves it from the CDN.
+  nitro: {
+    preset: 'vercel-static',
+    prerender: { crawlLinks: true, routes: ['/'] },
+  },
+
+  routeRules: {
+    '/images/**': { headers: { 'cache-control': 'public, max-age=31536000, immutable' } },
+
+    // The previous static site used .html URLs. Keep any existing links and
+    // search results working rather than dropping them on the 404 page.
+    // Note: no rule for /index.html — on a static host that file *is* `/`, so a
+    // redirect there overwrites the homepage with a loop back to itself.
+    '/about.html': { redirect: { to: '/about', statusCode: 301 } },
+    '/events.html': { redirect: { to: '/events', statusCode: 301 } },
+    '/gallery.html': { redirect: { to: '/gallery', statusCode: 301 } },
+    '/donate.html': { redirect: { to: '/donate', statusCode: 301 } },
+    '/programs.html': { redirect: { to: '/about', statusCode: 301 } },
+    '/archive.html': { redirect: { to: '/events', statusCode: 301 } },
+    '/contact.html': { redirect: { to: '/about', statusCode: 301 } },
+    '/productions/arudra-2026.html': { redirect: { to: '/arudra-2026', statusCode: 301 } },
+    '/productions/arudra-2025.html': { redirect: { to: '/events', statusCode: 301 } },
+  },
+})
