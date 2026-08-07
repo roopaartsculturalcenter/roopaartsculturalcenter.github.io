@@ -10,6 +10,8 @@ structured as acts, on a near-black stage lit with spotlight gold.
 **Nuxt 3** · **Tailwind** · **GSAP** (ScrollTrigger, SplitText, Flip) · **Lenis** · **Three.js**
 Fully static output, deployed to Vercel.
 
+**Live: https://roopaarts.vercel.app**
+
 ---
 
 ## Local development
@@ -99,32 +101,50 @@ Adding photos to `legacy/assets/img/gallery/` and running `npm run images` publi
 
 ---
 
-## Deploying to Vercel
+## Deploying
 
-The build emits Vercel's Build Output API format, so everything is served statically from the CDN.
+Live at **https://roopaarts.vercel.app**, on the Vercel project `roopa-arts`
+(scope `naveenkumarp3939-3162s-projects`). The build emits Vercel's Build Output API format, so
+everything is static files on the CDN — no functions, nothing to warm up.
 
-### First deploy
+### Redeploying
 
-1. Push this branch to GitHub.
-2. **[vercel.com/new](https://vercel.com/new)** → **Import Git Repository** → pick the repo.
-3. Leave the auto-detected **Nuxt.js** preset. Build and install commands come from `vercel.json`.
-   Leave **Output Directory** empty — Vercel finds `.vercel/output` itself. No env vars needed.
-4. **Deploy.** First build is ~3–5 minutes (most of it prerendering ~1,500 image variants).
-
-Or by CLI:
+> **Pushing to GitHub does not deploy.** The repo is not connected to the Vercel project:
+> `vercel link` failed with *"You need to add a Login Connection to your GitHub account first."*
+> Until that is added (Vercel → Account Settings → Login Connections → GitHub), every deploy is
+> manual.
 
 ```bash
-npm i -g vercel && vercel login && vercel link && vercel --prod
+vercel --prod        # from the repo root, after `vercel login`
 ```
 
-### Connecting the domain
+Once the GitHub connection exists, imports at [vercel.com/new](https://vercel.com/new) work
+normally: keep the detected **Nuxt.js** preset, leave **Output Directory** empty, no env vars.
+Pushes then deploy on their own and each branch gets its own preview URL.
+
+### About the URLs
+
+`*.vercel.app` subdomains are globally unique across all Vercel users — `roopa-arts.vercel.app`
+was already taken by someone else, hence `roopaarts`.
+
+The auto-generated `roopa-arts-<hash>-<scope>.vercel.app` URLs sit behind Vercel Authentication
+and redirect to a login page. The custom domain does not, which is why `roopaarts.vercel.app` is
+the link to share.
+
+A domain cannot be attached while the project's most recent **production** deployment is failed —
+fix the build and `vercel --prod` first, then add the domain.
+
+### Connecting roopaartsculturalcenter.org
 
 1. Project → **Settings → Domains** → add `roopaartsculturalcenter.org` and the `www` variant.
 2. Create the DNS records Vercel displays (typically `A @ → 76.76.21.21`,
    `CNAME www → cname.vercel-dns.com`). Use the values Vercel shows, not these.
 3. **Only touch the `A`/`CNAME` records** — leave MX records alone or you will break email.
 
-Every push to the production branch deploys; every other branch gets a preview URL.
+The old site is still on GitHub Pages at `roopaartsculturalcenter.github.io`, served from the
+`claude/roopaartsculturalcenter-redesign-i2nw1b` branch in legacy (no-build) mode. Nothing here
+has disturbed it. Pointing Pages at this branch would publish raw `.vue` source — it would need a
+GitHub Actions workflow and the `github-pages` Nitro preset instead.
 
 ---
 
@@ -152,6 +172,11 @@ Playbill reveals with `clip-path` alone for exactly this reason.
 
 ### Other traps, all hit during the build
 
+- **Do not unpin `image.provider`.** Left to auto-detect, `@nuxt/image` picks the `vercel`
+  provider when it sees the Vercel preset and emits `/_vercel/image?url=…` URLs. The prerenderer
+  crawls those, 404s, and **fails the build** — and it cannot reproduce locally, where the same
+  config resolves to `ipx`. This broke the first deploy. `ipxStatic` keeps both environments
+  identical and writes all ~1,500 variants as real files.
 - **Tailwind opacity modifiers must be multiples of 5.** `bg-stage/90` works; `bg-stage/92`
   silently generates *no CSS* and the element is transparent.
 - **`@nuxt/image` needs breakpoint-prefixed `sizes`.** A bare `sizes="100vw"` produces a
@@ -216,7 +241,8 @@ pages/          /, /about, /events, /arudra-2026, /arudra-2026/gallery, /gallery
 plugins/        lenis.client.ts
 public/fonts/   Self-hosted Fraunces + Inter (variable, latin + latin-ext)
 public/images/  Web-ready WebP (generated — do not hand-edit)
-legacy/         The original static site and uncompressed originals. Not built or served
+legacy/         The original static site and uncompressed originals. Not built, not served,
+                and excluded from deploys by .vercelignore (85 MB the build never reads)
 ```
 
 Old `.html` URLs 301-redirect to their new paths (`nuxt.config.ts`).
