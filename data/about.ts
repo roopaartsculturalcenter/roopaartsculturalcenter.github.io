@@ -16,6 +16,23 @@ export const story = [
     'lovers can come together to celebrate creativity and cultural expression in all its forms.',
 ]
 
+/**
+ * Act 3 recites the story as verses rather than paragraphs. This is the exact
+ * `story` copy above, only line-broken — nothing is added or reworded. `gold`
+ * marks the phrase that lights up as it crosses centre screen.
+ */
+export const verses: { text: string; gold?: boolean }[] = [
+  { text: 'Roopa Arts Cultural Center is a Texas' },
+  { text: '501(c)(3) public charity built by' },
+  { text: 'artists and art lovers.' },
+  { text: 'From our signature Arudra Festival' },
+  { text: 'to concerts, workshops, and seasonal' },
+  { text: 'celebrations, we create stages' },
+  { text: 'where the classical arts of India thrive', gold: true },
+  { text: '— and where the whole community' },
+  { text: 'gathers to experience them.' },
+]
+
 export interface AccordionItem {
   id: string
   title: string

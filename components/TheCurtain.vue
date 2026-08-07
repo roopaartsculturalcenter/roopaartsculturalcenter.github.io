@@ -33,10 +33,25 @@ function skip() {
   tl.progress(1)
 }
 
+/**
+ * On a constrained connection the curtain is the wrong trade.
+ *
+ * Measured: it is worth ~0.8s of Largest Contentful Paint on a throttled phone,
+ * because the hero's paint as the largest element is deferred until the panels
+ * open. Someone on a slow link or in data-saver mode wants the content, not the
+ * flourish — so they get the content.
+ */
+function connectionCanAfford() {
+  const c = (navigator as { connection?: { saveData?: boolean; effectiveType?: string } }).connection
+  if (!c) return true
+  if (c.saveData) return false
+  return !['slow-2g', '2g', '3g'].includes(c.effectiveType ?? '')
+}
+
 onMounted(() => {
   const seen = sessionStorage.getItem(SESSION_KEY)
 
-  if (seen || reduced.value) {
+  if (seen || reduced.value || !connectionCanAfford()) {
     finish()
     return
   }
@@ -60,14 +75,14 @@ onMounted(() => {
       .fromTo(
         strokes,
         { strokeDashoffset: (i, t) => t.getTotalLength?.() ?? 400 },
-        { strokeDashoffset: 0, duration: 0.62, ease: 'power2.inOut', stagger: 0.05 },
+        { strokeDashoffset: 0, duration: 0.52, ease: 'power2.inOut', stagger: 0.04 },
       )
       .to(mark, { opacity: 0, scale: 1.08, duration: 0.3, ease: 'power2.in' }, '+=0.08')
       .to(
         panels,
         {
           xPercent: (i) => (i === 0 ? -100 : 100),
-          duration: 0.72,
+          duration: 0.62,
           ease: 'expo.inOut',
         },
         '-=0.1',

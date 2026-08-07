@@ -77,7 +77,7 @@ function onKeydown(e: KeyboardEvent) {
         <NuxtLink
           to="/"
           class="pointer-events-auto font-display text-lg tracking-tight text-white sm:text-xl"
-          :aria-label="`${site.name} — home`"
+          :aria-label="`RACC — ${site.name}, home`"
         >
           RACC
         </NuxtLink>

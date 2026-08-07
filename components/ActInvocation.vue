@@ -268,12 +268,16 @@ scene(
         class="pointer-events-none absolute inset-0 flex items-center justify-center"
         aria-hidden="true"
       >
+        <!-- This is the LCP element on every device that declines the shader, so
+             `sizes` has to describe the box it actually occupies (70% of the
+             viewport, 52% from `sm` up). Describing it as 100vw made the browser
+             fetch roughly twice the pixels it could ever display. -->
         <NuxtImg
           :src="HERO_IMAGE"
           alt=""
           width="1600"
           height="900"
-          sizes="xs:100vw sm:100vw md:70vw lg:55vw xl:55vw xxl:55vw"
+          sizes="xs:72vw sm:54vw md:54vw lg:42vw xl:42vw xxl:42vw"
           preload
           fetchpriority="high"
           class="h-[72%] w-[70%] max-w-2xl object-cover opacity-70 sm:w-[52%]"
@@ -326,7 +330,7 @@ scene(
         class="pointer-events-none absolute inset-x-0 bottom-8 z-10 flex justify-center"
         aria-hidden="true"
       >
-        <span class="rubric animate-cue-pulse text-chalk/45">Scroll</span>
+        <span class="rubric animate-cue-pulse text-chalk/55">Scroll</span>
       </div>
 
       <!-- ACT 2: the photo wall -->

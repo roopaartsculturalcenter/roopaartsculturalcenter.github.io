@@ -4,7 +4,7 @@ export default defineNuxtConfig({
 
   modules: ['@nuxtjs/tailwindcss', '@nuxt/image', '@vueuse/motion/nuxt'],
 
-  css: ['~/assets/css/main.css'],
+  css: ['~/assets/css/fonts.css', '~/assets/css/main.css'],
 
   // Images are pre-compressed to WebP by `npm run images`, so the runtime
   // optimizer only has to produce the responsive widths.
@@ -24,14 +24,10 @@ export default defineNuxtConfig({
       ],
       link: [
         { rel: 'icon', type: 'image/webp', href: '/images/logo/racc-logo.webp' },
-        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
-        {
-          rel: 'stylesheet',
-          href:
-            'https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700' +
-            '&family=Inter:wght@400;500;600;700&display=swap',
-        },
+        // Fonts are self-hosted (assets/css/fonts.css) but deliberately NOT
+        // preloaded. Measured: preloading them competes with the hero image for
+        // bandwidth on a throttled connection and cost ~1s of LCP. `font-display:
+        // swap` already paints text immediately in the fallback face.
       ],
       script: [
         {
@@ -51,6 +47,24 @@ export default defineNuxtConfig({
   nitro: {
     preset: 'vercel-static',
     prerender: { crawlLinks: true, routes: ['/'] },
+  },
+
+  hooks: {
+    /**
+     * Three.js is dynamically imported, but Nuxt still emits a `modulepreload`
+     * for it because it can see the import statically — which put 115KB back on
+     * the hero's critical path, exactly what the dynamic import was avoiding.
+     *
+     * Demoted to prefetch: fetched at idle priority, after the page is usable,
+     * and ready by the time the shader asks for it.
+     */
+    'build:manifest'(manifest) {
+      const three = manifest['node_modules/three/build/three.module.js']
+      if (three) {
+        three.preload = false
+        three.prefetch = true
+      }
+    },
   },
 
   routeRules: {

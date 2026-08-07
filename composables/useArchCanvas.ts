@@ -1,15 +1,9 @@
-import {
-  Mesh,
-  OrthographicCamera,
-  PlaneGeometry,
-  Scene,
-  ShaderMaterial,
-  TextureLoader,
-  Vector2,
-  WebGLRenderer,
-  SRGBColorSpace,
-} from 'three'
 import { gsap } from 'gsap'
+import type { ShaderMaterial as TShaderMaterial, WebGLRenderer as TWebGLRenderer } from 'three'
+
+// Three.js is imported dynamically, below, only after the capability check
+// passes. Imported statically it lands in the entry chunk — ~135KB gzipped that
+// every phone downloads and parses to run a shader most of them will decline.
 
 /**
  * The one WebGL effect on the site: the hero photograph, masked into a temple
@@ -117,8 +111,8 @@ export function useArchCanvas(
   const supported = ref(false)
   const ready = ref(false)
 
-  let renderer: WebGLRenderer | undefined
-  let material: ShaderMaterial | undefined
+  let renderer: TWebGLRenderer | undefined
+  let material: TShaderMaterial | undefined
   let tick: ((t: number) => void) | undefined
   let onResize: (() => void) | undefined
   let onPointer: ((e: PointerEvent) => void) | undefined
@@ -152,6 +146,15 @@ export function useArchCanvas(
 
     const el = canvas.value
     if (!el) return
+
+    // Paid for only where it will actually be used.
+    const {
+      Mesh, OrthographicCamera, PlaneGeometry, Scene, ShaderMaterial,
+      TextureLoader, Vector2, WebGLRenderer, SRGBColorSpace,
+    } = await import('three')
+
+    // The component can unmount while that chunk is in flight.
+    if (!canvas.value) return
 
     const size = () => ({
       w: el.clientWidth || el.parentElement?.clientWidth || window.innerWidth,

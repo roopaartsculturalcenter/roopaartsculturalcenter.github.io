@@ -4,8 +4,11 @@ The website for [Roopa Arts Cultural Center](https://roopaartsculturalcenter.org
 501(c)(3) public charity in Sugar Land, presenting the Arudra Festival, concerts, workshops,
 and seasonal celebrations.
 
-Built with **Nuxt 3** (Vue 3, `<script setup>`), **Tailwind CSS**, **GSAP + ScrollTrigger**,
-**@vueuse/motion**, and **Lenis**. It builds to a fully static site and deploys to Vercel.
+The site is choreographed like a classical recital: the home page is one continuous scroll,
+structured as acts, on a near-black stage lit with spotlight gold.
+
+**Nuxt 3** · **Tailwind** · **GSAP** (ScrollTrigger, SplitText, Flip) · **Lenis** · **Three.js**
+Fully static output, deployed to Vercel.
 
 ---
 
@@ -19,36 +22,46 @@ npm run dev          # http://localhost:3000
 | Command | What it does |
 |---|---|
 | `npm run dev` | Dev server with hot reload |
-| `npm run build` | Production build → `.vercel/output/static` (fully prerendered) |
+| `npm run build` | Production build → `.vercel/output/static` |
 | `npm run preview` | Preview the production build |
-| `npm run images` | Re-generate web images from the originals — see below |
+| `npm run images` | Regenerate web images from the originals |
 
-### Previewing the real production build
-
-`npm run dev` does not reflect final performance. To check what actually ships:
+Dev mode does not reflect real performance. To see what actually ships:
 
 ```bash
-npm run build
-npx serve .vercel/output/static -l 4173
+npm run build && npx serve .vercel/output/static -l 4173
 ```
+
+---
+
+## The acts
+
+The home page is assembled from these, in order. Each is a self-contained component.
+
+| Act | Component | What it does |
+|---|---|---|
+| 0 | `TheCurtain` | Mandala mark draws in stroke, panels slide apart. Once per session |
+| 1 | `ActInvocation` | Masked line reveals, rotating ring, WebGL temple-arch hero, mouse parallax |
+| 2 | `ActInvocation` | Pinned 180vh scrub — type recedes, five photo columns counter-drift in |
+| 3 | `ActMission` | Pinned recitation, verse by verse, one phrase lighting gold at centre |
+| 4 | `ActPlaybill` | Cards reveal from a slanted shard, 3D tilt on hover, magnetic RSVP |
+| 5 | `ActFilmstrip` | Pinned horizontal filmstrip with velocity skew and a gold progress line |
+| 6 | `ActGallery` | Masonry with clip-path wipes; lightbox expands from the thumbnail (GSAP Flip) |
+| 7 | `ActOvation` | Cursor-tracked spotlight, Zelle details centre stage |
+| — | `TheFooter` | Outlined "Join the audience", velocity-skewed marquee, underline draws |
+
+Acts 3–7 are reused on the inner pages, so every route is the same production.
 
 ---
 
 ## Adding a new event
 
-**Everything about events lives in one file: [`data/events.ts`](data/events.ts).** You do not need
-to touch any component.
+**Everything about events lives in one file: [`data/events.ts`](data/events.ts).**
 
-**1. Add the flyer image.** Drop the original into `legacy/assets/img/events/` and run:
+**1. Add the flyer.** Drop the original into `legacy/assets/img/events/` and run `npm run images`.
+(Or put an already-web-sized `.webp` straight into `public/images/events/`.)
 
-```bash
-npm run images
-```
-
-This compresses it to WebP and writes it to `public/images/events/`. (If you already have a
-web-sized `.webp`, you can put it straight into `public/images/events/` and skip this step.)
-
-**2. Add an entry to `data/events.ts`:**
+**2. Add an entry:**
 
 ```ts
 {
@@ -56,150 +69,163 @@ web-sized `.webp`, you can put it straight into `public/images/events/` and skip
   title: 'Spring Concert 2027',
   status: 'upcoming',                 // 'upcoming' or 'past'
   image: '/images/events/spring-concert-2027.webp',
-  width: 1400,                        // the flyer's real pixel size —
-  height: 1400,                       // this reserves layout space and prevents layout shift
+  width: 1400,                        // real pixel size — prevents layout shift
+  height: 1400,
   alt: 'Flyer for the 2027 Spring Concert',
-  date: 'April 18, 2027',             // shown verbatim, any format
-  isoDate: '2027-04-18',              // used for <time datetime> and sorting
+  date: 'April 18, 2027',             // shown verbatim
+  isoDate: '2027-04-18',              // for <time datetime> and sorting
   venue: 'Stafford Centre',
   description: 'An evening of Carnatic vocal and violin.',
   rsvpUrl: 'https://evite.me/XXXXXXX',
-  rsvpLabel: 'RSVP',                  // optional, defaults to "RSVP"
 },
 ```
 
-Only `slug`, `title`, `status`, `image`, `width`, `height`, and `alt` are required. Anything you
-leave out simply is not rendered — no date line without `date`, no button without `rsvpUrl`.
+Only `slug`, `title`, `status`, `image`, `width`, `height`, `alt` are required. Anything omitted
+is not rendered. Look sizes up in `data/image-manifest.json`.
 
-**3. That's it.** The event appears on `/events` and, if `status: 'upcoming'`, in the homepage
-"Upcoming events" section too. To retire an event, change `status` to `'past'`.
+**3. Done.** It appears on `/events` and, if `upcoming`, in the home page Playbill.
 
-> **Finding the image dimensions:** open `data/image-manifest.json` (regenerated by
-> `npm run images`) and look up the file — every entry lists its `width` and `height`.
-
-### Other content files
+### The rest of the content
 
 | File | Contents |
 |---|---|
-| `data/site.ts` | Org name, tagline, location, email, socials, Zelle details, nav items |
-| `data/events.ts` | All events (above) |
+| `data/site.ts` | Name, tagline, location, email, socials, Zelle details, nav |
+| `data/events.ts` | All events |
 | `data/arudra.ts` | Arudra 2026 programme, flyers, artist cards, featured artists |
-| `data/about.ts` | The "How it began" copy, the three accordions, the counter strip |
-| `data/gallery.ts` | Hero slideshow picks; the gallery grid builds itself from the manifest |
+| `data/about.ts` | Story copy, Act 3 verses, accordions |
+| `data/gallery.ts` | Hero picks; the gallery builds itself from the manifest |
 
-The gallery is generated from the image manifest, so **adding photos to
-`legacy/assets/img/gallery/` and running `npm run images` publishes them** — no code change.
+Adding photos to `legacy/assets/img/gallery/` and running `npm run images` publishes them.
 
 ---
 
 ## Deploying to Vercel
 
-The build emits Vercel's Build Output API format (`.vercel/output/`), so the whole site is served
-as static files from Vercel's CDN — no serverless functions, nothing to warm up.
+The build emits Vercel's Build Output API format, so everything is served statically from the CDN.
 
-### First deploy (via the dashboard)
+### First deploy
 
 1. Push this branch to GitHub.
-2. Go to **[vercel.com/new](https://vercel.com/new)** and click **Import Git Repository**.
-3. Pick the `roopaartsculturalcenter.github.io` repo and click **Import**.
-4. On the configure screen:
-   - **Framework Preset** — leave as the auto-detected **Nuxt.js**.
-   - **Build Command** — `npm run build` (already set by `vercel.json`).
-   - **Install Command** — `npm ci` (already set by `vercel.json`).
-   - **Output Directory** — leave empty. Vercel detects `.vercel/output` automatically.
-   - **Environment Variables** — none needed.
-5. Click **Deploy**. The first build takes ~2–4 minutes (most of it is prerendering the
-   ~830 image variants).
-6. You'll get a `*.vercel.app` URL. Check it, then add the real domain below.
+2. **[vercel.com/new](https://vercel.com/new)** → **Import Git Repository** → pick the repo.
+3. Leave the auto-detected **Nuxt.js** preset. Build and install commands come from `vercel.json`.
+   Leave **Output Directory** empty — Vercel finds `.vercel/output` itself. No env vars needed.
+4. **Deploy.** First build is ~3–5 minutes (most of it prerendering ~1,500 image variants).
 
-### First deploy (via CLI)
+Or by CLI:
 
 ```bash
-npm i -g vercel
-vercel login
-vercel link          # answer the prompts to create/link the project
-vercel --prod        # build and deploy to production
+npm i -g vercel && vercel login && vercel link && vercel --prod
 ```
 
-### Connecting roopaartsculturalcenter.org
+### Connecting the domain
 
-1. In the Vercel project → **Settings → Domains** → add `roopaartsculturalcenter.org`
-   and `www.roopaartsculturalcenter.org`.
-2. Vercel shows the DNS records to create. At your registrar:
-   - `A` record for `@` → `76.76.21.21`
-   - `CNAME` for `www` → `cname.vercel-dns.com`
-   - (Vercel will display the exact current values — use those, not these, if they differ.)
-3. Wait for DNS to propagate; Vercel issues the TLS certificate automatically.
-4. **Before you switch DNS**, confirm no email (MX) records are being replaced — only touch the
-   `A`/`CNAME` records for the apex and `www`.
+1. Project → **Settings → Domains** → add `roopaartsculturalcenter.org` and the `www` variant.
+2. Create the DNS records Vercel displays (typically `A @ → 76.76.21.21`,
+   `CNAME www → cname.vercel-dns.com`). Use the values Vercel shows, not these.
+3. **Only touch the `A`/`CNAME` records** — leave MX records alone or you will break email.
 
-### Ongoing deploys
-
-Every push to `main` deploys to production; every other branch and PR gets its own preview URL.
-To change which branch is production: **Settings → Git → Production Branch**.
+Every push to the production branch deploys; every other branch gets a preview URL.
 
 ---
 
-## How the images work
+## Motion, and how to not break it
 
-The original photography (~85 MB, 139 files) is preserved untouched in `legacy/assets/img/`.
-It is never served. `npm run images` reads it and writes compressed WebP into `public/images/`:
+**Everything routes through `composables/useStage.ts`.** `scene()` owns a GSAP context, so a route
+change reverts its tweens and kills its ScrollTriggers. Without that, pins from the previous page
+keep measuring and the next page's pins land at the wrong offsets.
 
-```
-72.5 MB  →  13.4 MB   (81% smaller)
-```
+**Reduced motion is a hard gate, not a dimmer.** Every scene takes a `fallback` that renders the
+same content with no pin, no scrub, no parallax. Lenis does not initialise. The curtain does not
+play. The custom cursor does not mount. Test it — it is a supported way to use the site.
 
-`@nuxt/image` then generates responsive widths from those at build time. Two animated GIFs are
-skipped deliberately — they duplicate banner stills and would have to be re-encoded frame by frame.
+**Scrub tweens must be `fromTo` with `immediateRender: false`.** A plain `.to()` captures its start
+value when the timeline is built, which races the entrance animation. This cost us a permanently
+invisible mandala ring: the timeline was built mid-intro, captured `opacity: 0`, and pinned it there.
 
-To change compression, edit the per-folder `RULES` in `scripts/optimize-images.mjs`.
+**Only `transform` and `opacity` inside pins and scrubs.** `clip-path` is used for the Playbill and
+Gallery reveals because it is compositor-accelerated and causes no layout — but only on `once`
+triggers, never inside a scrub.
+
+**Do not put opacity on a reveal that also needs a contrast check.** A half-transparent card blends
+its text against the stage, and automated contrast auditing reads the blended colour as real. The
+Playbill reveals with `clip-path` alone for exactly this reason.
+
+### Other traps, all hit during the build
+
+- **Tailwind opacity modifiers must be multiples of 5.** `bg-stage/90` works; `bg-stage/92`
+  silently generates *no CSS* and the element is transparent.
+- **`@nuxt/image` needs breakpoint-prefixed `sizes`.** A bare `sizes="100vw"` produces a
+  **1-pixel** srcset. Use `utils/imageSizes.ts`.
+- **A canvas hidden with `v-show` measures 0×0** and the WebGL renderer never recovers. It is
+  hidden with opacity instead, and sized after `nextTick` with a `ResizeObserver`.
+- **Do not `v-if` images out of the DOM to defer them.** The prerender then never generates their
+  `_ipx` variants and the deployed static site 404s on every one. Defer them positionally instead.
+- **Chalk text below `text-chalk/50` fails contrast** on the stage black. 50 is the floor.
 
 ---
 
-## Notes for whoever edits this next
+## Performance
 
-**Tailwind opacity modifiers must be multiples of 5.** `bg-oxblood/90` works; `bg-oxblood/92`
-silently generates *no CSS at all* and the element ends up transparent. This bit us during the
-build — if a colour mysteriously doesn't apply, check the number.
+Three.js is dynamically imported after a capability check and demoted from `preload` to `prefetch`
+in `nuxt.config.ts`, so it never touches the hero's critical path — and phones that decline the
+shader never download it. Fonts are self-hosted and deliberately **not** preloaded: preloading them
+competed with the hero image and cost ~1s of LCP.
 
-**Motion is opt-out everywhere.** Every animation — GSAP timelines, ScrollTrigger reveals, Lenis
-smooth scrolling, the Ken Burns hero, the marquee, `v-motion` — is gated on
-`prefers-reduced-motion`. The gate lives in `composables/useMotionPreference.ts`; use it rather
-than adding animation directly. Scroll-reveal elements start hidden via a `js-motion` class that a
-tiny inline script sets before first paint, so with JavaScript disabled or reduced motion on,
-content is simply visible.
+The WebGL arch declines to run under reduced motion, without WebGL, or on devices reporting ≤4
+cores or <4GB, falling back to a CSS-masked still.
 
-**`@nuxt/image` needs breakpoint-prefixed `sizes`.** A bare `sizes="100vw"` produces a 1-pixel
-srcset. Use the constants in `utils/imageSizes.ts` for full-bleed images.
-
----
-
-## Measured quality
-
-Lighthouse against the production build (`.vercel/output/static`), all 7 routes:
+Measured on the production build:
 
 | | Performance | Accessibility | Best practices | SEO |
 |---|---|---|---|---|
-| Desktop | 98–100 | **100** | **100** | **100** |
-| Mobile | 91–93 | **100** | **100** | **100** |
+| Desktop | 97–100 | **100** | **100** | **100** |
+| Mobile (inner pages) | 89–96 | **100** | **100** | **100** |
+| Mobile (home) | 79–91, high variance | **100** | **100** | **100** |
 
-Mobile LCP 2.8–3.2 s, CLS 0.003–0.016.
+> **Read the mobile home number with care.** Repeated Lighthouse runs on the same build ranged
+> 79–91 with no code change, and a control page that had scored 96 earlier dropped to 86 under
+> sustained machine load. These were measured on a developer laptop running the dev server, a
+> static server and Chrome simultaneously. **Re-measure against the deployed URL with PageSpeed
+> Insights** before drawing conclusions.
+
+CLS is 0–0.011 everywhere. Total blocking time is 0ms.
 
 ---
 
-## Project structure
+## Accessibility
+
+- 100 on every route, verified per page.
+- All content is real text — nothing meaningful lives in an image.
+- Keyboard: skip link, focus trapping in the menu and lightbox, arrow keys and Escape in the
+  lightbox, focus returned to the element that opened it.
+- The custom cursor hides the system cursor, but **restores it the instant a key is pressed** —
+  and never mounts on touch or under reduced motion.
+- Focus rings are gold on stage black and always visible.
+
+---
+
+## Structure
 
 ```
-components/     UI — header, footer, hero, cards, gallery, accordion, marquee
-composables/    useGsap, useMagnetic, useMotionPreference, useMotionPreset, useSeo
-data/           All site content (see table above) + generated image-manifest.json
+components/     TheCurtain, ActInvocation, ActMission, ActPlaybill, ActFilmstrip,
+                ActGallery, ActOvation, TheNav, TheFooter, TheCursor, PageOverture
+composables/    useStage (GSAP + scenes), useArchCanvas (WebGL), useMotionPreference,
+                useMagnetic, useSeo
+data/           All content + generated image-manifest.json
 pages/          /, /about, /events, /arudra-2026, /arudra-2026/gallery, /gallery, /donate
-plugins/        lenis.client.ts — smooth scrolling wired into the GSAP ticker
-scripts/        optimize-images.mjs
-utils/          imageSizes.ts
+plugins/        lenis.client.ts
+public/fonts/   Self-hosted Fraunces + Inter (variable, latin + latin-ext)
 public/images/  Web-ready WebP (generated — do not hand-edit)
-legacy/         The previous static HTML site and the original uncompressed images
+legacy/         The original static site and uncompressed originals. Not built or served
 ```
 
-`legacy/` is kept so nothing from the old site is lost; it is not built or served. Old `.html`
-URLs 301-redirect to their new equivalents (configured in `nuxt.config.ts`).
+Old `.html` URLs 301-redirect to their new paths (`nuxt.config.ts`).
+
+## Content still needed
+
+- Founding story beyond the published paragraph; founder and board bios and headshots
+- Real "Community Impact" copy — the current accordion is assembled from published material
+- Per-photo captions (all gallery images share one descriptive alt)
+- A vector logo (SVG). The curtain draws a mandala mark because no vector wordmark exists
+- Hero video, if wanted — the only motion assets in the archive are two 673×501 slideshow GIFs
+- **Verify the Zelle QR** resolves to the right account before launch

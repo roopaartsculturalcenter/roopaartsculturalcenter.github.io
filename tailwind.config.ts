@@ -34,6 +34,9 @@ export default <Partial<Config>>{
         monumental: ['clamp(2.75rem, 9vw, 8rem)', { lineHeight: '0.9', letterSpacing: '-0.03em' }],
         grand: ['clamp(2rem, 5.5vw, 4.5rem)', { lineHeight: '1.0', letterSpacing: '-0.02em' }],
         recital: ['clamp(1.5rem, 3.2vw, 2.75rem)', { lineHeight: '1.25', letterSpacing: '-0.01em' }],
+        // Act 3 recites nine verses inside one pinned viewport, so this is sized
+        // to fit all of them at once — `grand` overflowed and clipped the first.
+        verse: ['clamp(1.3rem, 3.3vw, 2.9rem)', { lineHeight: '1.16', letterSpacing: '-0.015em' }],
       },
       letterSpacing: { rubric: '0.32em' },
       maxWidth: { stage: '90rem' },

@@ -10,128 +10,95 @@ useSeo({
 })
 
 useHead({
-  script: [
-    {
-      type: 'application/ld+json',
-      innerHTML: JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'Festival',
-        name: arudra2026.title,
-        startDate: arudra2026.isoDate,
-        description: arudra2026.intro,
-        location: { '@type': 'Place', name: arudra2026.venue },
-        organizer: { '@type': 'NGO', name: 'Roopa Arts Cultural Center' },
-        eventStatus: 'https://schema.org/EventScheduled',
-      }),
-    },
-  ],
+  script: [{
+    type: 'application/ld+json',
+    innerHTML: JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Festival',
+      name: arudra2026.title,
+      startDate: arudra2026.isoDate,
+      description: arudra2026.intro,
+      location: { '@type': 'Place', name: arudra2026.venue },
+      organizer: { '@type': 'NGO', name: 'Roopa Arts Cultural Center' },
+      eventStatus: 'https://schema.org/EventScheduled',
+    }),
+  }],
 })
 
-/** The masonry gallery shows a slice; the rest live on the View All page. */
-const preview = [...arudra2026.flyers, ...arudra2026.artistCards].slice(0, 10)
+const programmeRoot = ref<HTMLElement | null>(null)
+useEntrance(programmeRoot)
+
+const flyers = arudra2026.flyers.map((f) => ({ src: f.src, width: f.w, height: f.h, alt: f.alt }))
 </script>
 
 <template>
   <div>
-    <PageHero
-      kicker="Signature Festival"
+    <PageOverture
+      rubric="The signature festival"
       title="Arudra 2026"
       :lede="`${arudra2026.date} · ${arudra2026.venue}`"
       image="/images/misc/final.webp"
     />
 
-    <!-- Programme -->
-    <AppSection labelledby="programme-heading">
-      <div class="grid items-start gap-14 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
-        <div data-reveal>
+    <section ref="programmeRoot" class="bg-stage py-28 lg:py-36" aria-labelledby="prog-heading">
+      <div class="stage-pad grid gap-16 lg:grid-cols-[1fr_1.15fr] lg:gap-24">
+        <div data-wipe>
           <NuxtImg
             src="/images/events/all-program-flyer.webp"
             alt="Arudra 2026 full programme flyer"
-            width="1080"
-            height="1080"
-            sizes="sm:85vw lg:45vw"
-            loading="lazy"
-            class="w-full rounded-2xl shadow-[0_30px_70px_-40px_rgba(42,10,14,0.7)]"
+            width="1080" height="1080" loading="lazy"
+            sizes="xs:88vw sm:88vw md:80vw lg:45vw xl:45vw xxl:45vw"
+            class="w-full bg-stage-raised object-contain"
           />
         </div>
 
         <div>
-          <p data-reveal class="kicker rule-gold">The Programme</p>
-          <h2 id="programme-heading" data-reveal class="mt-5 text-display-md">
-            One afternoon, four experiences
+          <p data-wipe class="rubric">The programme</p>
+          <h2 id="prog-heading" data-wipe class="mt-6 font-display text-monumental text-chalk">
+            One afternoon,<br >four experiences
           </h2>
-          <p data-reveal class="mt-6 text-lg leading-relaxed text-ink/75">
-            {{ arudra2026.intro }}
-          </p>
+          <p data-wipe class="mt-8 max-w-lg leading-relaxed text-chalk/65">{{ arudra2026.intro }}</p>
 
-          <ol data-reveal class="mt-9 space-y-0">
+          <ol class="mt-12">
             <li
               v-for="(item, i) in arudra2026.programme"
               :key="item.title"
-              class="flex gap-5 border-t border-ink/10 py-5"
+              data-wipe
+              class="flex gap-6 border-t border-chalk/12 py-6"
             >
-              <span class="mt-1 font-display text-sm tabular-nums text-gold-deep">
+              <span class="font-display text-sm tabular-nums text-spot">
                 {{ String(i + 1).padStart(2, '0') }}
               </span>
               <span>
-                <span class="block font-display text-xl">{{ item.title }}</span>
-                <span v-if="item.note" class="mt-1 block text-sm text-ink/70">{{ item.note }}</span>
+                <span class="block font-display text-recital text-chalk">{{ item.title }}</span>
+                <span v-if="item.note" class="mt-1 block text-sm text-chalk/50">{{ item.note }}</span>
               </span>
             </li>
           </ol>
         </div>
       </div>
-    </AppSection>
+    </section>
 
-    <!-- Featured production -->
-    <AppSection tone="dark" size="tight" labelledby="featured-heading">
-      <template #decor>
-        <MandalaAccent
-          class="absolute -left-24 top-1/2 h-[26rem] w-[26rem] -translate-y-1/2 text-gold/[0.07]"
-          :petals="18"
-          spin
-        />
-      </template>
+    <ActFilmstrip />
 
-      <div class="mx-auto max-w-3xl text-center">
-        <p data-reveal class="kicker">Featured Production</p>
-        <h2 id="featured-heading" data-reveal class="mt-5 text-display-md">
+    <section class="bg-stage py-28 lg:py-36" aria-labelledby="featured-heading">
+      <div class="stage-pad mx-auto max-w-3xl text-center">
+        <p class="rubric">Featured production</p>
+        <h2 id="featured-heading" class="mt-6 font-display text-monumental text-chalk">
           {{ arudra2026.featured.title }}
         </h2>
-        <p data-reveal class="mt-6 text-lg leading-relaxed text-ivory/80">
-          {{ arudra2026.featured.body }}
-        </p>
+        <p class="mt-8 leading-relaxed text-chalk/65">{{ arudra2026.featured.body }}</p>
+        <NuxtLink
+          to="/arudra-2026/gallery"
+          data-cursor="view"
+          class="mt-12 inline-block border border-spot px-10 py-4 text-xs font-semibold uppercase tracking-rubric text-spot transition-colors duration-500 hover:bg-spot hover:text-stage"
+        >
+          Every flyer
+        </NuxtLink>
       </div>
+    </section>
 
-      <div data-reveal class="mt-14 -mx-5 sm:-mx-8 lg:-mx-12">
-        <FlyerMarquee :items="arudra2026.artistCards" :speed="70" />
-      </div>
-    </AppSection>
-
-    <!-- Masonry gallery -->
-    <AppSection tone="dim" labelledby="flyers-heading">
-      <div class="flex flex-wrap items-end justify-between gap-8">
-        <div class="max-w-prose">
-          <p data-reveal class="kicker rule-gold">Announcements</p>
-          <h2 id="flyers-heading" data-reveal class="mt-5 text-display-md">Festival flyers</h2>
-        </div>
-        <div data-reveal>
-          <AppButton to="/arudra-2026/gallery" variant="outline">View all</AppButton>
-        </div>
-      </div>
-
-      <div class="mt-14">
-        <PhotoGallery
-          :photos="preview.map((f) => ({ src: f.src, width: f.w, height: f.h, alt: f.alt }))"
-          columns="columns-2 sm:columns-3 lg:columns-4"
-        />
-      </div>
-
-      <div data-reveal class="mt-10">
-        <AppButton to="/arudra-2026/gallery">See every flyer</AppButton>
-      </div>
-    </AppSection>
-
-    <DonateBand />
+    <ActGallery :photos="flyers" heading="Announcements" rubric="The paper trail" />
+    <ActOvation />
   </div>
 </template>

@@ -12,23 +12,12 @@ useSeo({
 
 <template>
   <div>
-    <PageHero
-      kicker="Moments"
+    <PageOverture
+      rubric="Applause"
       title="Gallery"
-      :lede="`${galleryPhotos.length} photographs from our stage — dancers, musicians, and the community that fills the hall.`"
-      image="/images/banners/banner-2.webp"
+      :lede="`${galleryPhotos.length} photographs from our stage. Select any to open it larger; arrow keys move between them.`"
+      image="/images/home/home-6.webp"
     />
-
-    <AppSection labelledby="gallery-heading">
-      <h2 id="gallery-heading" class="sr-only">Performance photographs</h2>
-      <p data-reveal class="mb-12 max-w-prose text-sm text-ink/70">
-        Select any photograph to open it larger. Use the arrow keys to move between photographs
-        and Escape to close.
-      </p>
-
-      <PhotoGallery :photos="galleryPhotos" />
-    </AppSection>
-
-    <DonateBand />
+    <ActGallery :photos="galleryPhotos" heading="Every frame" rubric="The archive" />
   </div>
 </template>
