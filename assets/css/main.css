@@ -3,143 +3,112 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --header-h: 4.5rem;
-  }
-
   html {
     -webkit-text-size-adjust: 100%;
+    background-color: theme('colors.stage.DEFAULT');
   }
 
   body {
-    @apply bg-ivory font-sans text-ink antialiased;
-    /* Lenis drives scrolling; this keeps anchor jumps sane if it is disabled. */
+    @apply bg-stage font-sans text-chalk antialiased;
+    /* Lenis drives scroll; this keeps anchors sane when it is off. */
     scroll-behavior: auto;
+    overscroll-behavior-y: none;
   }
 
   h1, h2, h3, h4 {
     @apply font-display;
+    /* The display face is set at optical size 144 so huge type keeps its contrast. */
+    font-variation-settings: 'opsz' 144, 'SOFT' 0, 'WONK' 1;
     text-wrap: balance;
   }
 
-  p {
-    text-wrap: pretty;
-  }
+  p { text-wrap: pretty; }
 
-  /* A visible focus ring everywhere, tuned per surface. */
   :focus-visible {
-    @apply outline-none ring-2 ring-gold ring-offset-2 ring-offset-ivory;
-  }
-
-  .on-dark :focus-visible {
-    @apply ring-offset-oxblood;
+    @apply outline-none ring-2 ring-spot ring-offset-4 ring-offset-stage;
   }
 
   ::selection {
-    @apply bg-gold text-maroon-deep;
+    @apply bg-spot text-stage;
   }
 }
 
 @layer components {
-  .container-page {
-    @apply mx-auto w-full max-w-content px-5 sm:px-8 lg:px-12;
+  .stage-pad {
+    @apply mx-auto w-full max-w-stage px-6 sm:px-10 lg:px-16;
   }
 
-  .kicker {
-    @apply font-sans text-xs font-semibold uppercase tracking-[0.22em] text-gold-deep;
+  /* Small caps rubric used instead of ordinary kickers. */
+  .rubric {
+    @apply font-sans text-[0.65rem] font-medium uppercase tracking-rubric text-spot sm:text-xs;
   }
 
-  .on-dark .kicker {
-    @apply text-gold;
-  }
-
-  /* Buttons -------------------------------------------------------------- */
-  .btn {
-    @apply relative inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5
-           text-sm font-semibold tracking-wide transition-[transform,background-color,color,box-shadow]
-           duration-300 ease-silk will-change-transform;
-  }
-
-  .btn-gold {
-    @apply btn bg-gold text-maroon-deep shadow-[0_4px_20px_-6px_rgba(240,168,56,0.7)]
-           hover:bg-gold-pale hover:shadow-[0_10px_30px_-8px_rgba(240,168,56,0.85)];
-  }
-
-  .btn-outline {
-    @apply btn border border-current text-maroon hover:bg-maroon hover:text-ivory;
-  }
-
-  .on-dark .btn-outline {
-    @apply border-ivory/45 text-ivory hover:bg-ivory hover:text-maroon-deep;
-  }
-
-  /* Cards ---------------------------------------------------------------- */
-  .card-lift {
-    @apply transition-[transform,box-shadow] duration-500 ease-silk will-change-transform;
-  }
-
-  .card-lift:hover {
-    @apply -translate-y-1.5 shadow-[0_24px_60px_-24px_rgba(42,10,14,0.45)];
-  }
-
-  /* A thin gold rule used under section kickers. */
-  .rule-gold::after {
-    content: '';
-    @apply mt-4 block h-px w-14 bg-gradient-to-r from-gold to-transparent;
+  /* A line of display type that slides up from behind a mask. */
+  .mask-line {
+    @apply block overflow-hidden;
+    /* The descender needs room or SplitText clips the tails. */
+    padding-bottom: 0.14em;
+    margin-bottom: -0.14em;
   }
 }
 
 @layer utilities {
-  .text-shadow-hero {
-    text-shadow: 0 2px 30px rgba(24, 6, 9, 0.55);
+  .gpu {
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
   }
 }
 
-/* Pre-animation resting state -------------------------------------------------
-   `js-motion` is set on <html> by a tiny inline script before first paint, and
-   only when JavaScript is running AND the user has not asked for reduced motion.
-   So with JS disabled, or with reduced motion on, this rule never applies and
-   every element is simply visible. GSAP leaves an inline opacity behind when it
-   finishes, which outranks this rule and keeps the element revealed. */
-.js-motion [data-reveal],
-.js-motion [data-photo] {
+/* Lenis ------------------------------------------------------------------ */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+/* Pre-animation resting states -------------------------------------------
+   `js-motion` is set on <html> by an inline script before first paint, and only
+   when JS is running AND reduced motion is not requested. With JS off or reduced
+   motion on, none of these rules apply and everything is simply visible. */
+.js-motion [data-split],
+.js-motion [data-reveal] {
+  opacity: 0;
+}
+
+.js-motion [data-wipe] {
   opacity: 0;
   transform: translate3d(0, 2rem, 0);
 }
 
-/* Lenis ------------------------------------------------------------------ */
-html.lenis,
-html.lenis body {
-  height: auto;
+/* The curtain covers an already-painted hero, so it never delays LCP. */
+.js-motion [data-curtain-panel] {
+  transform: translate3d(0, 0, 0);
 }
 
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-
-.lenis.lenis-stopped {
-  overflow: hidden;
+/* Custom cursor ---------------------------------------------------------- */
+@media (hover: hover) and (pointer: fine) {
+  html.has-cursor,
+  html.has-cursor * {
+    cursor: none;
+  }
+  /* Keyboard users get the system cursor back the moment they Tab. */
+  html.using-keyboard,
+  html.using-keyboard * {
+    cursor: auto !important;
+  }
 }
 
 /* Reduced motion --------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
 
-  /* Anything waiting on GSAP must be visible immediately instead. */
+  [data-split],
   [data-reveal],
-  [data-photo] {
+  [data-wipe] {
     opacity: 1 !important;
-    transform: none !important;
-  }
-
-  .card-lift:hover {
     transform: none !important;
   }
 }

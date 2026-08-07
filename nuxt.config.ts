@@ -20,7 +20,7 @@ export default defineNuxtConfig({
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { name: 'theme-color', content: '#2A0A0E' },
+        { name: 'theme-color', content: '#0D0A08' },
       ],
       link: [
         { rel: 'icon', type: 'image/webp', href: '/images/logo/racc-logo.webp' },

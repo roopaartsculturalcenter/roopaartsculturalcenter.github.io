@@ -1,18 +1,16 @@
 <template>
-  <div class="flex min-h-screen flex-col">
+  <div class="min-h-screen bg-stage">
     <a
       href="#main"
-      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-gold focus:px-6 focus:py-3 focus:font-semibold focus:text-maroon-deep"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-6 focus:top-6 focus:z-[300] focus:bg-spot focus:px-6 focus:py-3 focus:font-semibold focus:text-stage"
     >
       Skip to content
     </a>
 
-    <SiteHeader />
+    <TheNav />
 
-    <main id="main" class="flex-1">
+    <main id="main">
       <slot />
     </main>
-
-    <SiteFooter />
   </div>
 </template>
