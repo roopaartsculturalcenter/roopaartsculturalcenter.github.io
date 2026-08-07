@@ -6,9 +6,17 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/fonts.css', '~/assets/css/main.css'],
 
-  // Images are pre-compressed to WebP by `npm run images`, so the runtime
-  // optimizer only has to produce the responsive widths.
+  // Images are pre-compressed to WebP by `npm run images`, so the optimizer only
+  // has to produce the responsive widths.
+  //
+  // The provider is pinned deliberately. Left to auto-detect, @nuxt/image picks
+  // `vercel` when it sees the Vercel preset and emits `/_vercel/image?url=...`
+  // URLs — which the prerenderer then tries to crawl and 404s on, failing the
+  // build. That never reproduces locally, where it picks `ipx`. `ipxStatic`
+  // generates every variant as a real file at build time, so the deployed site
+  // is plain static assets and behaves identically in both places.
   image: {
+    provider: 'ipxStatic',
     quality: 78,
     format: ['webp'],
     screens: { xs: 360, sm: 640, md: 768, lg: 1024, xl: 1280, xxl: 1536, '2xl': 1536 },

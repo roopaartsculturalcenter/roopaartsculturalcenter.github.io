@@ -1,0 +1,9 @@
+# The originals (~85 MB) are inputs to `npm run images` only — the build reads
+# the already-generated WebP in public/images. Shipping them to the builder just
+# slows the upload down.
+legacy/
+
+node_modules
+.nuxt
+.output
+.vercel
