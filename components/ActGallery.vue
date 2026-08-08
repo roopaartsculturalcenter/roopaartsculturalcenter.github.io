@@ -7,11 +7,11 @@
  * to the overlay, so the image the reader clicked is the image that expands —
  * no crossfade between two copies, no flash of a different crop.
  */
-import type { GalleryPhoto } from '~/data/gallery'
+import type { GalleryPhoto } from '~/content/gallery'
 
 const props = withDefaults(
   defineProps<{ photos: GalleryPhoto[]; heading?: string; rubric?: string; limit?: number }>(),
-  { heading: 'From the stage', rubric: 'Act IV · Applause' },
+  { heading: 'From the stage.', rubric: 'Select any photograph to open it' },
 )
 
 const { gsap, Flip, scene, reduced } = useStage()

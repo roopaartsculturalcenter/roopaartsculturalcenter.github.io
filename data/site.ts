@@ -27,12 +27,16 @@ export const site = {
     qr: '/images/misc/zelle-qr.webp',
   },
 
+  // Persistent nav. Donate is deliberately absent here — it renders as a
+  // visually distinct button, not a nav link.
   nav: [
-    { label: 'About', to: '/about' },
     { label: 'Events', to: '/events' },
-    { label: 'Arudra 2026', to: '/arudra-2026' },
+    { label: 'Arudra', to: '/arudra' },
+    { label: 'About', to: '/about' },
     { label: 'Gallery', to: '/gallery' },
   ],
+
+  donateTo: '/support',
 } as const
 
 export const logo = {

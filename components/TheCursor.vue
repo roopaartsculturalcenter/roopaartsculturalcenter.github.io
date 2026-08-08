@@ -56,7 +56,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="pointer-events-none fixed inset-0 z-[300] hidden [@media(hover:hover)and(pointer:fine)]:block" aria-hidden="true">
+  <div class="pointer-events-none fixed inset-0 z-[300] hidden [@media(hover:hover)_and_(pointer:fine)]:block" aria-hidden="true">
     <div
       ref="dot"
       class="absolute -left-1 -top-1 h-2 w-2 rounded-full bg-spot transition-opacity duration-300"

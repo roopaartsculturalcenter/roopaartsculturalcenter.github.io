@@ -51,7 +51,7 @@ onMounted(() => {
     <div class="stage-pad py-24 lg:py-32">
       <!-- Outlined call -->
       <NuxtLink
-        to="/donate"
+        to="/support"
         data-cursor="join"
         class="group block"
       >

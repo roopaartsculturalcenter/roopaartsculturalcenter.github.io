@@ -12,6 +12,11 @@
 import { gsap } from 'gsap'
 import { site } from '~/data/site'
 
+const props = withDefaults(
+  defineProps<{ heading?: string; showOtherWays?: boolean }>(),
+  { heading: 'Keep the music playing.', showOtherWays: false },
+)
+
 const { SplitText, scene, reduced } = useStage()
 
 const root = ref<HTMLElement | null>(null)
@@ -106,15 +111,13 @@ scene(
     />
 
     <div class="stage-pad relative text-center">
-      <p data-ovation class="rubric">Act V &nbsp;·&nbsp; Standing Ovation</p>
-
       <h2
         id="ovation-heading"
         ref="headingEl"
         data-split
         class="mx-auto mt-8 max-w-4xl font-display text-monumental text-chalk"
       >
-        Your gift puts artists on stage
+        {{ heading }}
       </h2>
 
       <p data-ovation class="mx-auto mt-10 max-w-xl text-lg leading-relaxed text-chalk/65">
@@ -169,6 +172,16 @@ scene(
         <p class="mt-6 text-xs text-chalk/55">
           Tax-deductible to the extent allowed by law, and eligible for employer matching.
         </p>
+
+        <NuxtLink
+          v-if="showOtherWays"
+          to="/support"
+          data-cursor="view"
+          class="group mt-10 inline-flex items-center gap-3 border-b border-chalk/30 pb-2 text-sm uppercase tracking-rubric text-chalk/70 transition-colors hover:border-spot hover:text-spot"
+        >
+          Other ways to help
+          <span class="transition-transform duration-500 ease-silk group-hover:translate-x-2" aria-hidden="true">→</span>
+        </NuxtLink>
       </div>
     </div>
   </section>

@@ -3,11 +3,15 @@ import { gsap } from 'gsap'
 import { site } from '~/data/site'
 
 /**
- * Minimal fixed nav that inverts over whatever is behind it, plus a full-screen
- * overlay menu with staggered link reveals.
+ * Persistent nav: the four sections plus a visually distinct Donate button.
  *
- * `mix-blend-mode: difference` is dropped while the overlay is open — blending
- * the menu against itself produces mud, and the overlay is its own surface.
+ * Donate is deliberately not a nav link — it is the only primary action in the
+ * chrome, so it is filled gold while everything else stays quiet text.
+ *
+ * `mix-blend-mode: difference` inverts the bar over whatever is behind it, and
+ * is dropped while the overlay is open, since blending the menu against itself
+ * produces mud. The Donate button opts out of blending as well, or its gold fill
+ * inverts into something arbitrary.
  */
 const open = ref(false)
 const route = useRoute()
@@ -16,13 +20,8 @@ const { reduced } = useMotionPreference()
 const panel = ref<HTMLElement | null>(null)
 const trigger = ref<HTMLButtonElement | null>(null)
 
-const links = [
-  { label: 'How It Began', to: '/about' },
-  { label: 'Events', to: '/events' },
-  { label: 'Arudra 2026', to: '/arudra-2026' },
-  { label: 'Gallery', to: '/gallery' },
-  { label: 'Donate', to: '/donate' },
-]
+// One nav list, shared by the header and the overlay, from the single site file.
+const links = site.nav
 
 watch(() => route.fullPath, () => { open.value = false })
 
@@ -82,15 +81,32 @@ function onKeydown(e: KeyboardEvent) {
           RACC
         </NuxtLink>
 
+        <div class="flex items-center gap-6 sm:gap-8">
+          <nav class="hidden items-center gap-8 lg:flex" aria-label="Main">
+            <NuxtLink
+              v-for="link in links"
+              :key="link.to"
+              :to="link.to"
+              class="pointer-events-auto text-sm text-white/85 transition-colors duration-300 hover:text-white"
+              active-class="text-white"
+            >{{ link.label }}</NuxtLink>
+          </nav>
+
+          <NuxtLink
+            :to="site.donateTo"
+            data-cursor="donate"
+            class="pointer-events-auto bg-spot px-5 py-2.5 text-[0.62rem] font-semibold uppercase tracking-rubric text-stage transition-colors duration-500 hover:bg-spot-warm [mix-blend-mode:normal] sm:px-6 sm:py-3"
+          >Donate</NuxtLink>
+
         <button
           ref="trigger"
           type="button"
-          class="pointer-events-auto -mr-2 flex items-center gap-3 px-2 py-2 text-white"
+          class="pointer-events-auto -mr-2 flex items-center gap-3 px-2 py-2 text-white lg:hidden"
           :aria-expanded="open"
           aria-controls="stage-menu"
           @click="open = !open"
         >
-          <span class="rubric text-white">{{ open ? 'Close' : 'Menu' }}</span>
+          <span class="sr-only">{{ open ? 'Close menu' : 'Open menu' }}</span>
           <span class="relative block h-3 w-6" aria-hidden="true">
             <span
               class="absolute left-0 block h-px w-6 bg-current transition-transform duration-500 ease-curtain"
@@ -102,6 +118,7 @@ function onKeydown(e: KeyboardEvent) {
             />
           </span>
         </button>
+        </div>
       </div>
     </header>
 
@@ -115,7 +132,7 @@ function onKeydown(e: KeyboardEvent) {
         v-show="open"
         id="stage-menu"
         ref="panel"
-        class="fixed inset-0 z-[110] flex flex-col justify-center bg-stage-deep"
+        class="fixed inset-0 z-[110] flex flex-col justify-center bg-stage-deep lg:hidden"
         role="dialog"
         aria-modal="true"
         aria-label="Menu"

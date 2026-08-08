@@ -9,7 +9,7 @@
  * Act 2: on scroll, the type shrinks and drifts up while five columns of
  * performance photography parallax in from top and bottom at different rates.
  */
-import { photo } from '~/data/gallery'
+import { photo } from '~/content/gallery'
 
 const props = defineProps<{ curtainDone: boolean }>()
 
@@ -22,6 +22,15 @@ const typeEl = ref<HTMLElement | null>(null)
 const ringEl = ref<HTMLElement | null>(null)
 const cueEl = ref<HTMLElement | null>(null)
 const wallEl = ref<HTMLElement | null>(null)
+
+/** Scrolls to scene 2 through Lenis when it is running, natively otherwise. */
+function toWhatsOn() {
+  const target = document.getElementById('whats-on')
+  if (!target) return
+  const lenis = (useNuxtApp() as unknown as { $lenis?: { scrollTo: (t: Element) => void } }).$lenis
+  if (lenis) lenis.scrollTo(target)
+  else target.scrollIntoView({ behavior: 'smooth' })
+}
 
 const HERO_IMAGE = '/images/home/home-3.webp'
 const arch = useArchCanvas(canvas, HERO_IMAGE)
@@ -309,17 +318,28 @@ scene(
       <!-- The type -->
       <div class="relative z-10 flex h-full items-center">
         <div ref="typeEl" class="stage-pad w-full gpu">
-          <p data-fade class="rubric mb-6 sm:mb-8">
-            Sugar Land, Texas &nbsp;·&nbsp; Est. as a 501(c)(3) public charity
-          </p>
-
-          <h1 data-split class="text-colossal">
-            Roopa Arts<br >Cultural Center
+          <h1 data-split class="max-w-5xl text-monumental">
+            Where the classical arts<br >of India take the stage.
           </h1>
 
-          <p data-fade class="mt-8 max-w-md text-base leading-relaxed text-chalk/65 sm:text-lg">
-            An evening of the classical arts of India — staged, and shared with
-            the whole community.
+          <p data-fade class="mt-9 max-w-lg text-base leading-relaxed text-chalk/70 sm:text-lg">
+            Roopa Arts Cultural Center — Sugar Land, TX &nbsp;·&nbsp; a 501(c)(3) nonprofit.
+          </p>
+
+          <!-- The single CTA on this screen. -->
+          <p data-fade class="mt-11">
+            <a
+              href="#whats-on"
+              data-cursor="scroll"
+              class="group inline-flex items-center gap-3 border border-spot px-9 py-4 text-xs font-semibold uppercase tracking-rubric text-spot transition-colors duration-500 hover:bg-spot hover:text-stage"
+              @click.prevent="toWhatsOn"
+            >
+              See what's on
+              <span
+                class="transition-transform duration-500 ease-silk group-hover:translate-y-1"
+                aria-hidden="true"
+              >↓</span>
+            </a>
           </p>
         </div>
       </div>

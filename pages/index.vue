@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { site } from '~/data/site'
-import { galleryPhotos } from '~/data/gallery'
 
-/** One continuous choreographed scroll, structured as acts. */
+/** Home is a five-scene trailer. Anything that is not one of those five lives on
+ *  its own page — no section is duplicated here. */
 useSeo({
   title: `${site.name} — ${site.tagline}`,
   description: site.description,
@@ -17,11 +17,10 @@ const curtainDone = ref(false)
   <div>
     <TheCurtain @done="curtainDone = true" />
 
-    <ActInvocation :curtain-done="curtainDone" />
-    <ActMission />
-    <ActPlaybill :show-past="false" heading="Now booking" rubric="Act II · The Playbill" />
-    <ActFilmstrip />
-    <ActGallery :photos="galleryPhotos" :limit="12" />
-    <ActOvation />
+    <ActInvocation :curtain-done="curtainDone" />   <!-- 1 Hero -->
+    <SceneFeatured />                               <!-- 2 Featured event -->
+    <ActMission cta />                              <!-- 3 Who we are -->
+    <SceneArudraTeaser />                           <!-- 4 Arudra teaser -->
+    <ActOvation show-other-ways />                  <!-- 5 The ask -->
   </div>
 </template>

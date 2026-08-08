@@ -85,11 +85,16 @@ export default defineNuxtConfig({
     '/about.html': { redirect: { to: '/about', statusCode: 301 } },
     '/events.html': { redirect: { to: '/events', statusCode: 301 } },
     '/gallery.html': { redirect: { to: '/gallery', statusCode: 301 } },
-    '/donate.html': { redirect: { to: '/donate', statusCode: 301 } },
+    '/donate.html': { redirect: { to: '/support', statusCode: 301 } },
     '/programs.html': { redirect: { to: '/about', statusCode: 301 } },
     '/archive.html': { redirect: { to: '/events', statusCode: 301 } },
     '/contact.html': { redirect: { to: '/about', statusCode: 301 } },
-    '/productions/arudra-2026.html': { redirect: { to: '/arudra-2026', statusCode: 301 } },
+    '/productions/arudra-2026.html': { redirect: { to: '/arudra', statusCode: 301 } },
+
+    // Routes retired by the v3 architecture.
+    '/arudra-2026': { redirect: { to: '/arudra', statusCode: 301 } },
+    '/arudra-2026/gallery': { redirect: { to: '/gallery', statusCode: 301 } },
+    '/donate': { redirect: { to: '/support', statusCode: 301 } },
     '/productions/arudra-2025.html': { redirect: { to: '/events', statusCode: 301 } },
   },
 })

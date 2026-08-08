@@ -11,6 +11,8 @@
  */
 import { verses } from '~/data/about'
 
+withDefaults(defineProps<{ cta?: boolean }>(), { cta: false })
+
 const { gsap, scene } = useStage()
 
 const root = ref<HTMLElement | null>(null)
@@ -90,7 +92,6 @@ scene(
   <section ref="root" class="relative bg-stage" aria-labelledby="mission-heading">
     <div ref="stageEl" class="flex min-h-[100svh] items-center overflow-hidden py-16">
       <div class="stage-pad w-full">
-        <p class="rubric mb-10 sm:mb-14">Act I &nbsp;·&nbsp; How It Began</p>
         <h2 id="mission-heading" class="sr-only">How it began</h2>
 
         <div class="max-w-4xl">
@@ -108,6 +109,16 @@ scene(
             </span>
           </p>
         </div>
+
+          <NuxtLink
+            v-if="cta"
+            to="/about"
+            data-cursor="view"
+            class="group mt-14 inline-flex items-center gap-3 border-b border-spot pb-2 text-sm uppercase tracking-rubric text-spot"
+          >
+            Our story
+            <span class="transition-transform duration-500 ease-silk group-hover:translate-x-2" aria-hidden="true">→</span>
+          </NuxtLink>
       </div>
     </div>
   </section>
