@@ -9,9 +9,9 @@
 export const story = [
   'Roopa Arts Cultural Center is a Texas 501(c)(3) public charity built by artists and art lovers. ' +
     'From our signature Arudra Festival to concerts, workshops, and seasonal celebrations, we create ' +
-    'stages where the classical arts of India thrive — and where the whole community gathers to ' +
+    'stages where the classical arts of India thrive, and where the whole community gathers to ' +
     'experience them.',
-  'Our mission is to promote, produce, and provide access to a diverse range of arts experiences — ' +
+  'Our mission is to promote, produce, and provide access to a diverse range of arts experiences, ' +
     'with the performing arts at our heart. Our vision is to create a space where artists and art ' +
     'lovers can come together to celebrate creativity and cultural expression in all its forms.',
 ]
@@ -29,7 +29,7 @@ export const verses: { text: string; gold?: boolean }[] = [
   { text: 'to concerts, workshops, and seasonal' },
   { text: 'celebrations, we create stages' },
   { text: 'where the classical arts of India thrive', gold: true },
-  { text: '— and where the whole community' },
+  { text: 'and where the whole community' },
   { text: 'gathers to experience them.' },
 ]
 
@@ -48,7 +48,7 @@ export const accordions: AccordionItem[] = [
     body: [
       'To create a space where artists and art lovers can come together to celebrate creativity and ' +
         'cultural expression in all its forms.',
-      'Our mission is to promote, produce, and provide access to a diverse range of arts experiences — ' +
+      'Our mission is to promote, produce, and provide access to a diverse range of arts experiences, ' +
         'with the performing arts at our heart, from classical dance productions to concerts and workshops.',
     ],
   },
@@ -63,13 +63,13 @@ export const accordions: AccordionItem[] = [
       {
         title: 'Stage Productions',
         text:
-          'Full-scale classical productions — the annual Arudra Festival brings Bharatanatyam, Kuchipudi, ' +
+          'Full-scale classical productions: the annual Arudra Festival brings Bharatanatyam, Kuchipudi, ' +
           'Mohiniyattam, and live Carnatic music to one stage.',
       },
       {
         title: 'Concerts',
         text:
-          'Carnatic and Hindustani concerts and cross-cultural collaborations — violin jugalbandis, the ' +
+          'Carnatic and Hindustani concerts and cross-cultural collaborations: violin jugalbandis, the ' +
           'Baroque–Carnatic Connection, Bollywood Night, and more.',
       },
       {
@@ -78,7 +78,7 @@ export const accordions: AccordionItem[] = [
       },
       {
         title: 'Community Series',
-        text: 'Seasonal and cultural celebrations — the Margazhi season and our annual Golu series.',
+        text: 'Seasonal and cultural celebrations: the Margazhi season and our annual Golu series.',
       },
     ],
   },
@@ -95,6 +95,22 @@ export const accordions: AccordionItem[] = [
     ],
   },
 ]
+
+/**
+ * The story scene (home page, Act 3).
+ *
+ * Copy is the published `story` above, verbatim — the organisation's About page
+ * names no founder and publishes no reach figures, so nothing here claims either.
+ * The heading is lifted from their own sentence rather than invented.
+ */
+export const storyScene = {
+  heading: 'Where the whole community gathers.',
+  image: '/images/about/racc-about.webp',
+  imageAlt:
+    'Roopa Arts Cultural Center leadership being honoured on stage, flanked by dancers in ' +
+    'Bharatanatyam costume, at the close of a production.',
+  body: story,
+}
 
 /**
  * The counter strip. These are counts of what is actually documented in this

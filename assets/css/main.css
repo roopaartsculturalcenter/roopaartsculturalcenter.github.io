@@ -29,7 +29,7 @@
   }
 
   ::selection {
-    @apply bg-spot text-stage;
+    @apply bg-spot text-chalk;
   }
 }
 
@@ -38,9 +38,22 @@
     @apply mx-auto w-full max-w-stage px-6 sm:px-10 lg:px-16;
   }
 
+  /* The torana silhouette: a rectangle with a semicircular cap.
+     Shared by the home hero's non-WebGL fallback and every inner-page header.
+
+     Border-radius, not clip-path. The old polygon approximated the curve with
+     eight straight segments, which was invisible while it was only the shader's
+     fallback and reads as a lumpy octagon now that it is the primary shape at hero
+     size. The browser clamps each radius to half the box, so this is a true cap at
+     any aspect ratio, with no facets and no geometry to keep in sync. */
+  .arch {
+    border-top-left-radius: 9999px;
+    border-top-right-radius: 9999px;
+  }
+
   /* Small caps rubric used instead of ordinary kickers. */
   .rubric {
-    @apply font-sans text-[0.65rem] font-medium uppercase tracking-rubric text-spot sm:text-xs;
+    @apply font-sans text-[0.65rem] font-medium uppercase tracking-rubric text-spot-ink sm:text-xs;
   }
 
   /* A line of display type that slides up from behind a mask. */

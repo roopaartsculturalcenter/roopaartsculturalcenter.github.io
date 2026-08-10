@@ -4,7 +4,7 @@ import { site } from '~/data/site'
 /** Home is a five-scene trailer. Anything that is not one of those five lives on
  *  its own page — no section is duplicated here. */
 useSeo({
-  title: `${site.name} — ${site.tagline}`,
+  title: `${site.name} · ${site.tagline}`,
   description: site.description,
   bare: true,
 })
@@ -19,7 +19,7 @@ const curtainDone = ref(false)
 
     <ActInvocation :curtain-done="curtainDone" />   <!-- 1 Hero -->
     <SceneFeatured />                               <!-- 2 Featured event -->
-    <ActMission cta />                              <!-- 3 Who we are -->
+    <SceneStory cta />                              <!-- 3 Who we are -->
     <SceneArudraTeaser />                           <!-- 4 Arudra teaser -->
     <ActOvation show-other-ways />                  <!-- 5 The ask -->
   </div>

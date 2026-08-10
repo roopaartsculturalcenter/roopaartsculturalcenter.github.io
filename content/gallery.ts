@@ -36,9 +36,49 @@ function pick(src: string, alt: string): GalleryImage {
   return { src, width: found.width, height: found.height, alt }
 }
 
-/** Everything under /images/gallery — the unattributed performance archive. */
+/**
+ * Frames held back from the gallery.
+ *
+ * Nothing is deleted — every file stays in the archive and in the manifest. This
+ * is a curation list, so putting a name back is a one-line change.
+ *
+ * The gallery is meant to be the work on stage. These are not that: they are the
+ * lobby, the paperwork and the misfires around it. Grouped by why.
+ */
+const HELD_BACK = new Set<string>([
+  // Posed against the branded step-and-repeat, or in a lobby. Not performances.
+  'hg-3', 'hg-4', 'hg-5', 'hg-6', 'hg', 'hg-7', 'hg-8', 'hg-9',
+  'racc-gallery1', 'racc-gallery2',
+
+  // Award presentations and posed line-ups in front of the event screen.
+  'hg-28', 'hg-29', 'hg-30', 'hg-31', 'hg-46', 'hg-47', 'hg-48',
+
+  // No performers in frame: a doorway, an empty hall, a standee, an idol on a table.
+  'gallery3', 'gallery4', 'hg-32', 'img-9549-1',
+
+  // Weak frames: subjects lost behind stage monitors, or so wide they read as an
+  // empty stage. `hg-91` and `hg-92` measure mean luminance 15-16 of 255 — about
+  // half the next-darkest frame kept — with the performers in a thin band, so in a
+  // thumbnail grid they read as black rectangles.
+  'hg-37', 'hg-43', 'hg-38', 'hg-40', 'hg-93', 'hg-91', 'hg-92',
+
+  // Duplicate of hg-242 — identical perceptual hash, so the wall showed the same
+  // frame twice. It was the only duplicate pair in the 63.
+  'hg-242-1',
+])
+
+const fileName = (src: string) => src.split('/').pop()!.replace('.webp', '')
+
+/**
+ * The performance archive: everything under /images/gallery that earns a wall.
+ *
+ * Deliberately photographs only. Event posters, save-the-dates and artist
+ * announcement cards used to sit in here too, which made the gallery half
+ * marketing collateral — they belong on /events and /arudra, and that is where
+ * they now live. The flyer lists below are kept for the homepage Arudra fan.
+ */
 const archive: GalleryImage[] = manifest
-  .filter((i) => i.src.startsWith('/images/gallery/'))
+  .filter((i) => i.src.startsWith('/images/gallery/') && !HELD_BACK.has(fileName(i.src)))
   .map((i) => ({
     src: i.src,
     width: i.width,
@@ -60,26 +100,21 @@ const ARUDRA_2026_FLYERS: [string, string][] = [
 
 /** The twelve artist announcement cards, in the order they were released. */
 const ARUDRA_2026_ARTISTS: [string, string][] = [
-  ['/images/events/arudra-2026-artist-25.webp', 'Mithra Arun, dancer — Arudra 2026'],
-  ['/images/events/arudra-2026-artist-26.webp', 'Rohitha Kaimal, dancer — Arudra 2026'],
-  ['/images/events/arudra-2026-artist-27.webp', 'Varsha Vasu, dancer — Arudra 2026'],
-  ['/images/events/arudra-2026-artist-30.webp', 'Sai Vignesh, vocals — Arudra 2026'],
-  ['/images/events/arudra-2026-artist-31.webp', 'Vaishnavi Narasimhan, vocals — Arudra 2026'],
-  ['/images/events/arudra-2026-artist-32.webp', 'Dr. Maheetha Bharadwaj, keys and vocals — Arudra 2026'],
-  ['/images/events/arudra-2026-artist-33.webp', 'Shashank Iswara, solkattu and nattuvangam — Arudra 2026'],
-  ['/images/events/arudra-2026-artist-34.webp', 'Naga Srinidhi Kuruvada, mridangam — Arudra 2026'],
-  ['/images/events/arudra-2026-artist-35.webp', 'Visveshwar Nagarajan, flute — Arudra 2026'],
-  ['/images/events/arudra-2026-artist-36.webp', 'Jahnavi Murali, cello and vocals — Arudra 2026'],
-  ['/images/events/arudra-2026-artist-37.webp', 'Achi Bala, violin, vocals and narration — Arudra 2026'],
-  ['/images/events/arudra-2026-artist-38.webp', 'Roopa Bala, narration — Arudra 2026'],
+  ['/images/events/arudra-2026-artist-25.webp', 'Mithra Arun, dancer (Arudra 2026)'],
+  ['/images/events/arudra-2026-artist-26.webp', 'Rohitha Kaimal, dancer (Arudra 2026)'],
+  ['/images/events/arudra-2026-artist-27.webp', 'Varsha Vasu, dancer (Arudra 2026)'],
+  ['/images/events/arudra-2026-artist-30.webp', 'Sai Vignesh, vocals (Arudra 2026)'],
+  ['/images/events/arudra-2026-artist-31.webp', 'Vaishnavi Narasimhan, vocals (Arudra 2026)'],
+  ['/images/events/arudra-2026-artist-32.webp', 'Dr. Maheetha Bharadwaj, keys and vocals (Arudra 2026)'],
+  ['/images/events/arudra-2026-artist-33.webp', 'Shashank Iswara, solkattu and nattuvangam (Arudra 2026)'],
+  ['/images/events/arudra-2026-artist-34.webp', 'Naga Srinidhi Kuruvada, mridangam (Arudra 2026)'],
+  ['/images/events/arudra-2026-artist-35.webp', 'Visveshwar Nagarajan, flute (Arudra 2026)'],
+  ['/images/events/arudra-2026-artist-36.webp', 'Jahnavi Murali, cello and vocals (Arudra 2026)'],
+  ['/images/events/arudra-2026-artist-37.webp', 'Achi Bala, violin, vocals and narration (Arudra 2026)'],
+  ['/images/events/arudra-2026-artist-38.webp', 'Roopa Bala, narration (Arudra 2026)'],
 ]
 
 export const galleryGroups: GalleryGroup[] = [
-  {
-    eventName: 'Arudra 2026',
-    date: '2026-02-08',
-    images: [...ARUDRA_2026_FLYERS, ...ARUDRA_2026_ARTISTS].map(([src, alt]) => pick(src, alt)),
-  },
   {
     eventName: 'Company archive',
     date: null,
@@ -87,12 +122,24 @@ export const galleryGroups: GalleryGroup[] = [
   },
 ]
 
-/** Flat list, for the lightbox's index arithmetic when "All" is selected. */
+/** Flat list, and the order the lightbox counts through. */
 export const allGalleryImages: GalleryImage[] = galleryGroups.flatMap((g) => g.images)
 
-/** The eight-image strip on the homepage Arudra teaser. */
+/**
+ * The Arudra posters, for the homepage fan.
+ *
+ * Sourced from the flyer list directly, not from `galleryGroups[0]` as before —
+ * that coupling meant the gallery's first group had to be the Arudra flyers, which
+ * is exactly the arrangement that put marketing collateral on the photo wall.
+ */
 export const arudraTeaserImages: GalleryImage[] =
-  galleryGroups[0].images.slice(0, 8)
+  ARUDRA_2026_FLYERS.map(([src, alt]) => pick(src, alt))
+
+/** Everything Arudra: posters and artist cards, for /arudra. */
+export const arudraCollateral: GalleryImage[] = [
+  ...ARUDRA_2026_FLYERS,
+  ...ARUDRA_2026_ARTISTS,
+].map(([src, alt]) => pick(src, alt))
 
 /**
  * Look a single image up by path. Used by the homepage photo wall, which names

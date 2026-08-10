@@ -97,14 +97,14 @@ scene(
         <div class="max-w-4xl">
           <p v-for="(verse, i) in verses" :key="i" class="mask-line font-display text-verse">
             <span data-verse class="relative block gpu">
-              <span :class="verse.gold ? 'text-chalk/55' : 'text-chalk'">{{ verse.text }}</span>
+              <span :class="verse.gold ? 'text-chalk/70' : 'text-chalk'">{{ verse.text }}</span>
 
               <!-- The lit copy, stacked exactly over the dim one. -->
               <span
                 v-if="verse.gold"
                 data-gold
                 aria-hidden="true"
-                class="absolute inset-0 text-spot opacity-0"
+                class="absolute inset-0 text-spot-ink opacity-0"
               >{{ verse.text }}</span>
             </span>
           </p>
@@ -114,7 +114,7 @@ scene(
             v-if="cta"
             to="/about"
             data-cursor="view"
-            class="group mt-14 inline-flex items-center gap-3 border-b border-spot pb-2 text-sm uppercase tracking-rubric text-spot"
+            class="group mt-14 inline-flex items-center gap-3 border-b border-spot pb-2 text-sm uppercase tracking-rubric text-spot-ink"
           >
             Our story
             <span class="transition-transform duration-500 ease-silk group-hover:translate-x-2" aria-hidden="true">→</span>

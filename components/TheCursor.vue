@@ -70,7 +70,7 @@ onMounted(() => {
         : '-ml-5 -mt-5 h-10 w-10'"
     >
       <span
-        class="text-[0.6rem] uppercase tracking-rubric text-spot transition-opacity duration-200"
+        class="text-[0.6rem] uppercase tracking-rubric text-spot-ink transition-opacity duration-200"
         :class="active && label ? 'opacity-100' : 'opacity-0'"
       >{{ label }}</span>
     </div>

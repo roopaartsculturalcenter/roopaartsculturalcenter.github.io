@@ -4,25 +4,34 @@ export default <Partial<Config>>{
   theme: {
     extend: {
       colors: {
-        // The stage. Everything sits on near-black; light is the scarce resource.
+        // The stage — now house lights up, not a blackout.
+        //
+        // The scale runs light. `deep` no longer means "darker black", it means
+        // "more tinted" — the alternating band between white sections. `raised`
+        // is the brightest of the three, since a raised panel on a light ground
+        // catches more light, not less.
         stage: {
-          DEFAULT: '#0D0A08',
-          deep: '#070505',
-          raised: '#151010',
+          DEFAULT: '#FBF8F3',
+          deep: '#F1EADE',
+          raised: '#FFFFFF',
         },
-        // Spotlight gold — the only bright colour on the site.
+        // Gold. `DEFAULT` is a fill colour only — at 2.2:1 on the light stage it
+        // must never carry text. `ink` is the same hue taken dark enough to read
+        // (~5.6:1), and is what every `text-*` usage points at.
         spot: {
           DEFAULT: '#D4A017',
           warm: '#E8BC4A',
           dim: '#8A6A11',
+          ink: '#7A5A0C',
         },
         crimson: {
           DEFAULT: '#7A1220',
           deep: '#4A0A14',
           lit: '#A81B2E',
         },
-        // Type on the dark stage.
-        chalk: '#F2EBE0',
+        // The type colour. Named `chalk` from the dark-stage design and kept that
+        // way to avoid churning ~150 call sites — it now means ink, not light.
+        chalk: '#1F1A16',
       },
       fontFamily: {
         display: ['Fraunces', 'Georgia', 'serif'],

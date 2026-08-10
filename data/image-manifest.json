@@ -304,6 +304,22 @@
     "originalHeight": 1600
   },
   {
+    "src": "/images/events/evening-celebrating-bhagyaraj.webp",
+    "width": 1050,
+    "height": 1400,
+    "original": "legacy/assets/img/events/evening-celebrating-bhagyaraj.webp",
+    "originalWidth": 1080,
+    "originalHeight": 1440
+  },
+  {
+    "src": "/images/events/ilaiyaraaja-night.webp",
+    "width": 1050,
+    "height": 1400,
+    "original": "legacy/assets/img/events/ilaiyaraaja-night.webp",
+    "originalWidth": 1080,
+    "originalHeight": 1440
+  },
+  {
     "src": "/images/events/invocation-flyer.webp",
     "width": 1080,
     "height": 1080,
@@ -334,6 +350,14 @@
     "original": "legacy/assets/img/events/margazhi.png",
     "originalWidth": 1080,
     "originalHeight": 1920
+  },
+  {
+    "src": "/images/events/navarathri-seva-series.webp",
+    "width": 1050,
+    "height": 1400,
+    "original": "legacy/assets/img/events/navarathri-seva-series.webp",
+    "originalWidth": 1086,
+    "originalHeight": 1448
   },
   {
     "src": "/images/events/navtar-violin-jugalbandi-1.webp",
@@ -376,6 +400,14 @@
     "originalHeight": 2000
   },
   {
+    "src": "/images/events/rule-of-n.webp",
+    "width": 1080,
+    "height": 1350,
+    "original": "legacy/assets/img/events/rule-of-n.webp",
+    "originalWidth": 1080,
+    "originalHeight": 1350
+  },
+  {
     "src": "/images/events/save-date-arudhra-2026-3.webp",
     "width": 1400,
     "height": 1400,
@@ -390,6 +422,14 @@
     "original": "legacy/assets/img/events/save-the-date.jpg",
     "originalWidth": 618,
     "originalHeight": 800
+  },
+  {
+    "src": "/images/events/season-at-a-glance.webp",
+    "width": 1120,
+    "height": 1400,
+    "original": "legacy/assets/img/events/season-at-a-glance.jpeg",
+    "originalWidth": 1122,
+    "originalHeight": 1402
   },
   {
     "src": "/images/events/the-baroque-carnatic-connection.webp",

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { gsap } from 'gsap'
-import { site } from '~/data/site'
+import { logo, site } from '~/data/site'
 
 /**
  * Persistent nav: the four sections plus a visually distinct Donate button.
@@ -8,14 +8,33 @@ import { site } from '~/data/site'
  * Donate is deliberately not a nav link — it is the only primary action in the
  * chrome, so it is filled gold while everything else stays quiet text.
  *
- * `mix-blend-mode: difference` inverts the bar over whatever is behind it, and
- * is dropped while the overlay is open, since blending the menu against itself
- * produces mud. The Donate button opts out of blending as well, or its gold fill
- * inverts into something arbitrary.
+ * The bar carries no blend mode. `mix-blend-difference` was how the dark theme
+ * stayed legible over an unknown backdrop, but on a light ground it inverts the
+ * page colour to near-black and the chrome reads as a dark smear over white. The
+ * light theme gets contrast from an actual backdrop instead.
  */
 const open = ref(false)
 const route = useRoute()
 const { reduced } = useMotionPreference()
+
+/**
+ * Past the hero the bar takes a solid backdrop.
+ *
+ * This is what stops headings sliding *underneath* the lockup — two sets of words
+ * in the same place, both readable, which is what the overlap looked like. The
+ * bar also tightens as it lands, so it covers less.
+ *
+ * Over the hero it is transparent: the top of the hero is page colour on the
+ * light theme, so the ink lockup already reads there without help.
+ */
+const scrolled = ref(false)
+
+onMounted(() => {
+  const onScroll = () => { scrolled.value = window.scrollY > 64 }
+  onScroll()
+  window.addEventListener('scroll', onScroll, { passive: true })
+  onScopeDispose(() => window.removeEventListener('scroll', onScroll))
+})
 
 const panel = ref<HTMLElement | null>(null)
 const trigger = ref<HTMLButtonElement | null>(null)
@@ -69,16 +88,34 @@ function onKeydown(e: KeyboardEvent) {
 <template>
   <div @keydown="onKeydown">
     <header
-      class="pointer-events-none fixed inset-x-0 top-0 z-[120]"
-      :class="!open && 'mix-blend-difference'"
+      class="pointer-events-none fixed inset-x-0 top-0 z-[120] transition-colors duration-500 ease-silk"
+      :class="!open && scrolled && 'border-b border-chalk/12 bg-stage/92 backdrop-blur-md'"
     >
-      <div class="stage-pad flex items-center justify-between py-6 sm:py-8">
+      <div
+        class="stage-pad flex items-center justify-between transition-all duration-500 ease-silk"
+        :class="scrolled ? 'py-4' : 'py-6 sm:py-8'"
+      >
+        <!-- `logo.dark` is the full-colour lockup — brown wordmark, gold mark —
+             which is the variant meant for light grounds. The white-on-transparent
+             one it replaced is invisible here.
+
+             A plain <img>, not NuxtImg: the asset is 28KB and appears in the
+             chrome of every route, so there is nothing for the optimizer to save
+             and no reason to route site-wide furniture through ipx. -->
         <NuxtLink
           to="/"
-          class="pointer-events-auto font-display text-lg tracking-tight text-white sm:text-xl"
-          :aria-label="`RACC — ${site.name}, home`"
+          class="pointer-events-auto"
+          :aria-label="`${site.name}, home`"
         >
-          RACC
+          <img
+            :src="logo.dark"
+            :width="logo.width"
+            :height="logo.height"
+            alt=""
+            decoding="async"
+            class="w-auto transition-all duration-500 ease-silk"
+            :class="scrolled ? 'h-6 sm:h-7' : 'h-7 sm:h-9'"
+          >
         </NuxtLink>
 
         <div class="flex items-center gap-6 sm:gap-8">
@@ -87,21 +124,21 @@ function onKeydown(e: KeyboardEvent) {
               v-for="link in links"
               :key="link.to"
               :to="link.to"
-              class="pointer-events-auto text-sm text-white/85 transition-colors duration-300 hover:text-white"
-              active-class="text-white"
+              class="pointer-events-auto text-sm text-chalk/75 transition-colors duration-300 hover:text-chalk"
+              active-class="text-chalk"
             >{{ link.label }}</NuxtLink>
           </nav>
 
           <NuxtLink
             :to="site.donateTo"
             data-cursor="donate"
-            class="pointer-events-auto bg-spot px-5 py-2.5 text-[0.62rem] font-semibold uppercase tracking-rubric text-stage transition-colors duration-500 hover:bg-spot-warm [mix-blend-mode:normal] sm:px-6 sm:py-3"
+            class="pointer-events-auto bg-spot px-5 py-2.5 text-[0.62rem] font-semibold uppercase tracking-rubric text-chalk transition-colors duration-500 hover:bg-spot-warm sm:px-6 sm:py-3"
           >Donate</NuxtLink>
 
         <button
           ref="trigger"
           type="button"
-          class="pointer-events-auto -mr-2 flex items-center gap-3 px-2 py-2 text-white lg:hidden"
+          class="pointer-events-auto -mr-2 flex items-center gap-3 px-2 py-2 text-chalk lg:hidden"
           :aria-expanded="open"
           aria-controls="stage-menu"
           @click="open = !open"
@@ -143,7 +180,7 @@ function onKeydown(e: KeyboardEvent) {
               <NuxtLink
                 :to="link.to"
                 data-menu-line
-                class="block py-1 font-display text-monumental text-chalk transition-colors duration-300 hover:text-spot sm:py-2"
+                class="block py-1 font-display text-monumental text-chalk transition-colors duration-300 hover:text-spot-ink sm:py-2"
               >
                 {{ link.label }}
               </NuxtLink>
@@ -157,7 +194,7 @@ function onKeydown(e: KeyboardEvent) {
               :href="s.href"
               target="_blank"
               rel="noopener noreferrer"
-              class="rubric text-chalk/60 transition-colors hover:text-spot"
+              class="rubric text-chalk/74 transition-colors hover:text-spot-ink"
             >{{ s.label }}</a>
           </div>
         </nav>

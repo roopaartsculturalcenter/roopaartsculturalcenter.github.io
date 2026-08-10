@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { gsap } from 'gsap'
-import { site } from '~/data/site'
+import { logo, site } from '~/data/site'
 
 /**
  * The footer: an oversized outlined call that fills with gold on hover, a
@@ -39,10 +39,10 @@ onMounted(() => {
           <li
             v-for="word in marqueeWords"
             :key="`${pass}-${word}`"
-            class="flex items-center gap-8 px-8 font-display text-2xl text-chalk/55 sm:text-3xl"
+            class="flex items-center gap-8 px-8 font-display text-2xl text-chalk/70 sm:text-3xl"
           >
             {{ word }}
-            <span class="text-spot" aria-hidden="true">★</span>
+            <span class="text-spot-ink" aria-hidden="true">★</span>
           </li>
         </ul>
       </div>
@@ -55,11 +55,11 @@ onMounted(() => {
         data-cursor="join"
         class="group block"
       >
-        <span class="sr-only">Join the audience — support Roopa Arts Cultural Center</span>
+        <span class="sr-only">Join the audience: support Roopa Arts Cultural Center</span>
         <span
           aria-hidden="true"
-          class="block font-display text-colossal leading-[0.85] text-transparent transition-colors duration-700 ease-silk group-hover:text-spot"
-          style="-webkit-text-stroke: 1px rgba(242,235,224,0.45)"
+          class="block font-display text-colossal leading-[0.85] text-transparent transition-colors duration-700 ease-silk group-hover:text-spot-ink"
+          style="-webkit-text-stroke: 1px rgba(31,26,22,0.55)"
         >
           Join the<br >audience
         </span>
@@ -68,7 +68,7 @@ onMounted(() => {
       <div class="mt-24 grid gap-14 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <p class="rubric">Where</p>
-          <address class="mt-5 not-italic leading-relaxed text-chalk/60">
+          <address class="mt-5 not-italic leading-relaxed text-chalk/74">
             {{ site.location }}<br >
             A {{ site.status }}
           </address>
@@ -79,7 +79,7 @@ onMounted(() => {
           <p class="mt-5">
             <a
               :href="`mailto:${site.email}`"
-              class="group relative inline-block break-all text-chalk/70 transition-colors hover:text-chalk"
+              class="group relative inline-block break-all text-chalk/82 transition-colors hover:text-chalk"
             >
               {{ site.email }}
               <span
@@ -97,7 +97,7 @@ onMounted(() => {
                 :href="s.href"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="group relative inline-block text-chalk/70 transition-colors hover:text-chalk"
+                class="group relative inline-block text-chalk/82 transition-colors hover:text-chalk"
               >
                 {{ s.label }}
                 <span
@@ -114,7 +114,7 @@ onMounted(() => {
             <li v-for="l in site.nav" :key="l.to">
               <NuxtLink
                 :to="l.to"
-                class="group relative inline-block text-chalk/70 transition-colors hover:text-chalk"
+                class="group relative inline-block text-chalk/82 transition-colors hover:text-chalk"
               >
                 {{ l.label }}
                 <span
@@ -126,9 +126,25 @@ onMounted(() => {
         </div>
       </div>
 
-      <p class="mt-20 border-t border-chalk/10 pt-8 text-xs text-chalk/55">
-        © {{ year }} {{ site.name }}. All donations are tax-deductible to the extent allowed by law.
-      </p>
+      <!-- Sign-off: the full lockup at a size where "Cultural Center" is
+           actually readable, which the nav's height cannot give it. -->
+      <div
+        class="mt-20 flex flex-col gap-8 border-t border-chalk/10 pt-8 sm:flex-row sm:items-center sm:justify-between sm:gap-12"
+      >
+        <img
+          :src="logo.dark"
+          :width="logo.width"
+          :height="logo.height"
+          :alt="site.name"
+          loading="lazy"
+          decoding="async"
+          class="h-11 w-auto shrink-0"
+        >
+
+        <p class="text-xs leading-relaxed text-chalk/70 sm:max-w-sm sm:text-right">
+          © {{ year }} {{ site.name }}. All donations are tax-deductible to the extent allowed by law.
+        </p>
+      </div>
     </div>
   </footer>
 </template>

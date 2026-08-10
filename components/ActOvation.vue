@@ -120,7 +120,7 @@ scene(
         {{ heading }}
       </h2>
 
-      <p data-ovation class="mx-auto mt-10 max-w-xl text-lg leading-relaxed text-chalk/65">
+      <p data-ovation class="mx-auto mt-10 max-w-xl text-lg leading-relaxed text-chalk/78">
         {{ site.name }} is a {{ site.status }}. We rely on the generosity of our supporters
         to keep our programs running and accessible to all.
       </p>
@@ -140,18 +140,18 @@ scene(
             class="mx-auto mt-8 w-full max-w-[16rem] bg-white p-3"
           />
 
-          <p class="mt-8 text-xs uppercase tracking-rubric text-chalk/55">Or Zelle to</p>
+          <p class="mt-8 text-xs uppercase tracking-rubric text-chalk/70">Or Zelle to</p>
           <p class="mt-3 break-all font-display text-lg text-chalk">
             <a
               :href="`mailto:${site.donate.zelleEmail}`"
-              class="underline decoration-spot decoration-1 underline-offset-8 transition-colors hover:text-spot"
+              class="underline decoration-spot decoration-1 underline-offset-8 transition-colors hover:text-spot-ink"
             >{{ site.donate.zelleEmail }}</a>
           </p>
 
           <button
             type="button"
             data-cursor="copy"
-            class="mt-6 border border-chalk/20 px-6 py-3 text-[0.65rem] uppercase tracking-rubric text-chalk/70 transition-colors duration-500 hover:border-spot hover:text-spot"
+            class="mt-6 border border-chalk/20 px-6 py-3 text-[0.65rem] uppercase tracking-rubric text-chalk/82 transition-colors duration-500 hover:border-spot hover:text-spot-ink"
             @click="copyEmail"
           >
             {{ copied ? 'Copied' : 'Copy address' }}
@@ -164,12 +164,12 @@ scene(
           target="_blank"
           rel="noopener noreferrer"
           data-cursor="open"
-          class="mt-8 inline-block bg-spot px-10 py-4 text-xs font-semibold uppercase tracking-rubric text-stage transition-colors duration-500 hover:bg-spot-warm"
+          class="mt-8 inline-block bg-spot px-10 py-4 text-xs font-semibold uppercase tracking-rubric text-chalk transition-colors duration-500 hover:bg-spot-warm"
         >
           Enroll with Zelle
         </a>
 
-        <p class="mt-6 text-xs text-chalk/55">
+        <p class="mt-6 text-xs text-chalk/70">
           Tax-deductible to the extent allowed by law, and eligible for employer matching.
         </p>
 
@@ -177,7 +177,7 @@ scene(
           v-if="showOtherWays"
           to="/support"
           data-cursor="view"
-          class="group mt-10 inline-flex items-center gap-3 border-b border-chalk/30 pb-2 text-sm uppercase tracking-rubric text-chalk/70 transition-colors hover:border-spot hover:text-spot"
+          class="group mt-10 inline-flex items-center gap-3 border-b border-chalk/30 pb-2 text-sm uppercase tracking-rubric text-chalk/82 transition-colors hover:border-spot hover:text-spot-ink"
         >
           Other ways to help
           <span class="transition-transform duration-500 ease-silk group-hover:translate-x-2" aria-hidden="true">→</span>

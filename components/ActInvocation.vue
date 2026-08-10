@@ -10,6 +10,7 @@
  * performance photography parallax in from top and bottom at different rates.
  */
 import { photo } from '~/content/gallery'
+import { site } from '~/data/site'
 
 const props = defineProps<{ curtainDone: boolean }>()
 
@@ -274,7 +275,7 @@ scene(
       />
       <div
         v-if="!arch.supported.value"
-        class="pointer-events-none absolute inset-0 flex items-center justify-center"
+        class="pointer-events-none absolute inset-0 flex items-center justify-center lg:justify-end lg:pr-[14%]"
         aria-hidden="true"
       >
         <!-- This is the LCP element on every device that declines the shader, so
@@ -289,8 +290,7 @@ scene(
           sizes="xs:72vw sm:54vw md:54vw lg:42vw xl:42vw xxl:42vw"
           preload
           fetchpriority="high"
-          class="h-[72%] w-[70%] max-w-2xl object-cover opacity-70 sm:w-[52%]"
-          style="clip-path: polygon(0 100%, 0 42%, 8% 20%, 26% 5%, 50% 0, 74% 5%, 92% 20%, 100% 42%, 100% 100%)"
+          class="arch h-[72%] w-[70%] max-w-2xl object-cover sm:w-[52%]"
         />
       </div>
 
@@ -300,30 +300,50 @@ scene(
         class="pointer-events-none absolute left-1/2 top-1/2 -z-0 -translate-x-1/2 -translate-y-1/2 gpu"
         aria-hidden="true"
       >
-        <svg
-          viewBox="0 0 200 200"
-          class="h-[85vmin] w-[85vmin] animate-ring-turn text-spot/25"
-          fill="none"
-        >
-          <g stroke="currentColor" stroke-width="0.35">
-            <circle cx="100" cy="100" r="92" />
-            <circle cx="100" cy="100" r="78" opacity="0.5" />
-            <g v-for="i in 36" :key="i" :transform="`rotate(${(360 / 36) * i} 100 100)`">
-              <line x1="100" y1="8" x2="100" y2="18" />
-            </g>
-          </g>
-        </svg>
+        <TheMandalaRing />
       </div>
+
+      <!-- Light wash under the type.
+           Ink type over a dark stage photograph is unreadable, so page colour is
+           carried under the text and faded out to the right.
+
+           This is deliberately doing the work rather than tuning the headline to
+           dodge the arch: the font scales on `vw` and the arch scales on aspect
+           ratio, so any width that clears at 1560px overlaps again at 1024px.
+           The wash holds at every width, and reads as type in front of a receding
+           image, which is the intent anyway.
+
+           It is a sibling at `z-[4]`, NOT a child of the type container. Nested
+           inside that `z-10` stacking context, a negative z could not drop below
+           the parent's level, so the whole wash painted over Act 2's photo wall and
+           washed out the left two thirds of it as you scrolled. Sitting at 4 it
+           still covers the arch (z-auto) and the ring (z-0) for Act 1, while the
+           wall at z-[5] passes cleanly in front of it. -->
+      <div
+        class="pointer-events-none absolute inset-y-0 left-0 z-[4] w-full bg-gradient-to-r from-stage via-stage/88 to-transparent lg:w-[72%]"
+        aria-hidden="true"
+      />
 
       <!-- The type -->
       <div class="relative z-10 flex h-full items-center">
         <div ref="typeEl" class="stage-pad w-full gpu">
-          <h1 data-split class="max-w-5xl text-monumental">
-            Where the classical arts<br >of India take the stage.
+          <!-- No hard <br>, and a narrower measure from `lg`.
+               The hand-broken two-line version ran the last word deep into the
+               arch. On the dark theme that was light type over a dark photo and
+               it read; as ink on the light theme it vanished. Letting the line
+               wrap inside a measure that ends before the arch fixes it at every
+               width, which chasing font size against the arch's aspect-driven
+               geometry does not. Slightly smaller from `lg` so the extra line
+               does not push the lede and CTA out of a short viewport. -->
+          <h1
+            data-split
+            class="max-w-5xl text-monumental lg:max-w-[42rem] lg:text-[clamp(3rem,6.6vw,6.5rem)]"
+          >
+            Where the classical arts of India take the stage.
           </h1>
 
-          <p data-fade class="mt-9 max-w-lg text-base leading-relaxed text-chalk/70 sm:text-lg">
-            Roopa Arts Cultural Center — Sugar Land, TX &nbsp;·&nbsp; a 501(c)(3) nonprofit.
+          <p data-fade class="mt-9 max-w-lg text-base leading-relaxed text-chalk/82 sm:text-lg">
+            {{ site.name }}, {{ site.location }} &nbsp;·&nbsp; a 501(c)(3) nonprofit.
           </p>
 
           <!-- The single CTA on this screen. -->
@@ -331,7 +351,7 @@ scene(
             <a
               href="#whats-on"
               data-cursor="scroll"
-              class="group inline-flex items-center gap-3 border border-spot px-9 py-4 text-xs font-semibold uppercase tracking-rubric text-spot transition-colors duration-500 hover:bg-spot hover:text-stage"
+              class="group inline-flex items-center gap-3 border border-spot px-9 py-4 text-xs font-semibold uppercase tracking-rubric text-spot-ink transition-colors duration-500 hover:bg-spot hover:text-chalk"
               @click.prevent="toWhatsOn"
             >
               See what's on
@@ -350,7 +370,7 @@ scene(
         class="pointer-events-none absolute inset-x-0 bottom-8 z-10 flex justify-center"
         aria-hidden="true"
       >
-        <span class="rubric animate-cue-pulse text-chalk/55">Scroll</span>
+        <span class="rubric animate-cue-pulse text-chalk/70">Scroll</span>
       </div>
 
       <!-- ACT 2: the photo wall -->

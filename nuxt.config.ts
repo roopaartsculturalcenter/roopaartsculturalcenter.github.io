@@ -22,13 +22,23 @@ export default defineNuxtConfig({
     screens: { xs: 360, sm: 640, md: 768, lg: 1024, xl: 1280, xxl: 1536, '2xl': 1536 },
   },
 
+  // `ipxStatic` resolves `/_ipx/...` to files written during the build, so under
+  // `nuxt dev` — where those files do not exist — every NuxtImg 404s and the site
+  // renders with no photographs at all. `ipx` transforms on request instead.
+  //
+  // Scoped to development so the pinned production provider above, and the build
+  // failure it exists to prevent, are untouched.
+  $development: {
+    image: { provider: 'ipx' },
+  },
+
   app: {
     head: {
       htmlAttrs: { lang: 'en' },
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { name: 'theme-color', content: '#0D0A08' },
+        { name: 'theme-color', content: '#FBF8F3' },
       ],
       link: [
         { rel: 'icon', type: 'image/webp', href: '/images/logo/racc-logo.webp' },

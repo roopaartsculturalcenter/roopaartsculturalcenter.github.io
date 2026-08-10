@@ -14,7 +14,7 @@ export function useSeo(options: {
   const route = useRoute()
   const url = `${site.url}${route.path === '/' ? '' : route.path}`
   const image = `${site.url}${options.image ?? '/images/home/home-3.webp'}`
-  const title = options.bare ? options.title : `${options.title} — ${site.name}`
+  const title = options.bare ? options.title : `${options.title} · ${site.name}`
 
   useHead({
     title,
@@ -54,7 +54,6 @@ export function useOrganisationSchema() {
           description: site.description,
           address: {
             '@type': 'PostalAddress',
-            addressLocality: 'Sugar Land',
             addressRegion: 'TX',
             addressCountry: 'US',
           },

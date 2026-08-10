@@ -9,7 +9,7 @@ export const arudra2026 = {
   venue: 'Jewish Community Center of Houston',
   intro:
     'Our flagship annual celebration of South Indian classical arts, held each year around the ' +
-    'Thiruvadhirai (Arudra Darshanam) season — bringing dancers, musicians, and the community ' +
+    'Thiruvadhirai (Arudra Darshanam) season, bringing dancers, musicians, and the community ' +
     'together on one stage.',
 
   programme: [

@@ -116,17 +116,23 @@ function onKeydown(e: KeyboardEvent) {
         {{ heading }}
       </h2>
 
-      <div class="mt-16 columns-2 gap-4 md:columns-3 lg:columns-4">
+      <div class="mt-16 columns-2 gap-3 sm:gap-4 md:columns-3 lg:columns-4 lg:gap-5">
         <button
           v-for="(p, i) in shown"
           :key="p.src"
           data-frame
           data-cursor="view"
           type="button"
-          class="group mb-4 block w-full overflow-hidden bg-stage-raised"
+          class="group relative mb-3 block w-full overflow-hidden bg-stage-raised ring-1 ring-chalk/10 transition-shadow duration-500 hover:shadow-xl sm:mb-4 lg:mb-5"
           @click="open(i)"
         >
           <span class="sr-only">Open photograph {{ i + 1 }} of {{ shown.length }}</span>
+
+          <!-- In colour, not grayscale.
+               These are stage photographs of costume and light; desaturating them by
+               default threw away the only thing that makes the wall worth looking
+               at, and on the light theme the grey read as washed out rather than
+               restrained. The hover now lifts rather than reveals. -->
           <NuxtImg
             :src="p.src"
             :alt="p.alt"
@@ -134,7 +140,7 @@ function onKeydown(e: KeyboardEvent) {
             :height="p.height"
             loading="lazy"
             sizes="xs:46vw sm:46vw md:30vw lg:23vw xl:23vw xxl:23vw"
-            class="w-full grayscale transition-[transform,filter] duration-700 ease-silk group-hover:scale-[1.04] group-hover:grayscale-0 motion-reduce:transform-none motion-reduce:grayscale-0"
+            class="w-full transition-transform duration-700 ease-silk group-hover:scale-[1.03] motion-reduce:transform-none"
           />
         </button>
       </div>
@@ -156,16 +162,16 @@ function onKeydown(e: KeyboardEvent) {
           aria-label="Photograph viewer"
           @keydown="onKeydown"
         >
-          <div data-scrim class="absolute inset-0 bg-stage-deep/97" />
+          <div data-scrim class="absolute inset-0 bg-[#17120F]/97" />
 
           <div class="relative flex items-center justify-between px-6 py-5 sm:px-10">
-            <p class="text-xs tabular-nums tracking-rubric text-chalk/50">
+            <p class="text-xs tabular-nums tracking-rubric text-chalk/66">
               {{ (openIndex ?? 0) + 1 }} / {{ shown.length }}
             </p>
             <button
               data-close
               type="button"
-              class="flex h-11 w-11 items-center justify-center text-chalk transition-colors hover:text-spot"
+              class="flex h-11 w-11 items-center justify-center text-chalk transition-colors hover:text-spot-ink"
               @click="close"
             >
               <span class="sr-only">Close viewer</span>
@@ -179,7 +185,7 @@ function onKeydown(e: KeyboardEvent) {
           <div class="relative flex flex-1 items-center justify-center gap-4 px-4 pb-10 sm:gap-8 sm:px-10">
             <button
               type="button"
-              class="flex h-12 w-12 shrink-0 items-center justify-center text-chalk transition-colors hover:text-spot"
+              class="flex h-12 w-12 shrink-0 items-center justify-center text-chalk transition-colors hover:text-spot-ink"
               @click="step(-1)"
             >
               <span class="sr-only">Previous photograph</span>
@@ -202,7 +208,7 @@ function onKeydown(e: KeyboardEvent) {
 
             <button
               type="button"
-              class="flex h-12 w-12 shrink-0 items-center justify-center text-chalk transition-colors hover:text-spot"
+              class="flex h-12 w-12 shrink-0 items-center justify-center text-chalk transition-colors hover:text-spot-ink"
               @click="step(1)"
             >
               <span class="sr-only">Next photograph</span>

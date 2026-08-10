@@ -6,7 +6,7 @@ import { featuredArtists } from '~/data/arudra'
 useSeo({
   title: 'About',
   description:
-    'Roopa Arts Cultural Center is a Texas 501(c)(3) public charity built by artists and art lovers — ' +
+    'Roopa Arts Cultural Center is a Texas 501(c)(3) public charity built by artists and art lovers, ' +
     'our story, vision, programmes, and community impact.',
   image: '/images/about/racc-about.webp',
 })
@@ -50,12 +50,12 @@ useEntrance(companyRoot, { stagger: 0.06 })
           <h2 :id="`sec-${s.id}`" data-wipe class="max-w-2xl font-display text-grand text-chalk">
             {{ s.heading }}
           </h2>
-          <p data-wipe class="mt-7 max-w-xl leading-relaxed text-chalk/70">{{ s.body }}</p>
+          <p data-wipe class="mt-7 max-w-xl leading-relaxed text-chalk/82">{{ s.body }}</p>
 
           <ul v-if="s.points" class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             <li v-for="p in s.points" :key="p.title" data-wipe class="border-l border-spot/40 pl-5">
               <p class="font-display text-lg text-chalk">{{ p.title }}</p>
-              <p class="mt-2 text-sm leading-relaxed text-chalk/60">{{ p.text }}</p>
+              <p class="mt-2 text-sm leading-relaxed text-chalk/74">{{ p.text }}</p>
             </li>
           </ul>
         </article>
@@ -86,14 +86,14 @@ useEntrance(companyRoot, { stagger: 0.06 })
           <h2 class="max-w-xl font-display text-recital text-chalk">
             Questions, or want to perform with us?
           </h2>
-          <p class="mt-5 max-w-md leading-relaxed text-chalk/70">
+          <p class="mt-5 max-w-md leading-relaxed text-chalk/82">
             {{ site.name }} is based in {{ site.location }}, and is a {{ site.status }}.
           </p>
           <p class="mt-6">
             <a
               :href="`mailto:${site.email}`"
               data-cursor="write"
-              class="group inline-flex items-center gap-3 border-b border-spot pb-2 text-sm text-spot"
+              class="group inline-flex items-center gap-3 border-b border-spot pb-2 text-sm text-spot-ink"
             >
               {{ site.email }}
               <span class="transition-transform duration-500 ease-silk group-hover:translate-x-2" aria-hidden="true">→</span>

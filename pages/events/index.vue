@@ -4,7 +4,7 @@ import { upcomingEvents, pastEvents } from '~/content/events'
 useSeo({
   title: 'Events',
   description:
-    'Everything currently booking at Roopa Arts Cultural Center, and everything we have staged — ' +
+    'Everything currently booking at Roopa Arts Cultural Center, and everything we have staged: ' +
     'the Arudra Festival, concerts, jugalbandis, and workshops across Texas.',
   image: upcomingEvents[0]?.flyerImage ?? '/images/events/arudhara-2026.webp',
 })
@@ -20,8 +20,8 @@ useSeo({
 
     <EventGrid
       :events="upcomingEvents"
-      heading="On stage next."
-      empty="Our next season is being programmed now — the first announcement goes to Instagram."
+      heading="Next on our stage."
+      empty="Our next season is being programmed now. The first announcement goes to Instagram."
     />
 
     <EventGrid :events="pastEvents" heading="Previously on this stage." tone="deep" />

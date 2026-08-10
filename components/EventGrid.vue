@@ -8,9 +8,9 @@
  * for a contrast check.
  */
 import type { RaccEvent } from '~/content/events'
-import { formatEventDate } from '~/content/events'
+import { eventDateLabel, flyerSize } from '~/content/events'
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
     events: RaccEvent[]
     heading: string
@@ -18,6 +18,15 @@ withDefaults(
     tone?: 'stage' | 'deep'
   }>(),
   { tone: 'stage' },
+)
+
+/**
+ * Each card carries its flyer's real dimensions, resolved once here rather than
+ * per render. Handing NuxtImg a square size is what made the optimizer ship
+ * cropped flyers — see `flyerSize`.
+ */
+const cards = computed(() =>
+  props.events.map((event) => ({ event, flyer: flyerSize(event.flyerImage) })),
 )
 
 const { gsap, scene } = useStage()
@@ -76,39 +85,58 @@ scene(
         </span>
       </h2>
 
-      <p v-if="!events.length && empty" class="mt-10 max-w-xl leading-relaxed text-chalk/65">
+      <p v-if="!events.length && empty" class="mt-10 max-w-xl leading-relaxed text-chalk/78">
         {{ empty }}
       </p>
 
       <ul v-else class="mt-16 grid gap-x-10 gap-y-20 md:grid-cols-2 lg:grid-cols-3">
-        <li v-for="event in events" :key="event.slug" data-event-card class="group">
+        <li v-for="{ event, flyer } in cards" :key="event.slug" data-event-card class="group">
           <NuxtLink :to="`/events/${event.slug}`" data-cursor="view" class="block">
-            <div class="overflow-hidden bg-stage-raised">
-              <!-- Flyers are artwork with text to the edges, so they are fitted,
-                   never cropped. -->
+            <div class="bg-stage-raised">
+              <!-- Flyers are artwork with text to the edges, so they are fitted and
+                   never cropped: real intrinsic size so the optimizer keeps the whole
+                   frame, `object-contain` to letterbox it inside a consistent box.
+                   The box stays fixed so the text below every card aligns, and these
+                   flyers run from 0.56 to 2.9 in aspect.
+
+                   No hover scale here. A 3% zoom inside `overflow-hidden` shaved the
+                   edges off artwork whose text runs to the border — the title colour
+                   change carries the hover instead. -->
               <NuxtImg
                 :src="event.flyerImage"
-                :alt="`Flyer for ${event.title}`"
-                width="1400"
-                height="1400"
+                :alt="`Flyer for ${event.title}, ${eventDateLabel(event)}`"
+                :width="flyer.width"
+                :height="flyer.height"
                 loading="lazy"
                 sizes="xs:88vw sm:88vw md:44vw lg:30vw xl:30vw xxl:30vw"
-                class="aspect-[4/5] w-full object-contain transition-transform duration-700 ease-silk group-hover:scale-[1.03] motion-reduce:transform-none"
+                class="aspect-[4/5] w-full object-contain"
               />
             </div>
 
-            <p class="mt-6 text-sm text-spot">
-              <time v-if="event.date" :datetime="event.date">
-                {{ formatEventDate(event.date) }}
+            <p class="mt-6 flex flex-wrap items-baseline gap-x-3 gap-y-1 text-sm">
+              <!-- `datetime` stays the raw ISO date even when the visible label is a
+                   range or a season, so the machine-readable value is never a guess. -->
+              <time v-if="event.date" :datetime="event.date" class="text-spot-ink">
+                {{ eventDateLabel(event) }}
               </time>
-              <span v-else>Recurring series</span>
+              <span v-else class="text-spot-ink">{{ eventDateLabel(event) }}</span>
+
+              <!-- /75, not /60: at 12px the badge needs 4.5:1 and /60 measured
+                   4.27:1 against the deep band this grid uses for past events. -->
+              <span v-if="event.status === 'past'" class="rubric text-chalk/75">Past event</span>
             </p>
 
-            <h3 class="mt-2 font-display text-recital text-chalk transition-colors duration-300 group-hover:text-spot">
+            <h3 class="mt-2 font-display text-recital text-chalk transition-colors duration-300 group-hover:text-spot-ink">
               {{ event.title }}
             </h3>
 
-            <p v-if="event.venue" class="mt-2 text-sm text-chalk/55">{{ event.venue }}</p>
+            <!-- `meta` is the schedule-or-bill line; `venue` is the fallback for the
+                 archive entries that predate it. -->
+            <p v-if="event.meta ?? event.venue" class="mt-2 text-sm leading-relaxed text-chalk/70">
+              {{ event.meta ?? event.venue }}
+            </p>
+
+            <p class="mt-3 text-sm leading-relaxed text-chalk/78">{{ event.description }}</p>
           </NuxtLink>
         </li>
       </ul>

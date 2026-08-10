@@ -14,24 +14,52 @@
  * below, give it a unique `slug`. That is the whole job.
  */
 
+import manifest from '~/data/image-manifest.json'
+
 export interface RaccEventSource {
   title: string
   slug: string
-  /** ISO date. `null` only for recurring/undated series — those sort last. */
+  /**
+   * ISO date, and the only thing that decides upcoming vs past.
+   *
+   * For a multi-day run this is the FIRST day, so the event stays upcoming for
+   * its whole length and sorts by when it opens. `null` only for undated series.
+   */
   date: string | null
+  /**
+   * Overrides the displayed date text when `date` alone would misrepresent it —
+   * a run across several days, or a whole season. `date` still drives sorting and
+   * the `<time datetime>` attribute, so the machine-readable value stays honest.
+   */
+  dateLabel?: string
   artists: string[]
   description: string
   venue: string | null
+  /**
+   * One line under the title on a card: schedule, city, or the bill. Free text,
+   * because what matters most differs per event — two cities for one, the
+   * performers for another. Falls back to `venue` when absent.
+   */
+  meta?: string
   flyerImage: string
   rsvpUrl?: string
   /**
-   * Forces this event to show as upcoming regardless of its date, and to be the
+   * An undated, forward-looking summary of the season.
+   *
+   * Shows as upcoming despite having no date, and always sorts last among the
+   * upcoming events — it is a signpost to everything else, so it reads as the
+   * closing card rather than the next thing on stage. Never becomes the
+   * homepage's featured event.
+   */
+  seasonOverview?: boolean
+  /**
+   * Forces an event to show as upcoming regardless of its date, and to be the
    * homepage's featured event.
    *
-   * Set on Navtar by explicit request. Note the card still displays its real
-   * date (July 12, 2025) — the flag overrides placement, not the truth. Remove
-   * it once a genuinely future-dated event exists and everything reverts to
-   * automatic behaviour.
+   * Currently unused, and that is the healthy state — it existed only to hold
+   * Navtar in the featured slot while the site had no future-dated events. Real
+   * ones now exist, so the flag came off and placement is fully automatic again.
+   * Kept as the escape hatch for a genuine "this is the headline act" override.
    */
   pinned?: boolean
 }
@@ -41,41 +69,116 @@ export interface RaccEvent extends RaccEventSource {
 }
 
 const source: RaccEventSource[] = [
+  // --- 2026–27 season -------------------------------------------------------
+  {
+    title: 'An Evening of Celebrating Bhagyaraj',
+    slug: 'evening-celebrating-bhagyaraj',
+    date: '2026-09-19',
+    artists: [],
+    description:
+      "A tribute to the legend behind timeless stories and memorable music. An evening " +
+      "honoring K. Bhagyaraj's cinema and songs.",
+    venue: 'Houston',
+    meta: '7:00 PM · Houston',
+    flyerImage: '/images/events/evening-celebrating-bhagyaraj.webp',
+  },
+  {
+    title: 'Navarathri Seva Series',
+    slug: 'navarathri-seva-series',
+    // First day of the run; the label carries the full span.
+    date: '2026-10-15',
+    dateLabel: 'October 15–19, 2026',
+    artists: [],
+    description:
+      'Five evenings of devotional music offered in the spirit of seva, celebrating ' +
+      'Navarathri across two cities.',
+    venue: 'Houston & Austin',
+    meta: 'Houston · Oct 15–17 | Austin · Oct 19',
+    flyerImage: '/images/events/navarathri-seva-series.webp',
+  },
+  {
+    title: 'Ilaiyaraaja Night',
+    slug: 'ilaiyaraaja-night',
+    date: '2026-10-23',
+    artists: [
+      'Arjun, vocals (Super Singer 5 fame)',
+      'Akhila, vocals (ETV title winner)',
+      'Achi, violin',
+      'with live band',
+    ],
+    description:
+      "An intimate live concert of timeless Tamil melodies: the maestro's classics, " +
+      'reimagined on stage in Austin. 8:00–10:00 PM.',
+    venue: 'Austin',
+    meta:
+      'Arjun, vocals (Super Singer 5 fame) · Akhila, vocals (ETV title winner) · ' +
+      'Achi, violin · with live band',
+    flyerImage: '/images/events/ilaiyaraaja-night.webp',
+  },
+  {
+    // Aug 2 2026 — already run, so this derives as past on its own and appears
+    // under "Previously on this stage". Nothing marks it by hand.
+    title: 'Rule of N: A Chamber Music Experience',
+    slug: 'rule-of-n',
+    date: '2026-08-02',
+    artists: [],
+    description:
+      'Each ensemble builds its program around one number, through composers, ragas, ' +
+      'talas, languages, and rhythms. One number, infinite musical possibilities.',
+    venue: 'Austin, TX',
+    meta: '2:00 PM onwards · Austin, TX',
+    flyerImage: '/images/events/rule-of-n.webp',
+  },
+  {
+    title: 'Season at a Glance',
+    slug: 'season-at-a-glance',
+    date: null,
+    dateLabel: '2026–2027 Season',
+    artists: [],
+    description:
+      'Our full season lineup, from Rule of N to Arudra 2027, with more announcements ' +
+      'coming this fall.',
+    venue: null,
+    meta: 'Music · Culture · Community',
+    flyerImage: '/images/events/season-at-a-glance.webp',
+    seasonOverview: true,
+  },
+
+  // --- Archive --------------------------------------------------------------
   {
     title: 'Navtar Violin Jugalbandi',
     slug: 'navtar-violin-jugalbandi',
     date: '2025-07-12',
-    artists: ['Vishnu Navtar', 'Achi Bala — violin', 'Karun Salvady — mridangam'],
+    artists: ['Vishnu Navtar', 'Achi Bala, violin', 'Karun Salvady, mridangam'],
     description:
-      'Compositions presented on the navtar, violin, and mridangam — three voices ' +
+      'Compositions presented on the navtar, violin, and mridangam: three voices ' +
       'trading phrases across a single evening.',
     venue: null,
     flyerImage: '/images/events/navtar-violin-jugalbandi.webp',
     rsvpUrl: 'https://evite.me/NVtRUQfHnt',
-    pinned: true,
   },
   {
     title: 'Arudra 2026',
     slug: 'arudra-2026',
     date: '2026-02-08',
     artists: [
-      'Mithra Arun — dancer',
-      'Rohitha Kaimal — dancer',
-      'Varsha Vasu — dancer',
-      'Achi Bala — violin, vocals & narration',
-      'Roopa Bala — narration',
-      'Shashank Iswara — solkattu & nattuvangam',
-      'Vaishnavi Narasimhan — vocals',
-      'Dr. Maheetha Bharadwaj — keys & vocals',
-      'Jahnavi Murali — cello & vocals',
-      'Sai Vignesh — vocals',
-      'Visveshwar Nagarajan — flute',
-      'Naga Srinidhi Kuruvada — mridangam',
+      'Mithra Arun, dancer',
+      'Rohitha Kaimal, dancer',
+      'Varsha Vasu, dancer',
+      'Achi Bala, violin, vocals & narration',
+      'Roopa Bala, narration',
+      'Shashank Iswara, solkattu & nattuvangam',
+      'Vaishnavi Narasimhan, vocals',
+      'Dr. Maheetha Bharadwaj, keys & vocals',
+      'Jahnavi Murali, cello & vocals',
+      'Sai Vignesh, vocals',
+      'Visveshwar Nagarajan, flute',
+      'Naga Srinidhi Kuruvada, mridangam',
     ],
     description:
       'Our signature festival: an invocation by Musicians of Houston, a veena-violin ' +
       'duet, the featured production Navagrahamum Navakailasamum, and Thiruvadhirai ' +
-      'Threads — one afternoon, four experiences.',
+      'Threads: one afternoon, four experiences.',
     venue: 'Jewish Community Center of Houston',
     flyerImage: '/images/events/all-program-flyer.webp',
   },
@@ -112,7 +215,7 @@ const source: RaccEventSource[] = [
     slug: 'arudra-festival-2025',
     date: '2025-03-01',
     artists: [],
-    description: 'The 2025 edition of our signature festival — an evening of music and dance.',
+    description: 'The 2025 edition of our signature festival: an evening of music and dance.',
     venue: 'Jewish Community Center of Houston',
     flyerImage: '/images/events/main-flyerarudra-festival-2025.webp',
   },
@@ -145,30 +248,62 @@ function startOfToday() {
 
 function deriveStatus(e: RaccEventSource): 'upcoming' | 'past' {
   if (e.pinned) return 'upcoming'
+  // A season summary has no date but is not history.
+  if (e.seasonOverview) return 'upcoming'
   if (!e.date) return 'past'
   return new Date(e.date) >= startOfToday() ? 'upcoming' : 'past'
 }
 
 export const events: RaccEvent[] = source.map((e) => ({ ...e, status: deriveStatus(e) }))
 
-/** Soonest first — that is the order an audience reads a "what's next" list in. */
+/**
+ * Soonest first — that is the order an audience reads a "what's next" list in.
+ * The season summary is pushed to the end regardless of anything else.
+ */
 export const upcomingEvents = events
   .filter((e) => e.status === 'upcoming')
-  .sort((a, b) => (a.date ?? '9999').localeCompare(b.date ?? '9999'))
+  .sort((a, b) => {
+    if (a.seasonOverview !== b.seasonOverview) return a.seasonOverview ? 1 : -1
+    return (a.date ?? '9999').localeCompare(b.date ?? '9999')
+  })
 
 /** Most recent first, undated series last. */
 export const pastEvents = events
   .filter((e) => e.status === 'past')
   .sort((a, b) => (b.date ?? '0000').localeCompare(a.date ?? '0000'))
 
-/** Drives the homepage featured scene. A pinned event always wins. */
+/**
+ * Drives the homepage featured scene. A pinned event always wins; the season
+ * summary never does, since "next on our stage" has to name one actual night.
+ */
 export const featuredEvent: RaccEvent | undefined =
-  upcomingEvents.find((e) => e.pinned) ?? upcomingEvents[0] ?? pastEvents[0]
+  upcomingEvents.find((e) => e.pinned)
+  ?? upcomingEvents.find((e) => !e.seasonOverview)
+  ?? pastEvents[0]
 
 export const getEvent = (slug: string) => events.find((e) => e.slug === slug)
 
 /** Everything under the Arudra banner, for /arudra. */
 export const arudraEvents = events.filter((e) => e.slug.includes('arudra'))
+
+/**
+ * A flyer's true pixel size, from the build manifest.
+ *
+ * Not cosmetic. `@nuxt/image` takes the aspect ratio of the variants it generates
+ * from the width/height it is handed, and ipx's `s_WxH` crops to cover. Every
+ * flyer render used to hardcode a square `1400x1400`, so a 1050x1400 poster was
+ * emitted as a physically cropped 1050x1050 file — a quarter of its height gone
+ * before any CSS ran, which `object-contain` cannot undo. The 1400x486 Guruguha
+ * banner fared worse, shipping as 486x486.
+ *
+ * Throws rather than guessing. A flyer missing here means `npm run images` has not
+ * been run, and a silent fallback would quietly reintroduce the crop.
+ */
+export function flyerSize(src: string): { width: number; height: number } {
+  const found = manifest.find((i) => i.src === src)
+  if (!found) throw new Error(`Flyer not in manifest: ${src} — run \`npm run images\``)
+  return { width: found.width, height: found.height }
+}
 
 /** Human-readable date. Undated series render their own label instead. */
 export function formatEventDate(date: string | null): string | null {
@@ -178,4 +313,16 @@ export function formatEventDate(date: string | null): string | null {
     day: 'numeric',
     year: 'numeric',
   })
+}
+
+/**
+ * What to print where a date goes, for any event.
+ *
+ * `dateLabel` wins when set, so a multi-day run or a whole season reads correctly
+ * while `date` keeps driving sorting and `<time datetime>`. Everything routes
+ * through here so the card, the detail page and the featured scene can never
+ * disagree about how one event is dated.
+ */
+export function eventDateLabel(e: RaccEventSource): string {
+  return e.dateLabel ?? formatEventDate(e.date) ?? 'Recurring series'
 }

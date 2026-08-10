@@ -117,7 +117,7 @@ onScopeDispose(() => {
     <!-- The mark that draws itself -->
     <div data-mark class="absolute inset-0 flex items-center justify-center">
       <svg viewBox="0 0 200 200" class="h-28 w-28 sm:h-36 sm:w-36" fill="none">
-        <g stroke="#D4A017" stroke-width="1.1" stroke-linecap="round">
+        <g stroke="#8A6A11" stroke-width="1.1" stroke-linecap="round">
           <circle data-draw cx="100" cy="100" r="52" />
           <circle data-draw cx="100" cy="100" r="34" opacity="0.65" />
           <g v-for="i in 8" :key="i" :transform="`rotate(${(360 / 8) * i} 100 100)`">

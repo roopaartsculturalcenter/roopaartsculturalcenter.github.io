@@ -76,12 +76,25 @@ const FRAG = /* glsl */ `
 
     // --- arch mask -----------------------------------------------------
     float aspect = uRes.x / uRes.y;
-    vec2 p = (vUv - vec2(0.5, 0.46)) * vec2(aspect, 1.0);
+    // On landscape the arch sits right of centre, clearing the headline column.
+    //
+    // Centred, it sat directly under the h1 — which the dark theme got away with
+    // (light type over a dark photo) and the light theme does not: ink type over a
+    // dark stage photograph disappears. Portrait keeps it centred, where the type
+    // is scrimmed instead; there is no width to give away on a phone.
+    float cx = aspect < 0.9 ? 0.5 : 0.68;
+    vec2 p = (vUv - vec2(cx, 0.46)) * vec2(aspect, 1.0);
     // Arch is narrower and taller on portrait viewports.
     float w = aspect < 0.9 ? 0.34 : 0.26;
     float h = aspect < 0.9 ? 0.52 : 0.44;
     float sdf = archSdf(p, w, h);
-    float mask = 1.0 - smoothstep(0.0, 0.055, sdf);
+    // Edge width is ~2px, not 0.055.
+    //
+    // The old soft edge faded alpha out over a wide band, which on the dark stage
+    // read as a glow — dark photo over near-black. Against the light page the same
+    // band is dark pixels smeared onto white: a grimy halo around the arch. This is
+    // narrow enough to kill the halo and still wide enough to anti-alias the cap.
+    float mask = 1.0 - smoothstep(0.0, 0.004, sdf);
 
     // A thin gold rim right on the arch edge.
     float rim = exp(-abs(sdf) * 90.0) * 0.5;
@@ -89,7 +102,9 @@ const FRAG = /* glsl */ `
 
     // --- grain + vignette ----------------------------------------------
     col += (hash(vUv * uRes.xy + uTime) - 0.5) * 0.055;
-    col *= 1.0 - smoothstep(0.35, 0.95, length((vUv - 0.5) * vec2(aspect, 1.0))) * 0.55;
+    // Vignette eased off: at 0.55 the arch's lower corners went to near-black, which
+    // was the point on a black stage and reads as sludge against white.
+    col *= 1.0 - smoothstep(0.35, 0.95, length((vUv - 0.5) * vec2(aspect, 1.0))) * 0.30;
 
     gl_FragColor = vec4(col, mask * uReveal * uFade);
   }

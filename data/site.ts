@@ -7,10 +7,10 @@ export const site = {
   shortName: 'RACC',
   tagline: 'Where the classical arts of India take the stage',
   description:
-    'Roopa Arts Cultural Center is a Texas 501(c)(3) public charity built by artists and art lovers — ' +
+    'Roopa Arts Cultural Center is a Texas 501(c)(3) public charity built by artists and art lovers, ' +
     'presenting the Arudra Festival, concerts, workshops, and seasonal celebrations.',
   url: 'https://roopaartsculturalcenter.org',
-  location: 'Sugar Land, Texas',
+  location: 'Texas',
   email: 'roopaartsculturalcenter@gmail.com',
   status: '501(c)(3) public charity',
   founded: null as string | null, // not published — see README "Content still needed"

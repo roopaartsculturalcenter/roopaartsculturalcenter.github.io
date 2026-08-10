@@ -9,7 +9,7 @@
  * The RSVP is the only primary action on this screen. "All upcoming events" is a
  * secondary link by design.
  */
-import { featuredEvent, upcomingEvents, formatEventDate } from '~/content/events'
+import { featuredEvent, upcomingEvents, eventDateLabel, flyerSize } from '~/content/events'
 
 const { gsap, SplitText, scene } = useStage()
 
@@ -17,7 +17,16 @@ const root = ref<HTMLElement | null>(null)
 const dateEl = ref<HTMLElement | null>(null)
 
 const event = featuredEvent
-const readableDate = computed(() => (event ? formatEventDate(event.date) : null))
+const readableDate = computed(() => (event ? eventDateLabel(event) : null))
+
+/**
+ * Real flyer dimensions, so the optimizer keeps the whole frame instead of
+ * cropping it square. Safe to fall back to a square when there is no event at
+ * all — nothing renders in that case.
+ */
+const flyer = computed(() =>
+  event ? flyerSize(event.flyerImage) : { width: 1400, height: 1400 },
+)
 
 /** A pinned past event is still "on stage next"; anything else is honest. */
 const label = computed(() => {
@@ -97,7 +106,7 @@ scene(
             v-if="readableDate"
             ref="dateEl"
             data-split
-            class="font-display text-monumental leading-none text-spot"
+            class="font-display text-monumental leading-none text-spot-ink"
           >
             {{ readableDate }}
           </p>
@@ -106,17 +115,17 @@ scene(
             {{ event.title }}
           </h2>
 
-          <p v-if="event.venue" data-feat class="mt-4 text-chalk/60">{{ event.venue }}</p>
+          <p v-if="event.venue" data-feat class="mt-4 text-chalk/74">{{ event.venue }}</p>
 
           <ul
             v-if="event.artists.length"
             data-feat
-            class="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-chalk/70"
+            class="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-chalk/82"
           >
             <li v-for="a in event.artists.slice(0, 6)" :key="a">{{ a }}</li>
           </ul>
 
-          <p data-feat class="mt-8 max-w-lg leading-relaxed text-chalk/70">
+          <p data-feat class="mt-8 max-w-lg leading-relaxed text-chalk/82">
             {{ event.description }}
           </p>
 
@@ -129,7 +138,7 @@ scene(
               target="_blank"
               rel="noopener noreferrer"
               data-cursor="rsvp"
-              class="inline-flex items-center gap-3 bg-spot px-10 py-5 text-xs font-semibold uppercase tracking-rubric text-stage transition-colors duration-500 hover:bg-spot-warm"
+              class="inline-flex items-center gap-3 bg-spot px-10 py-5 text-xs font-semibold uppercase tracking-rubric text-chalk transition-colors duration-500 hover:bg-spot-warm"
             >
               RSVP<span class="sr-only"> for {{ event.title }}</span>
               <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -142,7 +151,7 @@ scene(
               v-else
               :to="`/events/${event.slug}`"
               data-cursor="view"
-              class="inline-flex items-center gap-3 bg-spot px-10 py-5 text-xs font-semibold uppercase tracking-rubric text-stage transition-colors duration-500 hover:bg-spot-warm"
+              class="inline-flex items-center gap-3 bg-spot px-10 py-5 text-xs font-semibold uppercase tracking-rubric text-chalk transition-colors duration-500 hover:bg-spot-warm"
             >
               Event details
             </NuxtLink>
@@ -158,8 +167,8 @@ scene(
           <NuxtImg
             :src="event.flyerImage"
             :alt="`Flyer for ${event.title}`"
-            width="1400"
-            height="1400"
+            :width="flyer.width"
+            :height="flyer.height"
             loading="lazy"
             sizes="xs:88vw sm:88vw md:70vw lg:42vw xl:42vw xxl:42vw"
             class="w-full bg-stage-raised object-contain"
@@ -172,7 +181,7 @@ scene(
         v-if="upcomingEvents.length"
         to="/events"
         data-feat
-        class="group mt-20 flex items-center justify-between border-t border-chalk/12 pt-7 text-chalk/70 transition-colors hover:text-spot"
+        class="group mt-20 flex items-center justify-between border-t border-chalk/12 pt-7 text-chalk/82 transition-colors hover:text-spot-ink"
       >
         <span class="text-sm uppercase tracking-rubric">All upcoming events</span>
         <span class="transition-transform duration-500 ease-silk group-hover:translate-x-2" aria-hidden="true">→</span>
@@ -185,7 +194,7 @@ scene(
       <h2 id="featured-heading" class="mt-8 max-w-2xl font-display text-grand text-chalk">
         Our next season is being programmed now.
       </h2>
-      <NuxtLink to="/events" class="mt-10 inline-block border-b border-spot pb-1 text-sm uppercase tracking-rubric text-spot">
+      <NuxtLink to="/events" class="mt-10 inline-block border-b border-spot pb-1 text-sm uppercase tracking-rubric text-spot-ink">
         See past events
       </NuxtLink>
     </div>

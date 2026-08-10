@@ -1,7 +1,7 @@
 # Roopa Arts Cultural Center
 
 The website for [Roopa Arts Cultural Center](https://roopaartsculturalcenter.org) — a Texas
-501(c)(3) public charity in Sugar Land, presenting the Arudra Festival, concerts, workshops,
+501(c)(3) public charity in Texas, presenting the Arudra Festival, concerts, workshops,
 and seasonal celebrations.
 
 The site is choreographed like a classical recital: the home page is one continuous scroll,
@@ -249,9 +249,15 @@ Old `.html` URLs 301-redirect to their new paths (`nuxt.config.ts`).
 
 ## Content still needed
 
-- Founding story beyond the published paragraph; founder and board bios and headshots
-- Real "Community Impact" copy — the current accordion is assembled from published material
+- Founding story beyond the published paragraph; founder and board bios and headshots.
+  Scaffolding for these was built and then removed for launch — nothing invented was
+  shipped. The published About page names no founder, lists no trustee and gives no
+  reach figures, so the site claims none of it.
+- Real "Community Impact" copy — the `community-impact` accordion is assembled from
+  published material, which is honest but is not impact copy
 - Per-photo captions (all gallery images share one descriptive alt)
-- A vector logo (SVG). The curtain draws a mandala mark because no vector wordmark exists
+- A vector logo (SVG). The raster lockup is now in the nav and footer
+  (`racc-logo-white.webp`, 600×124); the curtain still draws a mandala mark
+  because no vector wordmark exists
 - Hero video, if wanted — the only motion assets in the archive are two 673×501 slideshow GIFs
 - **Verify the Zelle QR** resolves to the right account before launch
