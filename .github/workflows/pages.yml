@@ -1,0 +1,71 @@
+# Build the Nuxt site and publish it to GitHub Pages.
+#
+# Why this exists: GitHub Pages in "deploy from a branch" mode serves the branch
+# verbatim, and this branch is Nuxt source with no index.html at its root — which
+# is exactly the 404 that mode produces. Pages has to run the build itself.
+#
+# The preset is set here as an environment variable rather than in nuxt.config.
+# `nuxt.config.ts` pins `vercel-static` on purpose (auto-detection picks `vercel`,
+# which emits /_vercel/image URLs the prerenderer then 404s on), and NITRO_PRESET
+# overrides it for this build only. So Vercel keeps deploying exactly as before and
+# nothing about that path changes.
+#
+# The `github_pages` preset also writes `.nojekyll` into the output. Without it
+# Jekyll silently drops every directory starting with an underscore, which here is
+# `_nuxt/` and `_ipx/` — the entire JS bundle and every generated image.
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [architecture-v3]
+  # So a deploy can be re-run without an empty commit.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Queue deploys rather than cancelling them: a half-finished Pages deploy is worse
+# than a slightly stale one.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      # `npm ci` needs the lockfile to carry Linux sharp binaries; lockfileVersion 3
+      # records every platform, so the runner resolves sharp-libvips-linux-x64.
+      - run: npm ci
+
+      - name: Build for Pages
+        run: npm run build
+        env:
+          NITRO_PRESET: github_pages
+
+      - uses: actions/configure-pages@v5
+
+      # This repo is <name>.github.io, a user site served from the domain root, so
+      # asset paths stay root-relative and no baseURL override is needed.
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .output/public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
