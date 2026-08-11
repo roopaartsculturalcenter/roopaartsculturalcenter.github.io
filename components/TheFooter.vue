@@ -49,23 +49,46 @@ onMounted(() => {
     </div>
 
     <div class="stage-pad py-24 lg:py-32">
-      <!-- Outlined call -->
-      <NuxtLink
-        to="/support"
-        data-cursor="join"
-        class="group block"
-      >
-        <span class="sr-only">Join the audience: support Roopa Arts Cultural Center</span>
-        <span
-          aria-hidden="true"
-          class="block font-display text-colossal leading-[0.85] text-transparent transition-colors duration-700 ease-silk group-hover:text-spot-ink"
-          style="-webkit-text-stroke: 1px rgba(31,26,22,0.55)"
+      <!-- Outlined call, and the sign-up in the space it leaves.
+           The call used to run full width, which left the right-hand 40% of the
+           footer empty at every desktop size while the sign-up was squeezed into a
+           fifth link column. Pairing them fills that gap and gives the sign-up the
+           weight it needs to actually be used. -->
+      <!-- `auto` for the type, `1fr` for the panel: the headline column sizes to the
+           width of "audience" at whatever `text-colossal` currently computes to, and
+           the sign-up absorbs the remainder. A fixed 7/12 split instead forced a
+           choice between clipping the type at wide viewports and shrinking it at
+           narrow ones, because the content width caps at max-w-stage while 15vw
+           keeps growing. `minmax(0,1fr)` so the panel may shrink below min-content
+           rather than push the row wider than the container. -->
+      <div class="grid gap-16 lg:grid-cols-[auto_minmax(0,1fr)] lg:items-center lg:gap-20">
+        <NuxtLink
+          to="/support"
+          data-cursor="join"
+          class="group block"
         >
-          Join the<br >audience
-        </span>
-      </NuxtLink>
+          <span class="sr-only">Join the audience: support Roopa Arts Cultural Center</span>
+          <span
+            aria-hidden="true"
+            class="block font-display text-colossal leading-[0.85] text-transparent transition-colors duration-700 ease-silk group-hover:text-spot-ink"
+            style="-webkit-text-stroke: 1px rgba(31,26,22,0.55)"
+          >
+            Join the<br >audience
+          </span>
+        </NuxtLink>
 
-      <div class="mt-24 grid gap-14 sm:grid-cols-2 lg:grid-cols-4">
+        <!-- The footer is mounted in layouts/default.vue, so putting the sign-up
+             here puts it on every page with one insertion. -->
+        <div class="border border-chalk/12 bg-stage-raised p-8 xl:p-10">
+          <MailingListForm />
+        </div>
+      </div>
+
+      <!-- The Write column gets a wider track: the contact address is a single
+           unbreakable 271px token, and in equal quarters it wrapped to "…gmail.c /
+           om". Four equal columns also do not fit between lg and xl, so that band
+           stays at two. -->
+      <div class="mt-24 grid gap-14 sm:grid-cols-2 xl:grid-cols-[1fr_1.35fr_1fr_1fr]">
         <div>
           <p class="rubric">Where</p>
           <address class="mt-5 not-italic leading-relaxed text-chalk/74">
@@ -127,7 +150,13 @@ onMounted(() => {
       </div>
 
       <!-- Sign-off: the full lockup at a size where "Cultural Center" is
-           actually readable, which the nav's height cannot give it. -->
+           actually readable, which the nav's height cannot give it.
+
+           `self-start` on the logo is load-bearing. This is a column flex container
+           on mobile with no `items-*`, so align-items defaults to stretch, and in a
+           column stretch acts on the WIDTH — the lockup was being pulled to the full
+           container width against its fixed `h-11`, distorting it. `sm:items-center`
+           masked the bug above 640px, which is why it only showed on phones. -->
       <div
         class="mt-20 flex flex-col gap-8 border-t border-chalk/10 pt-8 sm:flex-row sm:items-center sm:justify-between sm:gap-12"
       >
@@ -138,7 +167,7 @@ onMounted(() => {
           :alt="site.name"
           loading="lazy"
           decoding="async"
-          class="h-11 w-auto shrink-0"
+          class="h-11 w-auto shrink-0 self-start"
         >
 
         <p class="text-xs leading-relaxed text-chalk/70 sm:max-w-sm sm:text-right">

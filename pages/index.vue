@@ -21,6 +21,7 @@ const curtainDone = ref(false)
     <SceneFeatured />                               <!-- 2 Featured event -->
     <SceneStory cta />                              <!-- 3 Who we are -->
     <SceneArudraTeaser />                           <!-- 4 Arudra teaser -->
-    <ActOvation show-other-ways />                  <!-- 5 The ask -->
+    <SceneSocial />                                 <!-- 5 Follow along -->
+    <ActOvation show-other-ways />                  <!-- 6 The ask -->
   </div>
 </template>
