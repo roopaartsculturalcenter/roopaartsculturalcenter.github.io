@@ -24,7 +24,7 @@ useHead({ title: is404.value ? 'Page not found' : 'Something went wrong' })
       <p class="mx-auto mt-6 max-w-md text-lg leading-relaxed text-ivory/75">
         {{
           is404
-            ? 'The page you were looking for is not here — it may have moved when we rebuilt the site.'
+            ? 'The page you were looking for is not here. It may have moved when we rebuilt the site.'
             : 'An unexpected error occurred. Please try again.'
         }}
       </p>

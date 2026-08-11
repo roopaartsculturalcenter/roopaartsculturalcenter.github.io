@@ -47,6 +47,15 @@ export default <Partial<Config>>{
         // to fit all of them at once — `grand` overflowed and clipped the first.
         verse: ['clamp(1.3rem, 3.3vw, 2.9rem)', { lineHeight: '1.16', letterSpacing: '-0.015em' }],
       },
+      // Colour opacity modifiers resolve against `theme.opacity`, whose default scale
+      // is multiples of 5. Anything off that scale — `text-chalk/82`, `border-chalk/12`
+      // — matched no utility and was silently dropped, with no build warning: the type
+      // then rendered at FULL chalk instead of 82%, and `border-chalk/12` fell all the
+      // way back to Tailwind's preflight default of gray-200, a cool grey in a warm
+      // palette. 48 of the 92 opacity usages on the site were affected, including the
+      // main body-copy tone. Registering the values here honours them as written
+      // rather than churning every call site onto the coarser scale.
+      opacity: { 12: '0.12', 66: '0.66', 74: '0.74', 78: '0.78', 82: '0.82', 88: '0.88', 92: '0.92' },
       letterSpacing: { rubric: '0.32em' },
       maxWidth: { stage: '90rem' },
       transitionTimingFunction: {
