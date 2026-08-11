@@ -1,0 +1,890 @@
+{
+ "invitation": "Namaskaram. It gives us immense pleasure to invite you to Roopa Arts Cultural Center’s flagship event, Arudra 2026. This year, we are excited to premiere a very unique dance production, Navagrahamum Navakailasamum. Coming off the tail end of the celebrated composer Muthuswami Dikshitar’s 250th jayanthi, we take you on a journey through Shaiva and Vaishnava Purana depicting the tales of the Navagrahas, as told through bedtime stories from Goddess Parvathi to her children Ganesha and Muruga and with tremendous inspiration from the rich narratives from the book Navagraha Purana by VS Rao. The concept has been brought to life through choreography by Shashank Iswara.",
+ "scenes": [
+  {
+   "n": 1,
+   "title": "The Navagrahas",
+   "blocks": [
+    {
+     "kind": "prose",
+     "text": "Long ago, before calendars, before clocks, before even our stories had names, before words, before life."
+    },
+    {
+     "kind": "stanza",
+     "lines": [
+      "There was only one thing – space.",
+      "Silent.",
+      "Dark.",
+      "Waiting.",
+      "Then, by the will of the Trimurtis",
+      "Brahma, the Creator;",
+      "Mahavishnu, the Protector;",
+      "and Maheshwara, the Transformer;",
+      "one by one, flickers appeared.",
+      "Not stars.",
+      "Not flames.",
+      "But presences.",
+      "Movers of time.",
+      "Dancers of fate.",
+      "Nine lights stirred awake.",
+      "These are… the Navagrahas."
+     ]
+    },
+    {
+     "kind": "prose",
+     "text": "The first to rise was the radiant elder, Suryan, his arms like fire, pulling the days behind him."
+    },
+    {
+     "kind": "prose",
+     "text": "Following him was Chandran – with utmost beauty, his moods waxed and waned as the moon we see each night."
+    },
+    {
+     "kind": "prose",
+     "text": "Third in line was Angarakan, leaping in as the red warrior, a flame on the battlefield."
+    },
+    {
+     "kind": "prose",
+     "text": "Guru arrived vast, calm, wisdom flowing from him like a river, the teacher and guide of the Devas."
+    },
+    {
+     "kind": "prose",
+     "text": "Shukra appeared for the Asurans, a counterweight to Guru."
+    },
+    {
+     "kind": "prose",
+     "text": "Budhan came next, quick and clever, the sharp-minded son of Chandran."
+    },
+    {
+     "kind": "prose",
+     "text": "And then Shani, born of shadow, unmoving, watchful, patient as time itself."
+    },
+    {
+     "kind": "prose",
+     "text": "From the mist, emerged the serpent twins… Rahu and Ketu! One a head without a body. One a tail without eyes. They coiled through the cosmos, the keepers of secrets."
+    },
+    {
+     "kind": "prose",
+     "text": "Generations later, the heavens prepared for a great union: the wedding of Shiva and Parvathi."
+    },
+    {
+     "kind": "prose",
+     "text": "All the Gods, sages, and planets gathered at Mount Kailash. It was a beautiful, divine, celestial wedding set at the most grand venue imaginable. But having so many great individuals in one place was bound to have side effects.. the weight of their presence tilted the Earth itself!"
+    },
+    {
+     "kind": "prose",
+     "text": "To restore the balance, Maheshwara turned to one of his disciples – Sage Agastya: “Go south. Carry my blessing. Anchor the earth with the Navagrahas. Witness from afar!”"
+    },
+    {
+     "kind": "prose",
+     "text": "Agastya obeyed. He journeyed beyond the Vindhyas, to the southern banks of the Tamirabarani. With him was Sage Romasa."
+    },
+    {
+     "kind": "prose",
+     "text": "To honor Shiva, Romasa cast nine lotuses into the sacred river: “Wherever they rest, let there rise shrines to Kailasanathar. Nine homes for the Nine Lights. Nine steps to liberation.”"
+    },
+    {
+     "kind": "prose",
+     "text": "And so it was. The lotuses found the river’s edges, and from each place, a temple rose, one for every Graha. The Navakailasam!"
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "vEyuru tOLi pangan viDamuNDa kaNThan miga nalla vINai taDavi"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "mAsaru tingaL gangai muDimEl aNInden uLamE pugundadanAl"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "jnAyiru tingaL shevvAi budhan vyAzhan veLLi shani"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "pAmbiraNDum uDanE asaru nalla nalla avai nalla nalla aDiyAravarkku migavE"
+     ]
+    },
+    {
+     "kind": "prose",
+     "text": "He shares His form with the Goddess,"
+    },
+    {
+     "kind": "prose",
+     "text": "whose shoulders arc gracefully like bamboo."
+    },
+    {
+     "kind": "prose",
+     "text": "His throat holds the poison churned from the sea,"
+    },
+    {
+     "kind": "stanza",
+     "lines": [
+      "His head adorned with the flawless moon",
+      "and the pure, cascading waters of the Gangā.",
+      "He plays a lute of celestial grace,",
+      "As He enters my heart to dwell there eternally,",
+      "The Sun, the Moon, Mercury, Venus, Mars,",
+      "Jupiter, Saturn, and the twin serpents,",
+      "Rāhu and Kētu,"
+     ]
+    },
+    {
+     "kind": "prose",
+     "text": "These celestial powers forever confer their blessings,"
+    },
+    {
+     "kind": "prose",
+     "text": "Bestowing boundless goodness upon the devotees of Lord Siva!"
+    }
+   ],
+   "summary": "The nine celestial entities are introduced, and set out for the Navakailasam temples."
+  },
+  {
+   "n": 2,
+   "title": "Suryan",
+   "blocks": [
+    {
+     "kind": "prose",
+     "text": "The Navagraha puranas are told as bedtime stories by Goddess Parvathi to her two children, Ganesha and Muruga."
+    },
+    {
+     "kind": "prose",
+     "text": "As the sky’s glow changes to an orange huge, Parvathi asks her children to listen to the timeless Suryashtakam."
+    },
+    {
+     "kind": "raga",
+     "text": "Raga Surya"
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "śāmba uvācha",
+      "ādidēva namastubhyaṃ prasīda mama bhāskara ।",
+      "divākara namastubhyaṃ prabhākara namō’stutē ॥"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "saptāśva ratha mārūḍhaṃ prachaṇḍaṃ kaśyapātmajam ।",
+      "śvēta padmadharaṃ dēvaṃ taṃ sūryaṃ praṇamāmyaham ॥"
+     ]
+    },
+    {
+     "kind": "prose",
+     "text": "I Reverentially Bow down to Sri Suryadeva) My Salutations to You O Adideva (the first God), Please be gracious to me O Bhaskara (the Shining One),"
+    },
+    {
+     "kind": "prose",
+     "text": "My Salutations to You, O Divakara (the maker of the Day), and again Salutations to You, O Prabhakara (the maker of Light)."
+    },
+    {
+     "kind": "prose",
+     "text": "(I Reverentially Bow down to Sri Suryadeva) You are mounted on a Chariot driven by seven Horses, You are excessively Energetic and the Son of sage Kashyapa,"
+    },
+    {
+     "kind": "prose",
+     "text": "You are the Deva Who holds a White Lotus (in Your Hand); I Bow to You, O Suryadeva."
+    },
+    {
+     "kind": "prose",
+     "text": "From here, the family witnesses a beautiful alarippu set to Saint Muthuswami Dikshitar’s first Navagraha krithi, Suryamurthe, in Sourashtra Ragam and Dhruva Talam. Surya is led by Aruna, his charioteer and seven horses representing seven rays of light.\nPallavi"
+    },
+    {
+     "kind": "prose",
+     "text": "Anupallavi"
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "kArya kAraNAtmaka jagatprakASa –"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "siMha rASyadhipatE"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "Arya vinuta tEjaHsphUrtE"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "ArOgyAdi phalada kIrtE"
+     ]
+    }
+   ],
+   "summary": "The Sun God, with a recitation of the Suryashtakam and an alarippu set to Muthuswami Dikshitar's Suryamurthe."
+  },
+  {
+   "n": 3,
+   "title": "Chandran",
+   "blocks": [
+    {
+     "kind": "prose",
+     "text": "Parvathi begins telling the stories of the Navagrahas to Ganesha and Muruga."
+    },
+    {
+     "kind": "prose",
+     "text": "“My dear Ganesha…\nmy brave Muruga…"
+    },
+    {
+     "kind": "prose",
+     "text": "We just witnessed the alarippu, or the blossoming, of Suryan, the Sun God, the blazing deity holding a white lotus."
+    },
+    {
+     "kind": "prose",
+     "text": "Listen now,\nto the story of the Navagrahas."
+    },
+    {
+     "kind": "stanza",
+     "lines": [
+      "We start with the tale of Chandra, the Moon.",
+      "Gentle, he was.",
+      "Cool, and kind."
+     ]
+    },
+    {
+     "kind": "prose",
+     "text": "By his light, the very oceans, found, their rhythm.”"
+    },
+    {
+     "kind": "prose",
+     "text": "Through pulses of raga Purnachandrika, the effect of waves is created."
+    },
+    {
+     "kind": "prose",
+     "text": "Parvathi continues her descriptions: “By the glow of Chandra, creepers climbed and leaves unfurled. Night, rested easily… the care… of the beautiful moon.”"
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "gām āviśya ca bhūtāni dhārayāmy aham ojasā |"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "puṣṇāmi cauṣadhīḥ sarvāḥ somo bhūtvā rasātmakaḥ ||"
+     ]
+    },
+    {
+     "kind": "prose",
+     "text": "Permeating the earth I support all beings by (My) energy; and having become the liquid moon, I nourish all herbs."
+    },
+    {
+     "kind": "prose",
+     "text": "Parvathi: “Chandra was also the friend of Manmatha, the Cupid. But sometimes… light that draws too many eyes… draws the wrong ones too. For Chandra… shone just a bit, too, bright.”"
+    },
+    {
+     "kind": "prose",
+     "text": "The story of Chandra is that he came to the ashram of Brihaspati, the Acharya of the Devas. But Chandra’s beautiful figure drew the wrong eyes – those of Tara, Brihaspati’s wife. What began with Tara enticing Chandra evolved into Chandra eventually forgoing his dharma as the shishya of Brihaspati, and instead choosing to run away with Tara."
+    },
+    {
+     "kind": "prose",
+     "text": "Brihaspati, teacher of the Devas was wounded – Chandra had taken his very beloved wife, Taara, from him. Infuriated in response to Chandra’s insurmountable ego, he brought the entire Deva army upon him to retrieve his wife back."
+    },
+    {
+     "kind": "prose",
+     "text": "But Śukra, the teacher of the Asuras, ever watchful,\nsaw in this moment a chance:\nto challenge the Devas,\nto test their order."
+    },
+    {
+     "kind": "prose",
+     "text": "Words sharpened.\nSides were chosen."
+    },
+    {
+     "kind": "prose",
+     "text": "A great war stood at the edge of the heavens."
+    },
+    {
+     "kind": "prose",
+     "text": "This story is aptly captured in Muthuswami Dikshitar’s Chandram Bhaja Manasa. Just as the waves of Purnachandrika flow in equal cycles, Chandram Bhaja Manasa is composed in the palindromic Matya talam, representing the phases of the moon.\nPallavi"
+    },
+    {
+     "kind": "prose",
+     "text": "Anupallavi"
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "indra-Adi lOka pAla-IDita tArA-ISaM"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "induM shODaSa kalA dharaM niSA-karaM"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "indirA sahOdaraM sudhA-karaM aniSam"
+     ]
+    },
+    {
+     "kind": "prose",
+     "text": "caraNam"
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "SaSa-ankaM gIH-pati SApa-anugraha pAtraM"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "Sarat-candrikA dhavaLa prakASa gAtram"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "kankaNa kEyUra hAra mukuTa-Adi dharaM"
+     ]
+    },
+    {
+     "kind": "prose",
+     "text": "By the intervention of the Trimurti, particularly Lord Brahma, Chandra returned Tara to Brihaspati. But Chandra would continue to draw misfortunes. Later, through his favoritism of Rohini among the 27 stars that became his wives, he was cursed again by Daksha to suffer from tuberculosis."
+    },
+    {
+     "kind": "prose",
+     "text": "Chandra finally came to Lord Shiva seeking forgiveness and praying for redemption."
+    },
+    {
+     "kind": "prose",
+     "text": "And Shiva, in his boundless mercy, placed the crescent moon upon his own head, and said to Chandra: “Let your light rise and fall, so that the world may remember – even the brightest must bow to truth.”"
+    },
+    {
+     "kind": "prose",
+     "text": "And that is the story of why the moon waxes and wanes – not from magic, from humility in Lord Shiva’s light."
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "sundhara thara pinAka dhanukhara"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "gangadhara gajacharmAmbharadhara"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "chandrachooda sivasankara parvathy"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "ramananE ninagE namO namO"
+     ]
+    }
+   ],
+   "summary": "The Moon God, carried by the composition Chandram Bhaja Manasa."
+  },
+  {
+   "n": 4,
+   "title": "Angarakan, Shani, and Budhan",
+   "blocks": [
+    {
+     "kind": "prose",
+     "text": "Parvathi continues her story to her children:"
+    },
+    {
+     "kind": "prose",
+     "text": "“My dear children,"
+    },
+    {
+     "kind": "prose",
+     "text": "Let me introduce you to another of your celestial siblings."
+    },
+    {
+     "kind": "prose",
+     "text": "This is Angaarakan, also known as Kuja, and Mangala."
+    },
+    {
+     "kind": "prose",
+     "text": "He was born from the sacred fire of Lord Shiva’s deep penance, from a drop of sweat that touched the Earth."
+    },
+    {
+     "kind": "prose",
+     "text": "And he was nurtured by Bhoomi Devi, Mother Earth herself."
+    },
+    {
+     "kind": "prose",
+     "text": "So within him, lives both ascetic fire and earthly strength – courage, speed, resolve, and a fierce intensity.”"
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "angArakaM ASrayAmyahaM",
+      "vinatASrita jana mandAraM"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "mangaLa vAraM bhUmi kumAraM vAraM vAram"
+     ]
+    },
+    {
+     "kind": "prose",
+     "text": "Parvathi continues: “The Navagrahas influence the unfolding of events. They shape moments of our puranas."
+    },
+    {
+     "kind": "prose",
+     "text": "When their light touches destiny, even love may be tested by separation, and paths may turn unexpectedly."
+    },
+    {
+     "kind": "stanza",
+     "lines": [
+      "You will recognize this turning",
+      "In the story of Rama and Sita",
+      "In the Ramayana.”"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "rAma rAma prANa sakhi neDabAsi"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "rAmuDeTuvale tALeno mundu"
+     ]
+    },
+    {
+     "kind": "prose",
+     "text": "Parvathi prepares to put the kids to sleep. As the lights go out, Muruga plays a prank and points the light from one of the objects in the sky at Ganesha. This is the light of Shani, the Navagraha that instills fear!"
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "divAkara tanujaM SanaiScaraM"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "dhIra-taraM santataM cintayE-aham"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "bhava-ambu nidhau nimagna janAnAM –"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "bhayankaraM ati-krUra phaladaM"
+     ]
+    },
+    {
+     "kind": "prose",
+     "text": "Ganesha scurries out in fear, and is brought back by his parents Parvathi and Shiva."
+    },
+    {
+     "kind": "prose",
+     "text": "Shiva, seizing the opportunity to takeover as the storyteller, consoles Ganesha and eagerly begins to share an incident where he and Budhan played a prank on a British officer."
+    },
+    {
+     "kind": "prose",
+     "text": "At the temple town of Thenthiruperai along the River Thamirabarani, at the Kailasanathar Temple, legend has it that during British rule, a viceroy ordered a tender coconut water to be brought from the nearby coconut farm for him to drink. When his servant went and asked for it in the farm, he was told that the whole farm and coconuts there are dedicated to the Kailasanathar temple and the coconut water will be offered only to God and not to human beings."
+    },
+    {
+     "kind": "prose",
+     "text": "Hearing this the viceroy got wild and asked his servant, “Do the tender coconuts offered to the god have horns?” and asked the servant to pull down one from the tree. The servant did so. To the amazement of the viceroy, he saw that the coconut had 3 horns. He had the scare of his life, and asked for God to forgive him."
+    },
+    {
+     "kind": "prose",
+     "text": "The humorous story concludes with Parvathi and Shiva descending down to the British viceroy and asking him to leave the scene so they can put their children to sleep."
+    }
+   ],
+   "summary": "Mars, Saturn and Mercury, including the story of a British viceroy at the Kailasanathar temple."
+  },
+  {
+   "n": 5,
+   "title": "Brihaspati and Shukran",
+   "blocks": [
+    {
+     "kind": "prose",
+     "text": "Parvathi recites the last of her bedtime stories: “My little ones. One last story for the night, and then you have to go to sleep."
+    },
+    {
+     "kind": "prose",
+     "text": "Close your eyes. The sky has grown quieter, yet you wonder, where are the other lights?\n\nTo understand the next two, you must hear an older story – one that has echoed across generations."
+    },
+    {
+     "kind": "prose",
+     "text": "For as long as time has turned, the Devas and the Asuras have stood opposed – not always in hatred, but in an endless struggle for balance, power, and glory."
+    },
+    {
+     "kind": "prose",
+     "text": "Among the Asuras rose a brilliant teacher – Shukra, their Acharya."
+    },
+    {
+     "kind": "prose",
+     "text": "To restore his clan’s lost greatness, Shukra turned his gaze toward Kubera, the Lord of Wealth.\n\nThrough illusion, Shukra seized all of the celestial wealth and brought the Asuras to new affluence."
+    },
+    {
+     "kind": "prose",
+     "text": "From the depths of stillness came Maheshwara – wrathful, blazing, his drums thundering like the end of worlds. Lord Shiva swallowed Shukra himself! A reminder that even the clever must bow to dharma."
+    },
+    {
+     "kind": "prose",
+     "text": "Yet Shukra’s devotion was unbroken… through severe penance, he pleased Lord Shiva, and was granted the sacred Mrita-Sanjeevani mantra – the power to restore the fallen. And so, their fallen warriors rose from the dead, and the Asuras became unstoppable."
+    },
+    {
+     "kind": "prose",
+     "text": "Alarmed, the Devas turned to their own great teacher – Brihaspathi. With wisdom and patience, he sent his son Kacha to learn the mantra under Shukra himself. But even he could not succeed, as a curse prevented him from ever successfully using the mantra."
+    },
+    {
+     "kind": "prose",
+     "text": "The struggle continued, until at last, the Devas and Asuras stood together to churn the cosmic ocean itself and retrieve the nectar of immortality – the Amritam."
+    },
+    {
+     "kind": "prose",
+     "text": "And that, my children, is how the fiercest conflicts of heaven shaped the destinies of the two great Navagrahas – Brihaspathi, and Shukran.”"
+    },
+    {
+     "kind": "raga",
+     "text": "Set to Raga Kambhoji"
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "dvau bhūta-sargau loke ’smin daiva āsura eva cha"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "daivo vistaraśhaḥ prokta āsuraṁ pārtha me śhṛiṇu"
+     ]
+    },
+    {
+     "kind": "prose",
+     "text": "There are two kinds of beings in this world: those endowed with a divine nature and those possessing a demoniac nature."
+    },
+    {
+     "kind": "raga",
+     "text": "Set to Raga Huseni"
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "thaeidal vunmaiyum, perugal vunmaiyum"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "maaidal vunmaiyum, pirattal vunmaiyum"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "ariyaadoraiyum ariyakkaatti"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "thingal puttezh terivarum vulagatthu"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "vallar aayinum vallunar aayinum"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "varundi vandor marungu nokki"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "arula vallai aagumati"
+     ]
+    },
+    {
+     "kind": "prose",
+     "text": "Whatever may be the level of enlightenment of those who approach you- whether they are not aware of the truth that wealth is unsteady (it may decrease and disappear, or grow more), that death is certain and is followed by rebirth, or they are so learned as to make people understand these truths and ascend the heavenly world adorned by the moon, or in any other state- become compassionate and extend charity to them all."
+    },
+    {
+     "kind": "raga",
+     "text": "Set to Raga Purvi Kalyani"
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "maheśvara uvāca |"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "śukravannissṛto yasmālliṃgānme bhṛgunandana |"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "karmaṇā tena śuklatvaṃ mama putrosi gamyatām"
+     ]
+    },
+    {
+     "kind": "prose",
+     "text": "O son of Bhṛgu, since after I punished, you emerged from my body, you will be called Śukra henceforth. I accept you as my son. You may go if you please."
+    },
+    {
+     "kind": "raga",
+     "text": "Set to Raga Paras"
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "SrI Sukra bhagavantaM cintayAmi santataM"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "sakala tattvajnam"
+     ]
+    },
+    {
+     "kind": "raga",
+     "text": "Set to Raga Atana"
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "bRhaspatE tArA patE"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "brahma jAtE namO(a)stu tE"
+     ]
+    },
+    {
+     "kind": "raga",
+     "text": "Set to Raga Sahana"
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "devayāny uvāca |"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "yadi māṃ dharmakāmārthe pratyākhyāsyasi coditaḥ |"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "tataḥ kaca na te vidyā siddhim eṣā gamiṣyati || 16 ||"
+     ]
+    },
+    {
+     "kind": "prose",
+     "text": "Translation"
+    },
+    {
+     "kind": "prose",
+     "text": "Devayānī said:"
+    },
+    {
+     "kind": "prose",
+     "text": "“If, even when urged for the sake of dharma and desire, you reject me,"
+    },
+    {
+     "kind": "prose",
+     "text": "then, O Kaca, this knowledge you have learned shall never attain fruition for you.”"
+    },
+    {
+     "kind": "raga",
+     "text": "Set to Raga Sama"
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "Vaanavarum Danavarum aazhi amudham kadainthida , mandara giri thanai thaangidave –oru"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "Koon udaya Oadu konda koormavatharam yena kolam uthrai pugazhum ongidave"
+     ]
+    },
+    {
+     "kind": "raga",
+     "text": "Set to Raga Rasikapriya"
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "AlakAla viSam aran arunda"
+     ]
+    },
+    {
+     "kind": "raga",
+     "text": "Set to Raga Kedaragowlai"
+    },
+    {
+     "kind": "prose",
+     "text": "Parvathi: And that is the story of the Devas and the Asuras, of Brihaspathi and Shukran, and of how the Navagraha purana is intertwined with the glory of the Trimurtis… especially your very own father. There was just one loose end… the last of the Navagrahas, Rahu and Ketu, the serpent twins, disguised themselves as Devas to also partake in the amritam. But Lord Vishnu detected them and promptly sliced their heads off! My dear children, it’s time for bed. Sleep tight, let us pray that the planets have found their places in the night sky."
+    }
+   ],
+   "summary": "The Devas and Asuras in conflict, told through the Shukra and Brihaspati narratives."
+  },
+  {
+   "n": 6,
+   "title": "Rahu and Ketu",
+   "blocks": [
+    {
+     "kind": "prose",
+     "text": "While Ganesha and Muruga go to sleep, the serpent twins Rahu and Ketu launch their attack. They swallow Suryan, the Sun! They swallow Chandran, the Moon! Darkness envelops the world."
+    },
+    {
+     "kind": "prose",
+     "text": "Ganesha and Muruga wake up – can they save the day?"
+    },
+    {
+     "kind": "raga",
+     "text": "Thillana in Raga Kapi"
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "dhit thillAna thaka thillAna thakajhanu dheem"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "dhit thalAngu thOm ena maththalathuDan citsabhaithanilE"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "eththisai magizha dharmam kAkkum seyal kanDu magizhum shivanE"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "satchidAnandamArga uththama maNaththil niRpavanE"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "niththamuNai bhakthiyuDan thudhiththu mukthi peRavaikum perumANE"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "tha kiTathaka dheem , thaka tha kiTathaka dheem , thakadhiku tha kiTathaka dheem"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "tha, dhit, thalAngu tharikiTa thakajhanu thOm , , dhit, thalAngu tharikiTa thakajhanu thOm , , thalAngu tharikiTa thakajhanu thaka"
+     ]
+    },
+    {
+     "kind": "prose",
+     "text": "To celebrate Ganesha’s bravery!"
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "bhUtAdi saMsEvita caraNaM"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "bhUta bhautika prapanca bharaNaM"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "karAmbuja pASa bIjA pUraM"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "kalusha vidUraM bhUtAkAraM"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "harAdi guru guha tOshita bimbaM"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "haMsa dhvani bhUshita hErambam"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "vAtApi gaNa patiM bhajE(a)haM"
+     ]
+    },
+    {
+     "kind": "verse",
+     "lines": [
+      "vAraNAsyaM vara pradaM SrI"
+     ]
+    },
+    {
+     "kind": "prose",
+     "text": "To conclude and celebrate Shiva and all the Navagrahas, through the Mangala Thevaram of Veyuru Tholi Pangan by Thirugnanasambandar."
+    }
+   ],
+   "summary": "The serpent twins close the production, with a Thillana in Raga Kapi and the Mangala Thevaram."
+  }
+ ]
+}

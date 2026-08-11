@@ -45,6 +45,13 @@ useEntrance(root)
 const rsvp = ref<HTMLElement | null>(null)
 useMagnetic(rsvp, 0.3)
 
+// Reveal scopes for the optional production sections below.
+const sceneRoot = ref<HTMLElement | null>(null)
+useEntrance(sceneRoot, { stagger: 0.06 })
+
+const creditRoot = ref<HTMLElement | null>(null)
+useEntrance(creditRoot, { stagger: 0.04 })
+
 // No prerender hint needed: nitro.prerender.crawlLinks follows the links from
 // /events, so every event page is generated at build time.
 </script>
@@ -86,9 +93,6 @@ useMagnetic(rsvp, 0.3)
                 fetchpriority="high"
                 class="w-full bg-stage-raised object-contain"
               />
-              <span
-                class="mt-4 inline-block border-b border-spot pb-1 text-xs uppercase tracking-rubric text-spot-ink opacity-80 transition-opacity duration-300 group-hover:opacity-100"
-              >Enlarge flyer</span>
             </a>
           </div>
 
@@ -117,7 +121,14 @@ useMagnetic(rsvp, 0.3)
               {{ event.description }}
             </p>
 
-            <div v-if="event.artists.length" data-wipe class="mt-10">
+            <!-- Suppressed when a full credit block exists further down the page,
+                 where the same names appear with their real roles and ordering. Events
+                 without credits still need this as their only artist listing. -->
+            <div
+              v-if="event.artists.length && !event.production?.credits"
+              data-wipe
+              class="mt-10"
+            >
               <h2 class="text-xs uppercase tracking-rubric text-chalk/66">On stage</h2>
               <ul class="mt-4 grid gap-2 sm:grid-cols-2">
                 <li v-for="a in event.artists" :key="a" class="text-chalk/85">{{ a }}</li>
@@ -144,6 +155,53 @@ useMagnetic(rsvp, 0.3)
         </div>
       </div>
     </section>
+
+    <!-- The featured production, in depth.
+         Only rendered for events that carry a `production` block, so every other
+         event page is unchanged. This is where per-edition detail belongs: it used
+         to sit on /arudra, which made the general festival page read as a report on
+         one year. -->
+    <template v-if="event.production">
+      <ProductionProgramme
+        v-if="event.production.programme"
+        :programme="event.production.programme"
+        :title="event.production.title"
+      />
+
+      <!-- Credits render exactly as ordered in the data. A credit block is a
+           contract with the people in it: no reordering to suit the grid, no
+           alphabetising. -->
+      <section
+        v-if="event.production.credits?.length"
+        ref="creditRoot"
+        class="bg-stage py-24 lg:py-32"
+        aria-labelledby="event-credits-heading"
+      >
+        <div class="stage-pad">
+          <p data-wipe class="rubric">Credits</p>
+          <h2
+            id="event-credits-heading"
+            data-wipe
+            class="mt-6 max-w-2xl font-display text-grand text-chalk"
+          >
+            Everyone who made it.
+          </h2>
+
+          <dl class="mt-14 grid gap-x-12 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+            <div v-for="group in event.production.credits" :key="group.role" data-wipe>
+              <dt class="text-xs uppercase tracking-rubric text-chalk/66">{{ group.role }}</dt>
+              <dd class="mt-3">
+                <ul class="space-y-1.5">
+                  <li v-for="n in group.names" :key="n" class="leading-snug text-chalk/85">
+                    {{ n }}
+                  </li>
+                </ul>
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+    </template>
 
     <ActOvation show-other-ways />
   </div>

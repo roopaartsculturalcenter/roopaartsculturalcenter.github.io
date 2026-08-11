@@ -15,6 +15,7 @@
  */
 
 import manifest from '~/data/image-manifest.json'
+import { arudra2026Credits, arudra2026Programme } from '~/data/arudra'
 
 export interface RaccEventSource {
   title: string
@@ -43,6 +44,24 @@ export interface RaccEventSource {
   meta?: string
   flyerImage: string
   rsvpUrl?: string
+  /**
+   * Long-form detail for the featured production of an event, rendered on its own
+   * page rather than on a landing page.
+   *
+   * This exists because /arudra had filled up with one edition's scene list and
+   * cast, so the general festival page answered "what happened in 2026" instead of
+   * "what is Arudra". Per-edition depth belongs on the edition.
+   */
+  production?: {
+    title: string
+    intro?: string
+    scenes?: { title: string; body: string }[]
+    credits?: { role: string; names: string[] }[]
+    /** The full programme book: narrative, verses, translations, ragas. */
+    programme?: typeof arudra2026Programme
+    /** Where the detail was transcribed from, for whoever checks it next. */
+    sourceUrl?: string
+  }
   /**
    * An undated, forward-looking summary of the season.
    *
@@ -161,19 +180,30 @@ const source: RaccEventSource[] = [
     title: 'Arudra 2026',
     slug: 'arudra-2026',
     date: '2026-02-08',
+    // Order and spellings follow the organisation's own page for the production,
+    // https://roopaartsculturalcenter.org/arudra-2026/ — concept, then direction,
+    // then cast, then the music team. The previous list was read off the artist
+    // announcement cards: it missed eleven cast members and misspelled two names.
+    // The full credit block lives in data/arudra.ts as `arudra2026Credits`.
     artists: [
-      'Mithra Arun, dancer',
-      'Rohitha Kaimal, dancer',
-      'Varsha Vasu, dancer',
-      'Achi Bala, violin, vocals & narration',
-      'Roopa Bala, narration',
-      'Shashank Iswara, solkattu & nattuvangam',
-      'Vaishnavi Narasimhan, vocals',
-      'Dr. Maheetha Bharadwaj, keys & vocals',
-      'Jahnavi Murali, cello & vocals',
-      'Sai Vignesh, vocals',
-      'Visveshwar Nagarajan, flute',
+      'Achi Bala, concept, music composition and violin',
+      'Shashank Iswara, dance direction, screenplay and choreography',
+      'Srinidhi Subash, cast',
+      'Aditya Subramaniam, cast',
+      'Maanya Varma, cast',
+      'Akhila Rajesh, cast',
+      'Mithra Arun, cast',
+      'Rohita Kaimal, cast',
+      'Varsha Vasu, cast',
+      'Soundarya Dalipatti, cast',
+      'Milind Soman, cast',
+      'Aditya Iswara, cast and mridangam',
+      'Saivignesh Ramakrishnan, vocal',
+      'Vaishnavi Narasimhan, vocal',
+      'Jahnavi Murali, vocal and cello',
+      'Dr. Maheetha Bharadwaj, keys',
       'Naga Srinidhi Kuruvada, mridangam',
+      'Visveshwar Nagarajan, flute',
     ],
     description:
       'Our signature festival: an invocation by Musicians of Houston, a veena-violin ' +
@@ -181,6 +211,15 @@ const source: RaccEventSource[] = [
       'Threads: one afternoon, four experiences.',
     venue: 'Jewish Community Center of Houston',
     flyerImage: '/images/events/all-program-flyer.webp',
+    production: {
+      title: 'Navagrahamum Navakailasamum',
+      // No `intro` or `scenes` here: the programme below carries the organisation's
+      // own invitation and the full six scenes, so setting either would print the
+      // same material twice.
+      credits: arudra2026Credits,
+      programme: arudra2026Programme,
+      sourceUrl: 'https://roopaartsculturalcenter.org/arudra-2026/',
+    },
   },
   {
     title: 'Guruguha Vaibhavam',

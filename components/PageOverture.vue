@@ -12,7 +12,17 @@
  * to draw a silhouette CSS already gives for free. Same shape, same mark, no bundle.
  */
 const props = withDefaults(
-  defineProps<{ rubric?: string; title: string; lede?: string; image?: string }>(),
+  defineProps<{
+    rubric?: string
+    title: string
+    lede?: string
+    image?: string
+    /**
+     * Which part of the image the arch keeps. `object-cover` in a 3:4 frame crops a
+     * square source left and right, so anything off-centre in the artwork gets cut.
+     */
+    imageFocus?: string
+  }>(),
   {},
 )
 
@@ -87,7 +97,7 @@ scene(
         sizes="xs:72vw sm:60vw md:58vw lg:48vw xl:44vw xxl:44vw"
         preload
         fetchpriority="high"
-        class="arch h-[74%] w-[74%] max-w-xl object-cover sm:w-[58%] lg:w-[82%]"
+        :class="['arch h-[74%] w-[74%] max-w-xl object-cover sm:w-[58%] lg:w-[82%]', imageFocus ?? 'object-center']"
       />
     </div>
 

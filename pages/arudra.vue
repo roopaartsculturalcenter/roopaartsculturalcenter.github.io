@@ -1,32 +1,43 @@
 <script setup lang="ts">
+/**
+ * /arudra — the festival in general, across every edition.
+ *
+ * Deliberately carries NO single year's cast, scene list or credits. Those sat here
+ * before, which meant a visitor asking "what is Arudra" got the 2026 programme
+ * notes instead. Per-edition depth lives on the edition's own page, reached from the
+ * grid below: /events/arudra-2026 carries the full Navagrahamum Navakailasamum
+ * scenes and credits.
+ */
 import { arudraEvents } from '~/content/events'
 import { arudraCollateral } from '~/content/gallery'
-import { arudra2026 } from '~/data/arudra'
+import { arudraFestival } from '~/data/arudra'
+import { site } from '~/data/site'
 
 useSeo({
   title: 'Arudra',
   description:
-    'Arudra is our signature festival, held each year around the Thiruvadhirai season, ' +
-    'dancers, musicians, and the community on one stage at the Jewish Community Center of Houston.',
+    'Arudra is our signature festival, held each year around the Thiruvadhirai season: ' +
+    'an invocation, two feature programmes, and a closing sequence, on one stage.',
   image: '/images/events/all-program-flyer.webp',
 })
 
 const storyRoot = ref<HTMLElement | null>(null)
 useEntrance(storyRoot)
 
-// Posters and artist cards, straight from the source list. This used to look the
-// group up in `galleryGroups` by the name 'Arudra 2026' — a lookup that returned
-// an empty array the moment that group left the photo gallery, silently emptying
-// this page. Named import instead, so the same mistake becomes a build error.
-const arudraImages = arudraCollateral
+const socialRoot = ref<HTMLElement | null>(null)
+useEntrance(socialRoot)
 </script>
 
 <template>
   <div>
+    <!-- `object-right`: the figure sits right of centre in a square source, and the
+         arch's 3:4 crop keeps the horizontal middle by default, which pushed it to
+         the edge. -->
     <PageOverture
       title="Arudra is where our whole year points."
       lede="Held each season around Thiruvadhirai (Arudra Darshanam), our signature festival brings dancers, musicians, and the community onto one stage."
       image="/images/misc/final.webp"
+      image-focus="object-right"
     />
 
     <section ref="storyRoot" class="bg-stage py-24 lg:py-32" aria-labelledby="arudra-story">
@@ -37,23 +48,20 @@ const arudraImages = arudraCollateral
           </h2>
 
           <p data-wipe class="mt-8 max-w-lg leading-relaxed text-chalk/82">
-            {{ arudra2026.intro }}
+            {{ arudraFestival.intro }}
           </p>
 
           <p data-wipe class="mt-5 max-w-lg leading-relaxed text-chalk/82">
-            The 2026 edition opened with Trilokya Nada, an invocation by Musicians of Houston,
-            and closed with Thiruvadhirai Threads. Between them sat a Veena-Violin duet and the
-            festival's featured production.
-          </p>
-
-          <p data-wipe class="mt-5 max-w-lg leading-relaxed text-chalk/82">
-            {{ arudra2026.featured.body }}
+            Every edition follows the same four-part shape. What changes each year is
+            the repertoire, the ensemble, and the production that anchors it. Open any
+            edition below for its full programme and credits.
           </p>
         </div>
 
+        <!-- The playbill: the festival's structure, not one year's line-up. -->
         <ol class="lg:pt-4">
           <li
-            v-for="(item, i) in arudra2026.programme"
+            v-for="(item, i) in arudraFestival.playbill"
             :key="item.title"
             data-wipe
             class="flex gap-6 border-t border-chalk/12 py-6"
@@ -70,6 +78,7 @@ const arudraImages = arudraCollateral
       </div>
     </section>
 
+    <!-- Every edition. Each card links to that year's page. -->
     <EventGrid
       :events="arudraEvents"
       heading="Every Arudra we have staged."
@@ -78,10 +87,35 @@ const arudraImages = arudraCollateral
     />
 
     <ActGallery
-      :photos="arudraImages"
+      :photos="arudraCollateral"
       heading="The festival, on paper."
       rubric="Flyers, banners, and every artist announcement"
     />
+
+    <section ref="socialRoot" class="bg-stage-deep py-20 lg:py-24" aria-labelledby="arudra-social">
+      <div class="stage-pad">
+        <h2 id="arudra-social" data-wipe class="max-w-xl font-display text-recital text-chalk">
+          Next season's dates go out on social first.
+        </h2>
+        <ul data-wipe class="mt-8 flex flex-wrap gap-x-8 gap-y-3">
+          <li v-for="s in site.social" :key="s.href">
+            <a
+              :href="s.href"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-cursor="view"
+              class="group inline-flex items-center gap-2 border-b border-spot pb-1 text-sm uppercase tracking-rubric text-spot-ink"
+            >
+              {{ s.label }}
+              <span
+                class="transition-transform duration-500 ease-silk group-hover:translate-x-1"
+                aria-hidden="true"
+              >→</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
 
     <ActOvation show-other-ways />
   </div>

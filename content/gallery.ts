@@ -101,9 +101,9 @@ const ARUDRA_2026_FLYERS: [string, string][] = [
 /** The twelve artist announcement cards, in the order they were released. */
 const ARUDRA_2026_ARTISTS: [string, string][] = [
   ['/images/events/arudra-2026-artist-25.webp', 'Mithra Arun, dancer (Arudra 2026)'],
-  ['/images/events/arudra-2026-artist-26.webp', 'Rohitha Kaimal, dancer (Arudra 2026)'],
+  ['/images/events/arudra-2026-artist-26.webp', 'Rohita Kaimal, dancer (Arudra 2026)'],
   ['/images/events/arudra-2026-artist-27.webp', 'Varsha Vasu, dancer (Arudra 2026)'],
-  ['/images/events/arudra-2026-artist-30.webp', 'Sai Vignesh, vocals (Arudra 2026)'],
+  ['/images/events/arudra-2026-artist-30.webp', 'Saivignesh Ramakrishnan, vocal (Arudra 2026)'],
   ['/images/events/arudra-2026-artist-31.webp', 'Vaishnavi Narasimhan, vocals (Arudra 2026)'],
   ['/images/events/arudra-2026-artist-32.webp', 'Dr. Maheetha Bharadwaj, keys and vocals (Arudra 2026)'],
   ['/images/events/arudra-2026-artist-33.webp', 'Shashank Iswara, solkattu and nattuvangam (Arudra 2026)'],
@@ -135,10 +135,33 @@ export const allGalleryImages: GalleryImage[] = galleryGroups.flatMap((g) => g.i
 export const arudraTeaserImages: GalleryImage[] =
   ARUDRA_2026_FLYERS.map(([src, alt]) => pick(src, alt))
 
-/** Everything Arudra: posters and artist cards, for /arudra. */
+/**
+ * Arudra 2025's banners and flyer.
+ *
+ * These were sitting unused in the archive while /arudra showed 2026 only, which
+ * is part of why the festival page looked like it had no history.
+ */
+const ARUDRA_2025: [string, string][] = [
+  ['/images/events/main-flyerarudra-festival-2025.webp', 'Arudra Festival 2025 programme flyer'],
+  ['/images/events/arudra-2025.webp', 'Arudra Festival 2025 announcement'],
+  ['/images/events/arudra-2025-mobile-view-banner.webp', 'Arudra Festival 2025 banner'],
+  ['/images/banners/arudra-2025-banner.webp', 'Arudra Festival 2025 stage banner'],
+  ['/images/banners/arudra-2025-banner01.webp', 'Arudra Festival 2025 stage banner'],
+  ['/images/banners/arudra-2025-banner02.webp', 'Arudra Festival 2025 stage banner'],
+]
+
+/** Additional 2026 collateral not in the original flyer set. */
+const ARUDRA_2026_EXTRA: [string, string][] = [
+  ['/images/events/arudra-2026-flyers-24.webp', 'Arudra 2026 festival flyer'],
+  ['/images/events/save-the-date.webp', 'Arudra 2026 save the date'],
+]
+
+/** Everything Arudra: posters, banners and artist cards, newest edition first. */
 export const arudraCollateral: GalleryImage[] = [
   ...ARUDRA_2026_FLYERS,
+  ...ARUDRA_2026_EXTRA,
   ...ARUDRA_2026_ARTISTS,
+  ...ARUDRA_2025,
 ].map(([src, alt]) => pick(src, alt))
 
 /**

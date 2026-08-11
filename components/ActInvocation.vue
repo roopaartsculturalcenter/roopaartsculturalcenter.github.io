@@ -319,13 +319,29 @@ scene(
            washed out the left two thirds of it as you scrolled. Sitting at 4 it
            still covers the arch (z-auto) and the ring (z-0) for Act 1, while the
            wall at z-[5] passes cleanly in front of it. -->
+      <!-- On a phone the wash runs top-to-bottom over the upper band only, not
+           left-to-right across the whole screen. Full width at via-stage/88 meant
+           88% page colour over the entire arch: the photograph came out bleached,
+           which reads as the hero being mostly empty. Sideways washes need a column
+           of spare width to fade into, and a 390px viewport has none, so on mobile
+           the type sits in a scrimmed band at the top and the image below it is
+           left completely alone.
+
+           `sm:via-stage/88 sm:via-50%` must BOTH stay on this element. They do not
+           just tune the sideways wash, they reset the mobile stops: the phone band
+           puts its 90% stop at 88% of the way DOWN, and once `sm:bg-gradient-to-r`
+           flips the axis that same stop means 88% of the way ACROSS, holding the page
+           colour at 90% over the full arch. Dropping the sm: overrides and letting
+           the mobile stops through is what bleaches the photograph here. -->
       <div
-        class="pointer-events-none absolute inset-y-0 left-0 z-[4] w-full bg-gradient-to-r from-stage via-stage/88 to-transparent lg:w-[72%]"
+        class="pointer-events-none absolute inset-x-0 top-0 z-[4] h-[66%] bg-gradient-to-b from-stage via-stage/90 via-[88%] to-transparent sm:inset-y-0 sm:left-0 sm:h-auto sm:w-full sm:bg-gradient-to-r sm:via-stage/88 sm:via-50% lg:w-[72%]"
         aria-hidden="true"
       />
 
-      <!-- The type -->
-      <div class="relative z-10 flex h-full items-center">
+      <!-- The type sits in the top band on mobile (clear of the fixed nav), and
+           returns to vertically centred from `sm` where the sideways wash takes
+           over. -->
+      <div class="relative z-10 flex h-full items-start pt-28 sm:items-center sm:pt-0">
         <div ref="typeEl" class="stage-pad w-full gpu">
           <!-- No hard <br>, and a narrower measure from `lg`.
                The hand-broken two-line version ran the last word deep into the

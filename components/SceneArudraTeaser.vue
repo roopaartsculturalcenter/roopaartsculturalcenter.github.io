@@ -19,7 +19,7 @@
  */
 import { arudraTeaserImages } from '~/content/gallery'
 import { arudraEvents, eventDateLabel } from '~/content/events'
-import { arudra2026 } from '~/data/arudra'
+import { arudraFestival } from '~/data/arudra'
 
 const root = ref<HTMLElement | null>(null)
 useEntrance(root, { stagger: 0.09 })
@@ -68,7 +68,7 @@ const PLACE = [
         </h2>
 
         <p data-wipe class="mt-8 max-w-md leading-relaxed text-chalk/82">
-          {{ arudra2026.intro }}
+          {{ arudraFestival.intro }}
         </p>
 
         <!-- One line, not a stacked table: both figures are derived from the events

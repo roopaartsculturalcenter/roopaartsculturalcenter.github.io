@@ -49,6 +49,20 @@ const FRAG = /* glsl */ `
   }
 
   void main() {
+    float aspect = uRes.x / uRes.y;
+
+    // Where the arch sits on screen, and how big it is. Declared up here because the
+    // texture pan below has to know, and the mask further down reuses them.
+    //
+    // On landscape the arch sits right of centre, clearing the headline column.
+    // Centred, it sat directly under the h1 — which the dark theme got away with
+    // (light type over a dark photo) and the light theme does not: ink type over a
+    // dark stage photograph disappears. Portrait keeps it centred, where the type is
+    // scrimmed instead; there is no width to give away on a phone.
+    float cx = aspect < 0.9 ? 0.5 : 0.68;
+    float w  = aspect < 0.9 ? 0.34 : 0.26;
+    float h  = aspect < 0.9 ? 0.52 : 0.44;
+
     // --- cover-fit the photograph -------------------------------------
     vec2 ratio = vec2(
       min((uRes.x / uRes.y) / (uTexRes.x / uTexRes.y), 1.0),
@@ -58,6 +72,23 @@ const FRAG = /* glsl */ `
       vUv.x * ratio.x + (1.0 - ratio.x) * 0.5,
       vUv.y * ratio.y + (1.0 - ratio.y) * 0.5
     );
+
+    // --- pan the photograph so the ARCH frames the subject -------------
+    //
+    // The cover-fit above centres the image on the whole canvas, but the arch is a
+    // small window onto it — 26% of the width — and it is not in the middle. Moving
+    // the arch right therefore slid the visible crop onto the right of the frame:
+    // the standing dancer sits at 51% across and 45% down, so he fell out of shot
+    // and the arch filled with the kneeling dancers behind him.
+    //
+    // FOCUS is the point of the texture, in uv space (y measured from the bottom),
+    // that should land at the centre of the arch. Solving for the offset:
+    //   arch centre samples  archCentre * ratio + (1 - ratio) * 0.5
+    //   so shift uv by       FOCUS - that
+    // which is zero when the arch is centred, and grows as it moves off centre.
+    const vec2 FOCUS = vec2(0.5, 0.55);
+    vec2 archCentre = vec2(cx, 0.46 - h * 0.5 + w * 0.5);
+    uv += FOCUS - (archCentre * ratio + (1.0 - ratio) * 0.5);
 
     // --- ripple away from the cursor ----------------------------------
     vec2 toMouse = vUv - uMouse;
@@ -75,18 +106,10 @@ const FRAG = /* glsl */ `
     col = mix(vec3(lum) * vec3(1.15, 0.92, 0.62), col, 0.72);
 
     // --- arch mask -----------------------------------------------------
-    float aspect = uRes.x / uRes.y;
-    // On landscape the arch sits right of centre, clearing the headline column.
-    //
-    // Centred, it sat directly under the h1 — which the dark theme got away with
-    // (light type over a dark photo) and the light theme does not: ink type over a
-    // dark stage photograph disappears. Portrait keeps it centred, where the type
-    // is scrimmed instead; there is no width to give away on a phone.
-    float cx = aspect < 0.9 ? 0.5 : 0.68;
+    // aspect, cx, w and h are declared at the top of main(), because the texture pan
+    // needs them before this point. (No backticks in here: the shader is a template
+    // literal, and one would end the string.)
     vec2 p = (vUv - vec2(cx, 0.46)) * vec2(aspect, 1.0);
-    // Arch is narrower and taller on portrait viewports.
-    float w = aspect < 0.9 ? 0.34 : 0.26;
-    float h = aspect < 0.9 ? 0.52 : 0.44;
     float sdf = archSdf(p, w, h);
     // Edge width is ~2px, not 0.055.
     //
