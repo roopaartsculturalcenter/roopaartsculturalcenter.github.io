@@ -9,7 +9,6 @@
  * scenes and credits.
  */
 import { arudraEvents } from '~/content/events'
-import { arudraCollateral } from '~/content/gallery'
 import { arudraFestival } from '~/data/arudra'
 import { site } from '~/data/site'
 
@@ -86,13 +85,11 @@ useEntrance(socialRoot)
       empty="Arudra dates for the coming season are still being confirmed."
     />
 
-    <ActGallery
-      :photos="arudraCollateral"
-      heading="The festival, on paper."
-      rubric="Flyers, banners, and every artist announcement"
-    />
-
-    <section ref="socialRoot" class="bg-stage-deep py-20 lg:py-24" aria-labelledby="arudra-social">
+    <!-- `bg-stage`, not `bg-stage-deep`. The collateral gallery that used to sit
+         above this was the light band between the edition grid and here; without it
+         this section, the grid above it and ActOvation below it were three deep
+         sections stacked with no seam. -->
+    <section ref="socialRoot" class="bg-stage py-20 lg:py-24" aria-labelledby="arudra-social">
       <div class="stage-pad">
         <h2 id="arudra-social" data-wipe class="max-w-xl font-display text-recital text-chalk">
           Next season's dates go out on social first.
