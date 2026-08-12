@@ -55,7 +55,12 @@ export default <Partial<Config>>{
       // palette. 48 of the 92 opacity usages on the site were affected, including the
       // main body-copy tone. Registering the values here honours them as written
       // rather than churning every call site onto the coarser scale.
-      opacity: { 12: '0.12', 66: '0.66', 74: '0.74', 78: '0.78', 82: '0.82', 88: '0.88', 92: '0.92' },
+      // 97 is the lightbox scrim, `bg-[#17120F]/97`. It had never rendered: the
+      // utility did not exist, the backdrop computed to rgba(0,0,0,0), and the
+      // enlarged photograph sat on top of the live page with the text showing
+      // through it. Arbitrary-colour utilities take the modifier from this same
+      // scale, so registering the value is the whole fix.
+      opacity: { 12: '0.12', 66: '0.66', 74: '0.74', 78: '0.78', 82: '0.82', 88: '0.88', 92: '0.92', 97: '0.97' },
       letterSpacing: { rubric: '0.32em' },
       maxWidth: { stage: '90rem' },
       transitionTimingFunction: {
