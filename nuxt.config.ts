@@ -41,7 +41,20 @@ export default defineNuxtConfig({
         { name: 'theme-color', content: '#FBF8F3' },
       ],
       link: [
-        { rel: 'icon', type: 'image/webp', href: '/images/logo/racc-logo.webp' },
+        // The icon is the R mark alone, not the lockup. The previous favicon pointed
+        // at racc-logo.webp, the full 767x159 "ROOPA ARTS / CULTURAL CENTER"
+        // horizontal lockup, so a browser squeezed the whole thing into a 16px box
+        // and it rendered as an illegible smear. WebP favicons are also unevenly
+        // supported, which PNG and ICO are not.
+        //
+        // Generated from legacy/assets/img/logo/racc-logo.png: the wordmark trimmed
+        // off, transparent edges trimmed, then padded to a square with a 6% margin.
+        { rel: 'icon', href: '/favicon.ico', sizes: 'any' },
+        { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
+        { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
+        // iOS ignores the alpha channel and composites on black, so this one is
+        // flattened onto the page colour rather than left transparent.
+        { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
         // Fonts are self-hosted (assets/css/fonts.css) but deliberately NOT
         // preloaded. Measured: preloading them competes with the hero image for
         // bandwidth on a throttled connection and cost ~1s of LCP. `font-display:
