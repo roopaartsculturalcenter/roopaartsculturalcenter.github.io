@@ -43,6 +43,13 @@ export interface RaccEventSource {
    */
   meta?: string
   flyerImage: string
+  /**
+   * Overrides the card's generated image alt. Left unset for every event whose
+   * poster is adequately described by "Flyer for {title}, {date}", which is all of
+   * them so far bar one; supplying it per event avoids rewording the default and
+   * changing the alt on cards nobody asked to touch.
+   */
+  flyerAlt?: string
   rsvpUrl?: string
   /**
    * Long-form detail for the featured production of an event, rendered on its own
@@ -257,6 +264,26 @@ const source: RaccEventSource[] = [
     description: 'The 2025 edition of our signature festival: an evening of music and dance.',
     venue: 'Jewish Community Center of Houston',
     flyerImage: '/images/events/main-flyerarudra-festival-2025.webp',
+  },
+  {
+    // Date, time and venue read off the poster: Sunday, March 3 2024, 3:00 PM CT,
+    // Stafford Civic Center. Venue is given as name plus city, matching the other
+    // entries; the poster's full street address is detail for a ticket, not a card.
+    // `artists` stays empty because the poster names none, and guessing at a 2024
+    // bill is not something a credit list can be wrong about quietly.
+    //
+    // Slug follows arudra-festival-2025, not arudra-2026: the two conventions
+    // already coexist, and matching the neighbouring year is the lesser surprise.
+    title: 'Arudra Festival 2024',
+    slug: 'arudra-festival-2024',
+    date: '2024-03-03',
+    dateLabel: 'Sunday, March 3, 2024, 3:00 PM CT',
+    artists: [],
+    description:
+      'The 2024 edition of our signature festival: an evening of Indian classical music and dance.',
+    venue: 'Stafford Civic Center, Stafford, TX',
+    flyerImage: '/images/arudra-2024/arudra-2024-poster.webp',
+    flyerAlt: 'Arudra 2024 – Indian classical music and dance evening',
   },
   {
     title: 'Sound Workshop',

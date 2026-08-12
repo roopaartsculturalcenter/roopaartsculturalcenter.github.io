@@ -25,6 +25,17 @@ const RULES = {
   home: { maxEdge: 1600, quality: 74 },
   gallery: { maxEdge: 1600, quality: 74 },
   events: { maxEdge: 1400, quality: 78 },
+  // Artist announcement cards: square, and the artist's name and role are set on
+  // the card itself, so this is text as much as photography. Same treatment as
+  // events, which is where the rest of the Arudra collateral lives.
+  'arudra-2026': { maxEdge: 1400, quality: 78 },
+  // Same treatment for the 2025 spotlight cards. Note public/images/artists holds
+  // six of these same cards at maxEdge 800, because there they are small cards on
+  // /arudra; the gallery lightbox opens them at up to 72vw, so it needs the full
+  // size. Two rules, two uses, deliberately.
+  'arudra-festival-2025': { maxEdge: 1400, quality: 78 },
+  'arudra-2024': { maxEdge: 1400, quality: 78 },
+  'arudra-festival-2024': { maxEdge: 1400, quality: 78 },
   artists: { maxEdge: 800, quality: 80 },
   about: { maxEdge: 1400, quality: 78 },
   misc: { maxEdge: 1600, quality: 78 },

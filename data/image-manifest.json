@@ -56,6 +56,350 @@
     "originalHeight": 1080
   },
   {
+    "src": "/images/arudra-2024/arudra-2024-poster.webp",
+    "width": 1080,
+    "height": 1080,
+    "original": "legacy/assets/img/arudra-2024/arudra-2024-poster.jpg",
+    "originalWidth": 1080,
+    "originalHeight": 1080
+  },
+  {
+    "src": "/images/arudra-2026/arudra-01.webp",
+    "width": 1080,
+    "height": 1080,
+    "original": "legacy/assets/img/arudra-2026/arudra-01.webp",
+    "originalWidth": 1080,
+    "originalHeight": 1080
+  },
+  {
+    "src": "/images/arudra-2026/arudra-02.webp",
+    "width": 1080,
+    "height": 1080,
+    "original": "legacy/assets/img/arudra-2026/arudra-02.webp",
+    "originalWidth": 1080,
+    "originalHeight": 1080
+  },
+  {
+    "src": "/images/arudra-2026/arudra-03.webp",
+    "width": 1080,
+    "height": 1080,
+    "original": "legacy/assets/img/arudra-2026/arudra-03.webp",
+    "originalWidth": 1080,
+    "originalHeight": 1080
+  },
+  {
+    "src": "/images/arudra-2026/arudra-04.webp",
+    "width": 1080,
+    "height": 1080,
+    "original": "legacy/assets/img/arudra-2026/arudra-04.webp",
+    "originalWidth": 1080,
+    "originalHeight": 1080
+  },
+  {
+    "src": "/images/arudra-2026/arudra-05.webp",
+    "width": 1080,
+    "height": 1080,
+    "original": "legacy/assets/img/arudra-2026/arudra-05.webp",
+    "originalWidth": 1080,
+    "originalHeight": 1080
+  },
+  {
+    "src": "/images/arudra-2026/arudra-06.webp",
+    "width": 1080,
+    "height": 1080,
+    "original": "legacy/assets/img/arudra-2026/arudra-06.webp",
+    "originalWidth": 1080,
+    "originalHeight": 1080
+  },
+  {
+    "src": "/images/arudra-2026/arudra-07.webp",
+    "width": 1080,
+    "height": 1080,
+    "original": "legacy/assets/img/arudra-2026/arudra-07.webp",
+    "originalWidth": 1080,
+    "originalHeight": 1080
+  },
+  {
+    "src": "/images/arudra-2026/arudra-08.webp",
+    "width": 1080,
+    "height": 1080,
+    "original": "legacy/assets/img/arudra-2026/arudra-08.webp",
+    "originalWidth": 1080,
+    "originalHeight": 1080
+  },
+  {
+    "src": "/images/arudra-2026/arudra-09.webp",
+    "width": 1080,
+    "height": 1080,
+    "original": "legacy/assets/img/arudra-2026/arudra-09.webp",
+    "originalWidth": 1080,
+    "originalHeight": 1080
+  },
+  {
+    "src": "/images/arudra-2026/arudra-10.webp",
+    "width": 1080,
+    "height": 1080,
+    "original": "legacy/assets/img/arudra-2026/arudra-10.jpg",
+    "originalWidth": 1080,
+    "originalHeight": 1080
+  },
+  {
+    "src": "/images/arudra-2026/arudra-11.webp",
+    "width": 1080,
+    "height": 1080,
+    "original": "legacy/assets/img/arudra-2026/arudra-11.webp",
+    "originalWidth": 1080,
+    "originalHeight": 1080
+  },
+  {
+    "src": "/images/arudra-festival-2024/arudra-2024-01.webp",
+    "width": 1170,
+    "height": 1211,
+    "original": "legacy/assets/img/arudra-festival-2024/arudra-2024-01.webp",
+    "originalWidth": 1170,
+    "originalHeight": 1211
+  },
+  {
+    "src": "/images/arudra-festival-2024/arudra-2024-02.webp",
+    "width": 1170,
+    "height": 1211,
+    "original": "legacy/assets/img/arudra-festival-2024/arudra-2024-02.webp",
+    "originalWidth": 1170,
+    "originalHeight": 1211
+  },
+  {
+    "src": "/images/arudra-festival-2024/arudra-2024-03.webp",
+    "width": 1170,
+    "height": 1210,
+    "original": "legacy/assets/img/arudra-festival-2024/arudra-2024-03.webp",
+    "originalWidth": 1170,
+    "originalHeight": 1210
+  },
+  {
+    "src": "/images/arudra-festival-2024/arudra-2024-04.webp",
+    "width": 1170,
+    "height": 1211,
+    "original": "legacy/assets/img/arudra-festival-2024/arudra-2024-04.webp",
+    "originalWidth": 1170,
+    "originalHeight": 1211
+  },
+  {
+    "src": "/images/arudra-festival-2024/arudra-2024-05.webp",
+    "width": 1170,
+    "height": 1211,
+    "original": "legacy/assets/img/arudra-festival-2024/arudra-2024-05.webp",
+    "originalWidth": 1170,
+    "originalHeight": 1211
+  },
+  {
+    "src": "/images/arudra-festival-2024/arudra-2024-06.webp",
+    "width": 1170,
+    "height": 1211,
+    "original": "legacy/assets/img/arudra-festival-2024/arudra-2024-06.webp",
+    "originalWidth": 1170,
+    "originalHeight": 1211
+  },
+  {
+    "src": "/images/arudra-festival-2024/arudra-2024-07.webp",
+    "width": 1170,
+    "height": 1211,
+    "original": "legacy/assets/img/arudra-festival-2024/arudra-2024-07.webp",
+    "originalWidth": 1170,
+    "originalHeight": 1211
+  },
+  {
+    "src": "/images/arudra-festival-2024/arudra-2024-08.webp",
+    "width": 1170,
+    "height": 1211,
+    "original": "legacy/assets/img/arudra-festival-2024/arudra-2024-08.webp",
+    "originalWidth": 1170,
+    "originalHeight": 1211
+  },
+  {
+    "src": "/images/arudra-festival-2024/arudra-2024-09.webp",
+    "width": 1170,
+    "height": 1211,
+    "original": "legacy/assets/img/arudra-festival-2024/arudra-2024-09.webp",
+    "originalWidth": 1170,
+    "originalHeight": 1211
+  },
+  {
+    "src": "/images/arudra-festival-2024/arudra-2024-10.webp",
+    "width": 1170,
+    "height": 1211,
+    "original": "legacy/assets/img/arudra-festival-2024/arudra-2024-10.webp",
+    "originalWidth": 1170,
+    "originalHeight": 1211
+  },
+  {
+    "src": "/images/arudra-festival-2024/arudra-2024-11.webp",
+    "width": 1170,
+    "height": 1211,
+    "original": "legacy/assets/img/arudra-festival-2024/arudra-2024-11.webp",
+    "originalWidth": 1170,
+    "originalHeight": 1211
+  },
+  {
+    "src": "/images/arudra-festival-2024/arudra-2024-12.webp",
+    "width": 1170,
+    "height": 1170,
+    "original": "legacy/assets/img/arudra-festival-2024/arudra-2024-12.webp",
+    "originalWidth": 1170,
+    "originalHeight": 1170
+  },
+  {
+    "src": "/images/arudra-festival-2024/arudra-2024-13.webp",
+    "width": 1170,
+    "height": 1211,
+    "original": "legacy/assets/img/arudra-festival-2024/arudra-2024-13.webp",
+    "originalWidth": 1170,
+    "originalHeight": 1211
+  },
+  {
+    "src": "/images/arudra-festival-2024/arudra-2024-14.webp",
+    "width": 1170,
+    "height": 1211,
+    "original": "legacy/assets/img/arudra-festival-2024/arudra-2024-14.webp",
+    "originalWidth": 1170,
+    "originalHeight": 1211
+  },
+  {
+    "src": "/images/arudra-festival-2024/arudra-2024-15.webp",
+    "width": 1170,
+    "height": 1211,
+    "original": "legacy/assets/img/arudra-festival-2024/arudra-2024-15.webp",
+    "originalWidth": 1170,
+    "originalHeight": 1211
+  },
+  {
+    "src": "/images/arudra-festival-2024/arudra-2024-16.webp",
+    "width": 1170,
+    "height": 1211,
+    "original": "legacy/assets/img/arudra-festival-2024/arudra-2024-16.webp",
+    "originalWidth": 1170,
+    "originalHeight": 1211
+  },
+  {
+    "src": "/images/arudra-festival-2024/arudra-2024-17.webp",
+    "width": 1170,
+    "height": 1211,
+    "original": "legacy/assets/img/arudra-festival-2024/arudra-2024-17.webp",
+    "originalWidth": 1170,
+    "originalHeight": 1211
+  },
+  {
+    "src": "/images/arudra-festival-2024/arudra-2024-18.webp",
+    "width": 1170,
+    "height": 1211,
+    "original": "legacy/assets/img/arudra-festival-2024/arudra-2024-18.webp",
+    "originalWidth": 1170,
+    "originalHeight": 1211
+  },
+  {
+    "src": "/images/arudra-festival-2024/arudra-2024-19.webp",
+    "width": 1170,
+    "height": 1211,
+    "original": "legacy/assets/img/arudra-festival-2024/arudra-2024-19.webp",
+    "originalWidth": 1170,
+    "originalHeight": 1211
+  },
+  {
+    "src": "/images/arudra-festival-2024/arudra-2024-20.webp",
+    "width": 1170,
+    "height": 1211,
+    "original": "legacy/assets/img/arudra-festival-2024/arudra-2024-20.webp",
+    "originalWidth": 1170,
+    "originalHeight": 1211
+  },
+  {
+    "src": "/images/arudra-festival-2025/arudra-2025-01.webp",
+    "width": 1080,
+    "height": 1080,
+    "original": "legacy/assets/img/arudra-festival-2025/arudra-2025-01.jpg",
+    "originalWidth": 1080,
+    "originalHeight": 1080
+  },
+  {
+    "src": "/images/arudra-festival-2025/arudra-2025-02.webp",
+    "width": 1080,
+    "height": 1080,
+    "original": "legacy/assets/img/arudra-festival-2025/arudra-2025-02.jpg",
+    "originalWidth": 1080,
+    "originalHeight": 1080
+  },
+  {
+    "src": "/images/arudra-festival-2025/arudra-2025-03.webp",
+    "width": 1080,
+    "height": 1080,
+    "original": "legacy/assets/img/arudra-festival-2025/arudra-2025-03.jpg",
+    "originalWidth": 1080,
+    "originalHeight": 1080
+  },
+  {
+    "src": "/images/arudra-festival-2025/arudra-2025-04.webp",
+    "width": 1080,
+    "height": 1080,
+    "original": "legacy/assets/img/arudra-festival-2025/arudra-2025-04.jpg",
+    "originalWidth": 1080,
+    "originalHeight": 1080
+  },
+  {
+    "src": "/images/arudra-festival-2025/arudra-2025-05.webp",
+    "width": 1080,
+    "height": 1080,
+    "original": "legacy/assets/img/arudra-festival-2025/arudra-2025-05.jpg",
+    "originalWidth": 1080,
+    "originalHeight": 1080
+  },
+  {
+    "src": "/images/arudra-festival-2025/arudra-2025-06.webp",
+    "width": 1080,
+    "height": 1080,
+    "original": "legacy/assets/img/arudra-festival-2025/arudra-2025-06.jpg",
+    "originalWidth": 1080,
+    "originalHeight": 1080
+  },
+  {
+    "src": "/images/arudra-festival-2025/arudra-2025-07.webp",
+    "width": 1080,
+    "height": 1080,
+    "original": "legacy/assets/img/arudra-festival-2025/arudra-2025-07.jpg",
+    "originalWidth": 1080,
+    "originalHeight": 1080
+  },
+  {
+    "src": "/images/arudra-festival-2025/arudra-2025-08.webp",
+    "width": 1080,
+    "height": 1080,
+    "original": "legacy/assets/img/arudra-festival-2025/arudra-2025-08.jpg",
+    "originalWidth": 1080,
+    "originalHeight": 1080
+  },
+  {
+    "src": "/images/arudra-festival-2025/arudra-2025-09.webp",
+    "width": 1080,
+    "height": 1080,
+    "original": "legacy/assets/img/arudra-festival-2025/arudra-2025-09.jpg",
+    "originalWidth": 1080,
+    "originalHeight": 1080
+  },
+  {
+    "src": "/images/arudra-festival-2025/arudra-2025-10.webp",
+    "width": 1079,
+    "height": 1079,
+    "original": "legacy/assets/img/arudra-festival-2025/arudra-2025-10.jpg",
+    "originalWidth": 1079,
+    "originalHeight": 1079
+  },
+  {
+    "src": "/images/arudra-festival-2025/arudra-2025-11.webp",
+    "width": 1080,
+    "height": 1080,
+    "original": "legacy/assets/img/arudra-festival-2025/arudra-2025-11.jpg",
+    "originalWidth": 1080,
+    "originalHeight": 1080
+  },
+  {
     "src": "/images/banners/arudra-2025-banner.webp",
     "width": 1920,
     "height": 666,

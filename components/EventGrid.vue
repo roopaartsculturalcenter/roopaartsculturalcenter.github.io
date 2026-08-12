@@ -104,7 +104,7 @@ scene(
                    change carries the hover instead. -->
               <NuxtImg
                 :src="event.flyerImage"
-                :alt="`Flyer for ${event.title}, ${eventDateLabel(event)}`"
+                :alt="event.flyerAlt ?? `Flyer for ${event.title}, ${eventDateLabel(event)}`"
                 :width="flyer.width"
                 :height="flyer.height"
                 loading="lazy"

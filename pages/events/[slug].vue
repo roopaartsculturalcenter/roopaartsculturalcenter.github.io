@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { events, getEvent, eventDateLabel, flyerSize } from '~/content/events'
+import { eventGalleries } from '~/content/gallery'
 import { site } from '~/data/site'
 
 const route = useRoute()
@@ -51,6 +52,11 @@ useEntrance(sceneRoot, { stagger: 0.06 })
 
 const creditRoot = ref<HTMLElement | null>(null)
 useEntrance(creditRoot, { stagger: 0.04 })
+
+// Only events listed in `eventGalleries` get a gallery; every other event page is
+// untouched. Heading and rubric come from the data, not the template, so one
+// edition's copy cannot leak onto another's page. See content/gallery.ts.
+const gallery = computed(() => eventGalleries[String(route.params.slug)] ?? null)
 
 // No prerender hint needed: nitro.prerender.crawlLinks follows the links from
 // /events, so every event page is generated at build time.
@@ -202,6 +208,19 @@ useEntrance(creditRoot, { stagger: 0.04 })
         </div>
       </section>
     </template>
+
+    <!-- The edition's own gallery, for events that have one. `tone="deep"` because
+         the credits block above is bg-stage and two flat sections in a row read as
+         one. Reuses ActGallery, so this gets the site's existing lightbox: click to
+         grow from the thumbnail, arrow keys between frames, Escape to close. -->
+    <ActGallery
+      v-if="gallery"
+      :id="`${event.slug}-gallery`"
+      :photos="gallery.images"
+      :heading="gallery.heading"
+      :rubric="gallery.rubric"
+      tone="deep"
+    />
 
     <ActOvation show-other-ways />
   </div>

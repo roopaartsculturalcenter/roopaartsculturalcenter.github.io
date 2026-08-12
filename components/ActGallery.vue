@@ -10,9 +10,21 @@
 import type { GalleryPhoto } from '~/content/gallery'
 
 const props = withDefaults(
-  defineProps<{ photos: GalleryPhoto[]; heading?: string; rubric?: string; limit?: number }>(),
-  { heading: 'From the stage.', rubric: 'Select any photograph to open it' },
+  defineProps<{
+    photos: GalleryPhoto[]
+    heading?: string
+    rubric?: string
+    limit?: number
+    /** Section background, named as EventGrid names it. Defaults to the lighter
+     *  stage so /gallery and /arudra are unchanged. */
+    tone?: 'stage' | 'deep'
+    /** Distinguishes the heading id when a page has more than one gallery. */
+    id?: string
+  }>(),
+  { heading: 'From the stage.', rubric: 'Select any photograph to open it', tone: 'stage', id: 'applause' },
 )
+
+const headingId = computed(() => `${props.id}-heading`)
 
 const { gsap, Flip, scene, reduced } = useStage()
 
@@ -109,10 +121,14 @@ function onKeydown(e: KeyboardEvent) {
 </script>
 
 <template>
-  <section ref="root" class="relative bg-stage py-28 lg:py-40" aria-labelledby="applause-heading">
+  <section
+    ref="root"
+    :class="['relative py-28 lg:py-40', tone === 'deep' ? 'bg-stage-deep' : 'bg-stage']"
+    :aria-labelledby="headingId"
+  >
     <div class="stage-pad">
       <p class="rubric">{{ rubric }}</p>
-      <h2 id="applause-heading" class="mt-6 font-display text-monumental text-chalk">
+      <h2 :id="headingId" class="mt-6 font-display text-monumental text-chalk">
         {{ heading }}
       </h2>
 
