@@ -14,7 +14,7 @@ useSeo({
   <div>
     <PageOverture
       title="Everything currently booking, and everything we have staged."
-      lede="Every event below is drawn from one list, so a date passing moves it into Past on its own."
+      lede="From the Arudra Festival to intimate concerts: what's on stage next, and everything that came before."
       image="/images/home/home-4.webp"
     />
 
