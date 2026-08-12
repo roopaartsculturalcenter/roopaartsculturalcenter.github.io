@@ -14,11 +14,16 @@ Fully static output.
 |---|---|
 | Vercel | **https://roopaarts.vercel.app** |
 | GitHub Pages | **https://roopaartsculturalcenter.github.io** (built by Actions from `architecture-v3`) |
-| `roopaartsculturalcenter.org` | Still the **old** site — LiteSpeed/PHP hosting, not yet pointed here |
+| **roopaartsculturalcenter.org** | **Live, and serving this build.** Set as the Pages custom domain, so `*.github.io` now 301s here |
 
-Both live hosts serve the same static build. Being static on two hosts is the constraint behind
-every third-party decision below: there is no server, so anything dynamic has to work from the
-browser alone.
+The domain was on LiteSpeed/PHP with the old site until the cutover; it is now GitHub Pages.
+
+> ⚠️ **"Enforce HTTPS" is off** (`https_enforced: false`). `https://` works and the certificate is
+> valid, but a visitor arriving on `http://` is left there rather than redirected. On a site with a
+> donation page that should be on. **Settings → Pages → Enforce HTTPS.**
+
+Every host serves the same static build. Being static is the constraint behind every third-party
+decision below: there is no server, so anything dynamic has to work from the browser alone.
 
 ---
 
@@ -223,14 +228,22 @@ build and `vercel --prod` first.
 > legacy builder lands last it serves the unbuilt branch and the site 404s.
 > **Fix: Settings → Pages → Source → "GitHub Actions".**
 
-### Connecting roopaartsculturalcenter.org
+### roopaartsculturalcenter.org
 
-The domain still serves the **old** site on LiteSpeed/PHP.
+**Already connected, to GitHub Pages** — not to Vercel. `cname` is set in the Pages config,
+`www` 301s to the apex, and `*.github.io` 301s to the domain. Verified serving this build.
 
-1. Vercel project → **Settings → Domains** → add the apex and `www`.
-2. Create the DNS records Vercel displays (typically `A @ → 76.76.21.21`,
-   `CNAME www → cname.vercel-dns.com`). Use the values Vercel shows, not these.
-3. **Only touch `A`/`CNAME`.** Leave MX records alone or you will break email.
+Two things to know about it:
+
+- **The custom domain is stored in Pages settings, and there is no `public/CNAME` in the repo.**
+  Branch-based deploys keep it in a `CNAME` file; this one does not have that file, so if the
+  domain ever drops after a deploy, add `public/CNAME` containing `roopaartsculturalcenter.org`.
+- Enforce HTTPS is off. See the warning at the top.
+
+If it is ever moved to Vercel instead: add the apex and `www` under project **Settings → Domains**,
+create the records Vercel displays (typically `A @ → 76.76.21.21`,
+`CNAME www → cname.vercel-dns.com`) using its values rather than these, and **only touch
+`A`/`CNAME`** — leave MX records alone or you will break email.
 
 ---
 
