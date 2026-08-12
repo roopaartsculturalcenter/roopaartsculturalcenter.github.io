@@ -226,7 +226,8 @@ build and `vercel --prod` first.
 > ⚠️ **Pages `build_type` is still `legacy`.** Both the legacy builder and the Actions workflow run
 > on every push and race each other. It has resolved correctly so far, but that is luck: if the
 > legacy builder lands last it serves the unbuilt branch and the site 404s.
-> **Fix: Settings → Pages → Source → "GitHub Actions".**
+> **Fix: Settings → Pages → Source → "GitHub Actions"** — and note `public/CNAME` has to stay in
+> place for that switch, or the custom domain goes with it. See below.
 
 ### roopaartsculturalcenter.org
 
@@ -235,9 +236,12 @@ build and `vercel --prod` first.
 
 Two things to know about it:
 
-- **The custom domain is stored in Pages settings, and there is no `public/CNAME` in the repo.**
-  Branch-based deploys keep it in a `CNAME` file; this one does not have that file, so if the
-  domain ever drops after a deploy, add `public/CNAME` containing `roopaartsculturalcenter.org`.
+- **The domain is pinned in two places, and it needs both.** Setting it in Settings wrote a
+  root-level `CNAME`, which is what the *legacy* branch builder serves. The Actions workflow
+  publishes `.output/public`, and a root `CNAME` is not inside `public/`, so it would **not** be in
+  that artifact — switching Source to "GitHub Actions" would drop the custom domain and take the
+  site off the domain. `public/CNAME` exists for exactly that reason: Nuxt copies it into the
+  output, verified present in the build. **Do not delete either copy.**
 - Enforce HTTPS is off. See the warning at the top.
 
 If it is ever moved to Vercel instead: add the apex and `www` under project **Settings → Domains**,
