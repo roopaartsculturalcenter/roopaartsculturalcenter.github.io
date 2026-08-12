@@ -1,16 +1,24 @@
 # Roopa Arts Cultural Center
 
 The website for [Roopa Arts Cultural Center](https://roopaartsculturalcenter.org) — a Texas
-501(c)(3) public charity in Texas, presenting the Arudra Festival, concerts, workshops,
-and seasonal celebrations.
+501(c)(3) public charity presenting the Arudra Festival, concerts, workshops, and seasonal
+celebrations.
 
 The site is choreographed like a classical recital: the home page is one continuous scroll,
-structured as acts, on a near-black stage lit with spotlight gold.
+structured as acts, on a warm off-white stage lit with gold.
 
 **Nuxt 3** · **Tailwind** · **GSAP** (ScrollTrigger, SplitText, Flip) · **Lenis** · **Three.js**
-Fully static output, deployed to Vercel.
+Fully static output.
 
-**Live: https://roopaarts.vercel.app**
+| | |
+|---|---|
+| Vercel | **https://roopaarts.vercel.app** |
+| GitHub Pages | **https://roopaartsculturalcenter.github.io** (built by Actions from `architecture-v3`) |
+| `roopaartsculturalcenter.org` | Still the **old** site — LiteSpeed/PHP hosting, not yet pointed here |
+
+Both live hosts serve the same static build. Being static on two hosts is the constraint behind
+every third-party decision below: there is no server, so anything dynamic has to work from the
+browser alone.
 
 ---
 
@@ -26,13 +34,16 @@ npm run dev          # http://localhost:3000
 | `npm run dev` | Dev server with hot reload |
 | `npm run build` | Production build → `.vercel/output/static` |
 | `npm run preview` | Preview the production build |
-| `npm run images` | Regenerate web images from the originals |
+| `npm run images` | Regenerate web images from the originals, and rewrite `data/image-manifest.json` |
 
 Dev mode does not reflect real performance. To see what actually ships:
 
 ```bash
-npm run build && npx serve .vercel/output/static -l 4173
+npm run build && python3 -m http.server --directory .vercel/output/static 4173
 ```
+
+> Use a plain static server, not `serve -s`. The `-s` flag rewrites every unknown path to
+> `index.html`, so a broken route still returns the homepage and looks fine.
 
 ---
 
@@ -40,111 +51,186 @@ npm run build && npx serve .vercel/output/static -l 4173
 
 The home page is assembled from these, in order. Each is a self-contained component.
 
-| Act | Component | What it does |
+| # | Component | What it does |
 |---|---|---|
 | 0 | `TheCurtain` | Mandala mark draws in stroke, panels slide apart. Once per session |
-| 1 | `ActInvocation` | Masked line reveals, rotating ring, WebGL temple-arch hero, mouse parallax |
-| 2 | `ActInvocation` | Pinned 180vh scrub — type recedes, five photo columns counter-drift in |
-| 3 | `ActMission` | Pinned recitation, verse by verse, one phrase lighting gold at centre |
-| 4 | `ActPlaybill` | Cards reveal from a slanted shard, 3D tilt on hover, magnetic RSVP |
-| 5 | `ActFilmstrip` | Pinned horizontal filmstrip with velocity skew and a gold progress line |
-| 6 | `ActGallery` | Masonry with clip-path wipes; lightbox expands from the thumbnail (GSAP Flip) |
-| 7 | `ActOvation` | Cursor-tracked spotlight, Zelle details centre stage |
-| — | `TheFooter` | Outlined "Join the audience", velocity-skewed marquee, underline draws |
+| 1 | `ActInvocation` | Masked line reveals, rotating ring, WebGL temple-arch hero, mouse parallax; then a pinned scrub where the type recedes and photo columns counter-drift in |
+| 2 | `SceneFeatured` | The next event, full bleed |
+| 3 | `SceneStory` | Who we are, in short |
+| 4 | `SceneArudraTeaser` | The festival, with a fan of posters |
+| 5 | `SceneSocial` | Embedded Facebook feed (see *Social* below) |
+| 6 | `ActOvation` | Cursor-tracked spotlight, Zelle details centre stage |
+| — | `TheFooter` | Outlined "Join the audience", velocity-skewed marquee, mailing-list sign-up |
 
-Acts 3–7 are reused on the inner pages, so every route is the same production.
+Shared across the inner pages: `PageOverture` (every inner page's hero, mirroring the home
+composition), `EventGrid`, `ActGallery`, `ActMission` (`/about`), `ProductionProgramme`
+(edition pages), `ActOvation`, `TheFooter`. Every route is the same production.
+
+Routes: `/` · `/about` · `/events` · `/events/[slug]` · `/arudra` · `/gallery` · `/support`
 
 ---
 
 ## Adding a new event
 
-**Everything about events lives in one file: [`data/events.ts`](data/events.ts).**
+**Everything about events lives in [`content/events.ts`](content/events.ts).** One entry gives you
+the card on `/events`, the card on `/arudra` if the slug contains `arudra`, and the detail page at
+`/events/<slug>` — the route is served by `pages/events/[slug].vue` and prerendered because
+`crawlLinks` follows the link. Nothing is written twice.
 
 **1. Add the flyer.** Drop the original into `legacy/assets/img/events/` and run `npm run images`.
-(Or put an already-web-sized `.webp` straight into `public/images/events/`.)
 
 **2. Add an entry:**
 
 ```ts
 {
-  slug: 'spring-concert-2027',        // unique, url-safe
   title: 'Spring Concert 2027',
-  status: 'upcoming',                 // 'upcoming' or 'past'
-  image: '/images/events/spring-concert-2027.webp',
-  width: 1400,                        // real pixel size — prevents layout shift
-  height: 1400,
-  alt: 'Flyer for the 2027 Spring Concert',
-  date: 'April 18, 2027',             // shown verbatim
-  isoDate: '2027-04-18',              // for <time datetime> and sorting
-  venue: 'Stafford Centre',
+  slug: 'spring-concert-2027',                // unique, url-safe
+  date: '2027-04-18',                         // ISO; null only for undated series
+  dateLabel: 'April 18–19, 2027',             // optional: overrides the displayed text
+  artists: ['Name, role'],                    // [] if none are announced
   description: 'An evening of Carnatic vocal and violin.',
-  rsvpUrl: 'https://evite.me/XXXXXXX',
-},
+  venue: 'Stafford Centre',                   // or null
+  meta: 'Two cities, two nights',             // optional one-liner on the card
+  flyerImage: '/images/events/spring-concert-2027.webp',
+  rsvpUrl: 'https://…',                       // optional
+}
 ```
 
-Only `slug`, `title`, `status`, `image`, `width`, `height`, `alt` are required. Anything omitted
-is not rendered. Look sizes up in `data/image-manifest.json`.
+`title`, `slug`, `date`, `artists`, `description`, `venue` and `flyerImage` are required.
 
-**3. Done.** It appears on `/events` and, if `upcoming`, in the home page Playbill.
+- **There is no `status` field.** Upcoming vs past is derived from `date`, so it can never go stale.
+- **There is no `width`/`height`.** `flyerSize()` reads the real dimensions from the manifest and
+  **throws** if the image is missing from it — run `npm run images`.
+- `flyerAlt` overrides the card's generated alt text. Only set it when
+  *"Flyer for {title}, {date}"* is genuinely inadequate.
+- `seasonOverview: true` pushes an entry to the end of the list regardless of date.
+- `pinned: true` forces an entry to count as upcoming whatever its date says. An escape
+  hatch for a headline act, not a way to fake a date.
+- `production` carries long-form detail (scenes, credits, a full programme book) and renders on
+  the edition page only.
+
+### Adding a gallery to an event page
+
+Galleries are per-event, keyed by slug in [`content/gallery.ts`](content/gallery.ts):
+
+```ts
+export const eventGalleries: Record<string, EventGallery> = {
+  'arudra-2026': { heading: '…', rubric: '…', images: [...] },
+}
+```
+
+An event with no entry renders **no gallery section** — deliberately, because a heading over an
+empty grid reads as a broken page rather than one awaiting content. Heading and rubric live in the
+data, not the template, so one edition's copy cannot leak onto another's page.
+
+Images go in their own folder under `legacy/assets/img/`, with a rule in
+`scripts/optimize-images.mjs`, then `npm run images`. Alt text should name what is *in* the image:
+these are mostly artist announcement cards with legible names, so *"Arudra 2026 performance"*
+would be both wrong and useless to a screen reader.
 
 ### The rest of the content
 
 | File | Contents |
 |---|---|
-| `data/site.ts` | Name, tagline, location, email, socials, Zelle details, nav |
-| `data/events.ts` | All events |
-| `data/arudra.ts` | Arudra 2026 programme, flyers, artist cards, featured artists |
+| `data/site.ts` | Name, tagline, location, email, socials, Zelle details, nav, social feed, mailing list |
+| `content/events.ts` | All events, and the per-edition production detail |
+| `content/gallery.ts` | Gallery groups, the curation hold-back list, Arudra collateral, `eventGalleries` |
+| `data/arudra.ts` | The festival's standing playbill, 2026 credits, previous-year artists |
+| `data/arudra-2026-programme.json` | The 2026 programme book: 195 blocks of narrative, verse and raga |
 | `data/about.ts` | Story copy, Act 3 verses, accordions |
-| `data/gallery.ts` | Hero picks; the gallery builds itself from the manifest |
+| `data/image-manifest.json` | Generated. Do not hand-edit |
 
-Adding photos to `legacy/assets/img/gallery/` and running `npm run images` publishes them.
+---
+
+## Mailing list
+
+`data/site.ts` → `mailingList`. Currently a **Formspree** endpoint (free tier: 50 submissions a
+month). The form is in `TheFooter`, which is mounted in the default layout, so it is on all 20
+pages from one insertion.
+
+> **Formspree relays to email. It does not build a list and cannot send a campaign.** To actually
+> mail the season announcement you want a list tool — MailerLite (free to 1,000 subscribers),
+> Buttondown, Kit or Mailchimp — which stores subscribers and handles confirmation and
+> unsubscribes.
+
+Three states, because a static site has no backend:
+
+| `endpoint` / `mode` | Behaviour |
+|---|---|
+| `endpoint: null` | A `mailto:` link. Not a placeholder — it genuinely works with nothing configured |
+| `mode: 'fetch'` | Posts in the background, thanks the reader in place. Formspree, Buttondown |
+| `mode: 'native'` | Plain form POST into a new tab. The **only** thing that works with Mailchimp, which refuses cross-origin AJAX — and also the no-JavaScript path |
+
+`field` sets the input name: `email` for Formspree/Buttondown, `fields[email]` for MailerLite,
+`EMAIL` for Mailchimp.
+
+## Social
+
+`SceneSocial` embeds Facebook's **Page Plugin**, which needs no key and no token.
+
+Instagram is the busier account but **cannot** be embedded as a feed from a static site: Basic
+Display was shut down in December 2024, Graph requires an access token that cannot be shipped to a
+browser, and the legacy `?__a=1` endpoint sits behind a login. Per-post embeds are open, but they
+need hardcoded shortcodes, so they are not a feed.
+
+The plugin iframe is **deliberately not sandboxed**. A sandbox gives it an opaque origin, storage
+access is denied, and it spins forever.
+
+## Favicon
+
+`public/favicon.ico` (16/32/48), `favicon-32x32.png`, `favicon-16x16.png`,
+`apple-touch-icon.png` (180). Generated from `legacy/assets/img/logo/racc-logo.png`: wordmark
+trimmed off, transparent edges trimmed, squared with a 6% margin.
+
+The icon is the **R mark alone**. It previously pointed at the full 767×159 horizontal lockup,
+which a browser crushed into 16px as an illegible smear. The Apple icon is flattened onto the page
+colour because iOS discards alpha and composites on black.
 
 ---
 
 ## Deploying
 
-Live at **https://roopaarts.vercel.app**, on the Vercel project `roopa-arts`
-(scope `naveenkumarp3939-3162s-projects`). The build emits Vercel's Build Output API format, so
-everything is static files on the CDN — no functions, nothing to warm up.
+The build emits Vercel's Build Output API format — static files on a CDN, no functions.
 
-### Redeploying
+### Vercel
 
-> **Pushing to GitHub does not deploy.** The repo is not connected to the Vercel project:
-> `vercel link` failed with *"You need to add a Login Connection to your GitHub account first."*
-> Until that is added (Vercel → Account Settings → Login Connections → GitHub), every deploy is
-> manual.
+Project `roopa-arts` (scope `naveenkumarp3939-3162s-projects`), linked locally via
+`.vercel/project.json`.
 
-```bash
-vercel --prod        # from the repo root, after `vercel login`
-```
+> **Check whether pushing deploys before relying on it.** The repo was historically *not*
+> connected to the Vercel project — `vercel link` failed with *"You need to add a Login Connection
+> to your GitHub account first"* — which made every deploy manual:
+> ```bash
+> vercel --prod
+> ```
+> Once that connection exists, pushes deploy on their own and each branch gets a preview URL.
 
-Once the GitHub connection exists, imports at [vercel.com/new](https://vercel.com/new) work
-normally: keep the detected **Nuxt.js** preset, leave **Output Directory** empty, no env vars.
-Pushes then deploy on their own and each branch gets its own preview URL.
+`*.vercel.app` subdomains are globally unique across all Vercel users, so `roopa-arts.vercel.app`
+was taken and this is `roopaarts`. The auto-generated `roopa-arts-<hash>-<scope>` URLs sit behind
+Vercel Authentication and redirect to a login page; the custom domain does not, which is why
+`roopaarts.vercel.app` is the link to share.
 
-### About the URLs
+A domain cannot be attached while the most recent **production** deployment is failed — fix the
+build and `vercel --prod` first.
 
-`*.vercel.app` subdomains are globally unique across all Vercel users — `roopa-arts.vercel.app`
-was already taken by someone else, hence `roopaarts`.
+### GitHub Pages
 
-The auto-generated `roopa-arts-<hash>-<scope>.vercel.app` URLs sit behind Vercel Authentication
-and redirect to a login page. The custom domain does not, which is why `roopaarts.vercel.app` is
-the link to share.
+`.github/workflows/pages.yml` builds with `NITRO_PRESET=github_pages` and publishes
+`.output/public`.
 
-A domain cannot be attached while the project's most recent **production** deployment is failed —
-fix the build and `vercel --prod` first, then add the domain.
+> ⚠️ **Pages `build_type` is still `legacy`.** Both the legacy builder and the Actions workflow run
+> on every push and race each other. It has resolved correctly so far, but that is luck: if the
+> legacy builder lands last it serves the unbuilt branch and the site 404s.
+> **Fix: Settings → Pages → Source → "GitHub Actions".**
 
 ### Connecting roopaartsculturalcenter.org
 
-1. Project → **Settings → Domains** → add `roopaartsculturalcenter.org` and the `www` variant.
+The domain still serves the **old** site on LiteSpeed/PHP.
+
+1. Vercel project → **Settings → Domains** → add the apex and `www`.
 2. Create the DNS records Vercel displays (typically `A @ → 76.76.21.21`,
    `CNAME www → cname.vercel-dns.com`). Use the values Vercel shows, not these.
-3. **Only touch the `A`/`CNAME` records** — leave MX records alone or you will break email.
-
-The old site is still on GitHub Pages at `roopaartsculturalcenter.github.io`, served from the
-`claude/roopaartsculturalcenter-redesign-i2nw1b` branch in legacy (no-build) mode. Nothing here
-has disturbed it. Pointing Pages at this branch would publish raw `.vue` source — it would need a
-GitHub Actions workflow and the `github-pages` Nitro preset instead.
+3. **Only touch `A`/`CNAME`.** Leave MX records alone or you will break email.
 
 ---
 
@@ -159,33 +245,46 @@ same content with no pin, no scrub, no parallax. Lenis does not initialise. The 
 play. The custom cursor does not mount. Test it — it is a supported way to use the site.
 
 **Scrub tweens must be `fromTo` with `immediateRender: false`.** A plain `.to()` captures its start
-value when the timeline is built, which races the entrance animation. This cost us a permanently
+value when the timeline is built, which races the entrance animation. This cost a permanently
 invisible mandala ring: the timeline was built mid-intro, captured `opacity: 0`, and pinned it there.
 
-**Only `transform` and `opacity` inside pins and scrubs.** `clip-path` is used for the Playbill and
-Gallery reveals because it is compositor-accelerated and causes no layout — but only on `once`
+**Only `transform` and `opacity` inside pins and scrubs.** `clip-path` is used for the event-card
+and gallery reveals because it is compositor-accelerated and causes no layout — but only on `once`
 triggers, never inside a scrub.
 
 **Do not put opacity on a reveal that also needs a contrast check.** A half-transparent card blends
-its text against the stage, and automated contrast auditing reads the blended colour as real. The
-Playbill reveals with `clip-path` alone for exactly this reason.
+its text against the stage, and automated contrast auditing reads the blended colour as real.
+
+**Animations freeze in a backgrounded tab.** `requestAnimationFrame` is throttled, so GSAP's ticker
+stops mid-tween — entrance wipes stall part-open and `Flip.fit` leaves the lightbox image sized to
+its thumbnail. When automating screenshots, this looks exactly like a rendering bug and is not one.
 
 ### Other traps, all hit during the build
 
 - **Do not unpin `image.provider`.** Left to auto-detect, `@nuxt/image` picks the `vercel`
   provider when it sees the Vercel preset and emits `/_vercel/image?url=…` URLs. The prerenderer
   crawls those, 404s, and **fails the build** — and it cannot reproduce locally, where the same
-  config resolves to `ipx`. This broke the first deploy. `ipxStatic` keeps both environments
-  identical and writes all ~1,500 variants as real files.
-- **Tailwind opacity modifiers must be multiples of 5.** `bg-stage/90` works; `bg-stage/92`
-  silently generates *no CSS* and the element is transparent.
+  config resolves to `ipx`. `ipxStatic` keeps both environments identical and writes every variant
+  as a real file. `$development` overrides it back to `ipx`, or dev 404s on every image.
+- **Colour opacity modifiers must exist in `theme.opacity`.** The default scale is multiples of 5;
+  anything else — `text-chalk/82`, `border-chalk/12`, `bg-[#17120F]/97` — silently matches no
+  utility and is dropped, with no build warning. The text then renders **fully opaque** and a
+  border falls back to Tailwind's gray-200, a cool grey in a warm palette. The values in use are
+  registered in `tailwind.config.ts`; add yours there or use a multiple of 5. This bit twice: it
+  hid 48 of 92 opacity usages, and it meant the lightbox scrim had never rendered at all.
+- **Gold must never carry text.** `spot.DEFAULT` is 2.2:1 on the light stage and is a fill colour
+  only; `spot.ink` is the same hue taken dark enough to read. All `text-*` uses `spot-ink`.
 - **`@nuxt/image` needs breakpoint-prefixed `sizes`.** A bare `sizes="100vw"` produces a
   **1-pixel** srcset. Use `utils/imageSizes.ts`.
 - **A canvas hidden with `v-show` measures 0×0** and the WebGL renderer never recovers. It is
   hidden with opacity instead, and sized after `nextTick` with a `ResizeObserver`.
 - **Do not `v-if` images out of the DOM to defer them.** The prerender then never generates their
-  `_ipx` variants and the deployed static site 404s on every one. Defer them positionally instead.
-- **Chalk text below `text-chalk/50` fails contrast** on the stage black. 50 is the floor.
+  `_ipx` variants and the deployed site 404s on every one. Defer them positionally instead.
+- **A negative `z-index` cannot escape a positioned ancestor.** The hero wash nested inside a
+  `z-10` context painted over the photo wall below it; it has to be a sibling.
+- **Flexbox `align-items` defaults to `stretch`, and in a column that acts on width.** The footer
+  logo was being pulled to the container width against its fixed height and distorting — only on
+  phones, because `sm:items-center` masked it above 640px.
 
 ---
 
@@ -199,7 +298,10 @@ competed with the hero image and cost ~1s of LCP.
 The WebGL arch declines to run under reduced motion, without WebGL, or on devices reporting ≤4
 cores or <4GB, falling back to a CSS-masked still.
 
-Measured on the production build:
+> **The Lighthouse table below was measured on the earlier dark-theme build and has not been
+> re-run since.** Treat it as indicative only, and **re-measure against a deployed URL with
+> PageSpeed Insights** before quoting numbers. Repeated local runs on one unchanged build ranged
+> 79–91 on mobile home with no code change.
 
 | | Performance | Accessibility | Best practices | SEO |
 |---|---|---|---|---|
@@ -207,57 +309,58 @@ Measured on the production build:
 | Mobile (inner pages) | 89–96 | **100** | **100** | **100** |
 | Mobile (home) | 79–91, high variance | **100** | **100** | **100** |
 
-> **Read the mobile home number with care.** Repeated Lighthouse runs on the same build ranged
-> 79–91 with no code change, and a control page that had scored 96 earlier dropped to 86 under
-> sustained machine load. These were measured on a developer laptop running the dev server, a
-> static server and Chrome simultaneously. **Re-measure against the deployed URL with PageSpeed
-> Insights** before drawing conclusions.
-
-CLS is 0–0.011 everywhere. Total blocking time is 0ms.
-
 ---
 
 ## Accessibility
 
-- 100 on every route, verified per page.
+Contrast is audited per route with a script that walks every text node and composites ancestor
+backgrounds, checked at desktop and tablet widths. Current status: **0 failures across all 20 routes.**
+
 - All content is real text — nothing meaningful lives in an image.
 - Keyboard: skip link, focus trapping in the menu and lightbox, arrow keys and Escape in the
   lightbox, focus returned to the element that opened it.
-- The custom cursor hides the system cursor, but **restores it the instant a key is pressed** —
-  and never mounts on touch or under reduced motion.
-- Focus rings are gold on stage black and always visible.
+- The custom cursor hides the system cursor but **restores it the instant a key is pressed**, and
+  never mounts on touch or under reduced motion.
+- WCAG AA thresholds: 4.5:1 normal text, 3:1 for large (≥24px, or ≥18.66px bold). Several
+  regressions here were a few hundredths under the line, so measure rather than eyeball.
 
 ---
 
 ## Structure
 
 ```
-components/     TheCurtain, ActInvocation, ActMission, ActPlaybill, ActFilmstrip,
-                ActGallery, ActOvation, TheNav, TheFooter, TheCursor, PageOverture
+components/     TheCurtain, ActInvocation, ActMission, ActGallery, ActOvation, EventGrid,
+                ProductionProgramme, PageOverture, MailingListForm, SceneFeatured, SceneStory,
+                SceneArudraTeaser, SceneSocial, TheNav, TheFooter, TheCursor, TheMandalaRing
 composables/    useStage (GSAP + scenes), useArchCanvas (WebGL), useMotionPreference,
                 useMagnetic, useSeo
-data/           All content + generated image-manifest.json
-pages/          /, /about, /events, /arudra-2026, /arudra-2026/gallery, /gallery, /donate
+content/        events.ts, gallery.ts
+data/           site.ts, arudra.ts, about.ts, the 2026 programme, image-manifest.json
+pages/          /, /about, /events, /events/[slug], /arudra, /gallery, /support
 plugins/        lenis.client.ts
+scripts/        optimize-images.mjs
 public/fonts/   Self-hosted Fraunces + Inter (variable, latin + latin-ext)
 public/images/  Web-ready WebP (generated — do not hand-edit)
-legacy/         The original static site and uncompressed originals. Not built, not served,
-                and excluded from deploys by .vercelignore (85 MB the build never reads)
+legacy/         The original static site and the uncompressed originals. Not built, not served,
+                excluded from deploys by .vercelignore (~92 MB the build never reads)
 ```
 
 Old `.html` URLs 301-redirect to their new paths (`nuxt.config.ts`).
 
 ## Content still needed
 
+- **Artist lists for Arudra Festival 2024 and 2025.** Both have `artists: []`, so neither page has
+  an "On stage" list or schema.org `performer` data — yet their announcement cards name 20 and 10
+  people respectively. The names are already transcribed in the alt text in `content/gallery.ts`.
 - Founding story beyond the published paragraph; founder and board bios and headshots.
-  Scaffolding for these was built and then removed for launch — nothing invented was
-  shipped. The published About page names no founder, lists no trustee and gives no
-  reach figures, so the site claims none of it.
-- Real "Community Impact" copy — the `community-impact` accordion is assembled from
-  published material, which is honest but is not impact copy
-- Per-photo captions (all gallery images share one descriptive alt)
-- A vector logo (SVG). The raster lockup is now in the nav and footer
-  (`racc-logo-white.webp`, 600×124); the curtain still draws a mandala mark
-  because no vector wordmark exists
-- Hero video, if wanted — the only motion assets in the archive are two 673×501 slideshow GIFs
-- **Verify the Zelle QR** resolves to the right account before launch
+  Scaffolding was built and then removed for launch — nothing invented was shipped. The published
+  About page names no founder, lists no trustee and gives no reach figures, so the site claims none.
+- Real "Community Impact" copy — the `community-impact` accordion is assembled from published
+  material, which is honest but is not impact copy.
+- Per-photo captions: the ~63 archive photographs share one descriptive alt and carry no
+  attribution, which is why they sit in one "Company archive" group rather than being assigned to
+  events on a guess.
+- A vector logo (SVG). Everything is raster, which is also why the favicon is generated by
+  trimming the lockup rather than exported cleanly.
+- **Verify the Zelle QR** on `/support` resolves to the right account. This is a live donation path
+  and has never been checked.
