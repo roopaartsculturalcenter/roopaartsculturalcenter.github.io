@@ -77,10 +77,12 @@ useEntrance(socialRoot)
       </div>
     </section>
 
-    <!-- Every edition. Each card links to that year's page. -->
+    <!-- Every edition. Each card links to that year's page. The heading no longer
+         says "every Arudra we have staged": 2027 is announced and in this grid, and
+         a past-tense heading over an upcoming edition reads as a mistake. -->
     <EventGrid
       :events="arudraEvents"
-      heading="Every Arudra we have staged."
+      heading="Every Arudra, on stage and to come."
       tone="deep"
       empty="Arudra dates for the coming season are still being confirmed."
     />

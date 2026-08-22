@@ -142,6 +142,35 @@ const source: RaccEventSource[] = [
     flyerImage: '/images/events/ilaiyaraaja-night.webp',
   },
   {
+    // Everything here is read off the save-the-date poster and nothing more: day,
+    // date and venue. `artists` stays empty because the poster announces no bill,
+    // and there is no `production` because no programme exists yet. Both fill in
+    // the same way 2026's did, once the line-up is confirmed.
+    //
+    // Slug follows arudra-2026, the edition immediately before it, rather than the
+    // older arudra-festival-YYYY form.
+    title: 'Arudra 2027',
+    slug: 'arudra-2027',
+    date: '2027-02-27',
+    // The poster leads with the day of the week and gives no start time, so the
+    // label carries the day and stops there rather than inventing an hour.
+    dateLabel: 'Saturday, February 27, 2027',
+    artists: [],
+    description:
+      'Our signature annual production returns. Save the date: the programme, cast ' +
+      'and credits are announced closer to the day.',
+    venue: 'Jewish Community Center of Houston',
+    meta: 'Save the date · Jewish Community Center of Houston',
+    flyerImage: '/images/events/arudra-2027.webp',
+    // The default "Flyer for Arudra 2027, Saturday, February 27, 2027" would repeat
+    // the line of text directly above the card. This describes what the poster
+    // shows instead. The figure is deliberately not named: the lotus and the parrot
+    // fit more than one goddess, and the poster itself names none.
+    flyerAlt:
+      'Save-the-date poster for Arudra 2027 at the Jewish Community Center of Houston, ' +
+      'with a goddess holding a lotus, a parrot at her shoulder, between two temple gopurams',
+  },
+  {
     // Aug 2 2026 — already run, so this derives as past on its own and appears
     // under "Previously on this stage". Nothing marks it by hand.
     title: 'Rule of N: A Chamber Music Experience',
