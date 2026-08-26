@@ -51,6 +51,8 @@ export interface RaccEventSource {
    */
   flyerAlt?: string
   rsvpUrl?: string
+  /** Overrides the default "RSVP" text for ticketed events. */
+  actionLabel?: string
   /**
    * Long-form detail for the featured production of an event, rendered on its own
    * page rather than on a landing page.
@@ -140,6 +142,8 @@ const source: RaccEventSource[] = [
       'Arjun, vocals (Super Singer 5 fame) · Akhila, vocals (ETV title winner) · ' +
       'Achi, violin · with live band',
     flyerImage: '/images/events/ilaiyaraaja-night.webp',
+    rsvpUrl: 'https://www.zeffy.com/en-US/ticketing/ilaiyaraaja-night-timeless-tamil-melodies',
+    actionLabel: 'Buy tickets',
   },
   {
     // Everything here is read off the save-the-date poster and nothing more: day,

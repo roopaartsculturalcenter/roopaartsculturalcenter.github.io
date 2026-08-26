@@ -150,7 +150,7 @@ const gallery = computed(() => eventGalleries[String(route.params.slug)] ?? null
                 data-cursor="rsvp"
                 class="inline-flex items-center gap-3 bg-spot px-10 py-5 text-xs font-semibold uppercase tracking-rubric text-chalk transition-colors duration-500 hover:bg-spot-warm"
               >
-                RSVP<span class="sr-only"> for {{ event.title }}</span>
+                {{ event.actionLabel ?? 'RSVP' }}<span class="sr-only"> for {{ event.title }}</span>
                 <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                   stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
                   <path d="M5 12h14M13 6l6 6-6 6" />
