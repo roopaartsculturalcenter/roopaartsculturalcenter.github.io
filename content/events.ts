@@ -109,6 +109,7 @@ const source: RaccEventSource[] = [
     venue: 'Houston',
     meta: '7:00 PM · Houston',
     flyerImage: '/images/events/evening-celebrating-bhagyaraj.webp',
+    rsvpUrl: 'https://www.zeffy.com/en-US/ticketing/an-evening-of-celebrating-bhagyaraj',
   },
   {
     title: 'Navarathri Seva Series',
@@ -141,7 +142,7 @@ const source: RaccEventSource[] = [
     meta:
       'Arjun, vocals (Super Singer 5 fame) · Akhila, vocals (ETV title winner) · ' +
       'Achi, violin · with live band',
-    flyerImage: '/images/events/ilaiyaraaja-night.webp',
+    flyerImage: '/images/events/ilaiyaraaja-night-venue.webp',
     rsvpUrl: 'https://www.zeffy.com/en-US/ticketing/ilaiyaraaja-night-timeless-tamil-melodies',
     actionLabel: 'Buy tickets',
   },
@@ -173,6 +174,7 @@ const source: RaccEventSource[] = [
     flyerAlt:
       'Save-the-date poster for Arudra 2027 at the Jewish Community Center of Houston, ' +
       'with a goddess holding a lotus, a parrot at her shoulder, between two temple gopurams',
+    rsvpUrl: 'https://www.zeffy.com/en-US/ticketing/arudra-2027-raccs-signature-annual-production',
   },
   {
     // Aug 2 2026 — already run, so this derives as past on its own and appears
