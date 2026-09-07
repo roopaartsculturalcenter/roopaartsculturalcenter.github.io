@@ -142,7 +142,7 @@ const source: RaccEventSource[] = [
     meta:
       'Arjun, vocals (Super Singer 5 fame) · Akhila, vocals (ETV title winner) · ' +
       'Achi, violin · with live band',
-    flyerImage: '/images/events/ilaiyaraaja-night-venue.webp',
+    flyerImage: '/images/events/ilaiyaraaja-night-sponsor.webp',
     rsvpUrl: 'https://www.zeffy.com/en-US/ticketing/ilaiyaraaja-night-timeless-tamil-melodies',
     actionLabel: 'Buy tickets',
   },
