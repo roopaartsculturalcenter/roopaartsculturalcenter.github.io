@@ -18,9 +18,7 @@ Fully static output.
 
 The domain was on LiteSpeed/PHP with the old site until the cutover; it is now GitHub Pages.
 
-> ⚠️ **"Enforce HTTPS" is off** (`https_enforced: false`). `https://` works and the certificate is
-> valid, but a visitor arriving on `http://` is left there rather than redirected. On a site with a
-> donation page that should be on. **Settings → Pages → Enforce HTTPS.**
+"Enforce HTTPS" is on, so a visitor arriving on `http://` is redirected to the secure site.
 
 Every host serves the same static build. Being static is the constraint behind every third-party
 decision below: there is no server, so anything dynamic has to work from the browser alone.
@@ -242,7 +240,6 @@ Two things to know about it:
   that artifact — switching Source to "GitHub Actions" would drop the custom domain and take the
   site off the domain. `public/CNAME` exists for exactly that reason: Nuxt copies it into the
   output, verified present in the build. **Do not delete either copy.**
-- Enforce HTTPS is off. See the warning at the top.
 
 If it is ever moved to Vercel instead: add the apex and `www` under project **Settings → Domains**,
 create the records Vercel displays (typically `A @ → 76.76.21.21`,
