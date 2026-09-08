@@ -44,7 +44,9 @@ scene(
 
     // The date is the loudest thing on the screen, so it arrives first.
     if (dateEl.value) {
-      const split = new SplitText(dateEl.value, { type: 'chars' })
+      // chars alone are free-floating inline blocks, so a line could break in
+      // the middle of a number ("September 1 / 9"); word wrappers forbid that.
+      const split = new SplitText(dateEl.value, { type: 'chars,words' })
       gsap.set(dateEl.value, { opacity: 1 })
       gsap.from(split.chars, {
         yPercent: 110,
