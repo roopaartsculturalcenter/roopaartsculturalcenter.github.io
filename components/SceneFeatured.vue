@@ -16,8 +16,18 @@ const { gsap, SplitText, scene } = useStage()
 const root = ref<HTMLElement | null>(null)
 const dateEl = ref<HTMLElement | null>(null)
 
-const event = featuredEvent
-const readableDate = computed(() => (event ? eventDateLabel(event) : null))
+/**
+ * Keep the prerendered event intact through hydration, then refresh it from the
+ * browser's current date. Without this handoff, a date rollover can update the
+ * text while leaving Nuxt Image's server-rendered flyer URL behind.
+ */
+const event = useState('homepage-featured-event', () => featuredEvent)
+
+onMounted(() => {
+  event.value = featuredEvent
+})
+
+const readableDate = computed(() => (event.value ? eventDateLabel(event.value) : null))
 
 /**
  * Real flyer dimensions, so the optimizer keeps the whole frame instead of
@@ -25,13 +35,13 @@ const readableDate = computed(() => (event ? eventDateLabel(event) : null))
  * all — nothing renders in that case.
  */
 const flyer = computed(() =>
-  event ? flyerSize(event.flyerImage) : { width: 1400, height: 1400 },
+  event.value ? flyerSize(event.value.flyerImage) : { width: 1400, height: 1400 },
 )
 
 /** A pinned past event is still "on stage next"; anything else is honest. */
 const label = computed(() => {
-  if (!event) return null
-  return event.status === 'upcoming' ? 'Next on our stage' : 'Most recently on our stage'
+  if (!event.value) return null
+  return event.value.status === 'upcoming' ? 'Next on our stage' : 'Most recently on our stage'
 })
 
 const rsvp = ref<HTMLElement | null>(null)
@@ -162,6 +172,7 @@ scene(
 
         <NuxtLink
           :to="`/events/${event.slug}`"
+          :key="event.slug"
           data-feat-flyer
           data-cursor="view"
           class="block"
