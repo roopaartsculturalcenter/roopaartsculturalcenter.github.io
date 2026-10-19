@@ -30,7 +30,7 @@ useHead({ title: is404.value ? 'Page not found' : 'Something went wrong' })
       </p>
       <div class="mt-10 flex flex-wrap justify-center gap-4">
         <AppButton to="/">Back to home</AppButton>
-        <AppButton to="/events" variant="outline">See events</AppButton>
+        <AppButton to="/events/" variant="outline">See events</AppButton>
       </div>
     </div>
   </div>

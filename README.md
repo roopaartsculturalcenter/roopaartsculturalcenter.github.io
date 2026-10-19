@@ -104,6 +104,8 @@ the card on `/events`, the card on `/arudra` if the slug contains `arudra`, and 
 - **There is no `status` field.** Upcoming vs past is derived from `date`, so it can never go stale.
 - **There is no `width`/`height`.** `flyerSize()` reads the real dimensions from the manifest and
   **throws** if the image is missing from it — run `npm run images`.
+- `tickets` is one line of tier names and prices ("VIP $100 · Platinum $50 …"). Never a live
+  seat count — that is stale the moment it is published.
 - `flyerAlt` overrides the card's generated alt text. Only set it when
   *"Flyer for {title}, {date}"* is genuinely inadequate.
 - `seasonOverview: true` pushes an entry to the end of the list regardless of date.

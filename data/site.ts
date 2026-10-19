@@ -97,13 +97,13 @@ export const site = {
   // Persistent nav. Donate is deliberately absent here — it renders as a
   // visually distinct button, not a nav link.
   nav: [
-    { label: 'Events', to: '/events' },
-    { label: 'Arudra', to: '/arudra' },
-    { label: 'About', to: '/about' },
-    { label: 'Gallery', to: '/gallery' },
+    { label: 'Events', to: '/events/' },
+    { label: 'Arudra', to: '/arudra/' },
+    { label: 'About', to: '/about/' },
+    { label: 'Gallery', to: '/gallery/' },
   ],
 
-  donateTo: '/support',
+  donateTo: '/support/',
 } as const
 
 export const logo = {

@@ -39,9 +39,9 @@ const editionDate = computed(() => (edition ? eventDateLabel(edition) : 'To be a
 const editionCount = arudraEvents.filter((e) => e.status === 'past' && e.date).length
 
 /**
- * Three flyers, fanned. Each keeps `object-contain` — these are square artwork with
- * text to the edges, so filling the frame would crop the very thing being shown.
- * The tilt comes from the wrapper, so the image itself is never distorted.
+ * The poster board handles one poster or a fan of three. A single save-the-date
+ * (the current state, with 2027 announced and nothing else to fan) sits upright
+ * and centred; the tilt-and-pin treatment only makes sense with company.
  */
 const posters = arudraTeaserImages.slice(0, 3)
 const TILT = ['-rotate-6', 'rotate-3', '-rotate-2']
@@ -50,6 +50,7 @@ const PLACE = [
   'right-0 top-0 z-0',
   'bottom-0 left-[26%] z-20',
 ]
+const solo = posters.length === 1
 </script>
 
 <template>
@@ -81,18 +82,34 @@ const PLACE = [
           </span>
         </p>
 
-        <NuxtLink
-          to="/arudra"
-          data-wipe
-          data-cursor="view"
-          class="group mt-10 inline-flex items-center gap-3 border-b border-spot pb-2 text-sm uppercase tracking-rubric text-spot-ink"
-        >
-          Explore the festival
-          <span
-            class="transition-transform duration-500 ease-silk group-hover:translate-x-2"
-            aria-hidden="true"
-          >→</span>
-        </NuxtLink>
+        <div data-wipe class="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
+          <a
+            v-if="next?.rsvpUrl"
+            :href="next.rsvpUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-cursor="rsvp"
+            class="inline-flex items-center gap-3 bg-spot px-10 py-5 text-xs font-semibold uppercase tracking-rubric text-chalk transition-colors duration-500 hover:bg-spot-warm"
+          >
+            RSVP for {{ next.title }}
+            <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </a>
+
+          <NuxtLink
+            to="/arudra/"
+            data-cursor="view"
+            class="group inline-flex items-center gap-3 border-b border-spot pb-2 text-sm uppercase tracking-rubric text-spot-ink"
+          >
+            Explore the festival
+            <span
+              class="transition-transform duration-500 ease-silk group-hover:translate-x-2"
+              aria-hidden="true"
+            >→</span>
+          </NuxtLink>
+        </div>
       </div>
 
       <!-- The poster board. Absolute placement inside a fixed-ratio box so the fan
@@ -107,9 +124,10 @@ const PLACE = [
             v-for="(img, i) in posters"
             :key="img.src"
             :class="[
-              'absolute w-[56%] transition-transform duration-700 ease-silk hover:rotate-0 motion-reduce:transform-none',
-              PLACE[i],
-              TILT[i],
+              'absolute transition-transform duration-700 ease-silk hover:rotate-0 motion-reduce:transform-none',
+              solo
+                ? 'left-1/2 top-1/2 w-[58%] -translate-x-1/2 -translate-y-1/2 -rotate-1'
+                : ['w-[56%]', PLACE[i], TILT[i]],
             ]"
           >
             <NuxtImg

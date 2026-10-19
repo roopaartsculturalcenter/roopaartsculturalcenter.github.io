@@ -141,8 +141,13 @@ scene(
             {{ event.description }}
           </p>
 
-          <!-- The one primary action on this screen. -->
-          <div data-feat class="mt-12">
+          <p v-if="event.tickets" data-feat class="mt-6 text-sm text-chalk/74">
+            {{ event.tickets }}
+          </p>
+
+          <!-- The one primary action on this screen; the detail page is offered
+               quietly beside it rather than competing with it. -->
+          <div data-feat class="mt-12 flex flex-wrap items-center gap-x-8 gap-y-4">
             <a
               v-if="event.rsvpUrl"
               ref="rsvp"
@@ -160,10 +165,11 @@ scene(
             </a>
 
             <NuxtLink
-              v-else
-              :to="`/events/${event.slug}`"
+              :to="`/events/${event.slug}/`"
               data-cursor="view"
-              class="inline-flex items-center gap-3 bg-spot px-10 py-5 text-xs font-semibold uppercase tracking-rubric text-chalk transition-colors duration-500 hover:bg-spot-warm"
+              :class="event.rsvpUrl
+                ? 'inline-flex items-center gap-2 border-b border-spot pb-1 text-xs uppercase tracking-rubric text-spot-ink'
+                : 'inline-flex items-center gap-3 bg-spot px-10 py-5 text-xs font-semibold uppercase tracking-rubric text-chalk transition-colors duration-500 hover:bg-spot-warm'"
             >
               Event details
             </NuxtLink>
@@ -171,7 +177,7 @@ scene(
         </div>
 
         <NuxtLink
-          :to="`/events/${event.slug}`"
+          :to="`/events/${event.slug}/`"
           :key="event.slug"
           data-feat-flyer
           data-cursor="view"
@@ -179,7 +185,7 @@ scene(
         >
           <NuxtImg
             :src="event.flyerImage"
-            :alt="`Flyer for ${event.title}`"
+            :alt="event.flyerAlt ?? `Flyer for ${event.title}`"
             :width="flyer.width"
             :height="flyer.height"
             loading="lazy"
@@ -192,7 +198,7 @@ scene(
       <!-- Slim secondary strip, not a second primary action. -->
       <NuxtLink
         v-if="upcomingEvents.length"
-        to="/events"
+        to="/events/"
         data-feat
         class="group mt-20 flex items-center justify-between border-t border-chalk/12 pt-7 text-chalk/82 transition-colors hover:text-spot-ink"
       >
@@ -207,7 +213,7 @@ scene(
       <h2 id="featured-heading" class="mt-8 max-w-2xl font-display text-grand text-chalk">
         Our next season is being programmed now.
       </h2>
-      <NuxtLink to="/events" class="mt-10 inline-block border-b border-spot pb-1 text-sm uppercase tracking-rubric text-spot-ink">
+      <NuxtLink to="/events/" class="mt-10 inline-block border-b border-spot pb-1 text-sm uppercase tracking-rubric text-spot-ink">
         See past events
       </NuxtLink>
     </div>

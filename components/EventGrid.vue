@@ -91,7 +91,7 @@ scene(
 
       <ul v-else class="mt-16 grid gap-x-10 gap-y-20 md:grid-cols-2 lg:grid-cols-3">
         <li v-for="{ event, flyer } in cards" :key="event.slug" data-event-card class="group">
-          <NuxtLink :to="`/events/${event.slug}`" data-cursor="view" class="block">
+          <NuxtLink :to="`/events/${event.slug}/`" data-cursor="view" class="block">
             <div class="bg-stage-raised">
               <!-- Flyers are artwork with text to the edges, so they are fitted and
                    never cropped: real intrinsic size so the optimizer keeps the whole

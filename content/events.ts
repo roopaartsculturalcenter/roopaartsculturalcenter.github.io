@@ -54,6 +54,12 @@ export interface RaccEventSource {
   /** Overrides the default "RSVP" text for ticketed events. */
   actionLabel?: string
   /**
+   * One line of ticket tiers, shown on the detail page and the featured scene.
+   * Tier names and prices only — never a live seat count, which goes stale the
+   * moment it is published.
+   */
+  tickets?: string
+  /**
    * Long-form detail for the featured production of an event, rendered on its own
    * page rather than on a landing page.
    *
@@ -126,9 +132,13 @@ const source: RaccEventSource[] = [
     flyerImage: '/images/events/navarathri-seva-series.webp',
   },
   {
-    title: 'Ilaiyaraaja Night',
+    // The slug and flyer filename predate the title change and stay as they are:
+    // the page is already linked and the image already shipped. The title itself
+    // deliberately does not name the composer being honoured.
+    title: 'Melodies of the Maestro',
     slug: 'ilaiyaraaja-night',
     date: '2026-10-23',
+    dateLabel: 'Friday, October 23, 2026 · 8:00–10:00 PM CT',
     artists: [
       'Arjun, vocals (Super Singer 5 fame)',
       'Akhila, vocals (ETV title winner)',
@@ -136,15 +146,17 @@ const source: RaccEventSource[] = [
       'with live band',
     ],
     description:
-      "An intimate live concert of timeless Tamil melodies: the maestro's classics, " +
-      'reimagined on stage in Austin. 8:00–10:00 PM.',
-    venue: 'Austin',
-    meta:
-      'Arjun, vocals (Super Singer 5 fame) · Akhila, vocals (ETV title winner) · ' +
-      'Achi, violin · with live band',
+      'An intimate live concert of timeless Tamil classics, a tribute to the music of ' +
+      'the Maestro, presented with a live band. Come relax, sing along and experience ' +
+      'the magic.',
+    venue: 'ParqSOCIAL, 1641 Scottsdale Dr, Leander, TX 78641',
+    meta: 'ParqSOCIAL, Leander · 8:00–10:00 PM',
     flyerImage: '/images/events/ilaiyaraaja-night-sponsor.webp',
+    flyerAlt:
+      'Flyer for Melodies of the Maestro, Friday, October 23, 2026, ParqSOCIAL, Leander, TX',
     rsvpUrl: 'https://www.zeffy.com/en-US/ticketing/ilaiyaraaja-night-timeless-tamil-melodies',
-    actionLabel: 'Buy tickets',
+    actionLabel: 'Get tickets',
+    tickets: 'VIP $100 · Platinum $50 · Gold $35 · Group discounts available.',
   },
   {
     // Everything here is read off the save-the-date poster and nothing more: day,

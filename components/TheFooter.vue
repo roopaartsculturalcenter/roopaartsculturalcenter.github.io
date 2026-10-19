@@ -63,7 +63,7 @@ onMounted(() => {
            rather than push the row wider than the container. -->
       <div class="grid gap-16 lg:grid-cols-[auto_minmax(0,1fr)] lg:items-center lg:gap-20">
         <NuxtLink
-          to="/support"
+          to="/support/"
           data-cursor="join"
           class="group block"
         >

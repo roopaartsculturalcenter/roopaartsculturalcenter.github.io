@@ -31,8 +31,13 @@ useHead({
       ...(event.date ? { startDate: event.date } : {}),
       description: event.description,
       ...(event.venue ? { location: { '@type': 'Place', name: event.venue } } : {}),
-      ...(event.artists.length
-        ? { performer: event.artists.map((a) => ({ '@type': 'Person', name: a.split(',')[0].trim() })) }
+      // "with live band" and similar ensemble notes are billing, not people.
+      ...(event.artists.filter((a) => !a.startsWith('with ')).length
+        ? {
+            performer: event.artists
+              .filter((a) => !a.startsWith('with '))
+              .map((a) => ({ '@type': 'Person', name: a.split(',')[0].trim() })),
+          }
         : {}),
       organizer: { '@type': 'NGO', name: site.name },
       eventStatus: 'https://schema.org/EventScheduled',
@@ -67,7 +72,7 @@ const gallery = computed(() => eventGalleries[String(route.params.slug)] ?? null
     <section ref="root" class="relative bg-stage pb-24 pt-40 lg:pb-32 lg:pt-48">
       <div class="stage-pad">
         <NuxtLink
-          to="/events"
+          to="/events/"
           class="group inline-flex items-center gap-2 text-xs uppercase tracking-rubric text-chalk/70 transition-colors hover:text-spot-ink"
         >
           <span class="transition-transform duration-500 ease-silk group-hover:-translate-x-1" aria-hidden="true">←</span>
@@ -91,7 +96,7 @@ const gallery = computed(() => eventGalleries[String(route.params.slug)] ?? null
             >
               <NuxtImg
                 :src="event.flyerImage"
-                :alt="`Flyer for ${event.title}, ${readableDate}`"
+                :alt="event.flyerAlt ?? `Flyer for ${event.title}, ${readableDate}`"
                 :width="flyer.width"
                 :height="flyer.height"
                 sizes="xs:88vw sm:88vw md:80vw lg:45vw xl:45vw xxl:45vw"
@@ -139,6 +144,11 @@ const gallery = computed(() => eventGalleries[String(route.params.slug)] ?? null
               <ul class="mt-4 grid gap-2 sm:grid-cols-2">
                 <li v-for="a in event.artists" :key="a" class="text-chalk/85">{{ a }}</li>
               </ul>
+            </div>
+
+            <div v-if="event.tickets" data-wipe class="mt-10">
+              <h2 class="text-xs uppercase tracking-rubric text-chalk/66">Tickets</h2>
+              <p class="mt-4 text-chalk/85">{{ event.tickets }}</p>
             </div>
 
             <div v-if="event.rsvpUrl" data-wipe class="mt-12">

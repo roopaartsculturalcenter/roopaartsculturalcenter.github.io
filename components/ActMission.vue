@@ -112,7 +112,7 @@ scene(
 
           <NuxtLink
             v-if="cta"
-            to="/about"
+            to="/about/"
             data-cursor="view"
             class="group mt-14 inline-flex items-center gap-3 border-b border-spot pb-2 text-sm uppercase tracking-rubric text-spot-ink"
           >

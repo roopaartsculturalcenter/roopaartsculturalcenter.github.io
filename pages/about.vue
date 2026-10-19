@@ -37,7 +37,7 @@ useEntrance(companyRoot, { stagger: 0.06 })
   <div>
     <PageOverture
       title="Built by artists and art lovers."
-      lede="A Texas public charity creating stages where the classical arts of India thrive."
+      lede="A Texas 501(c)(3) public charity presenting the Arudra Festival, concerts, workshops, and seasonal celebrations."
       image="/images/home/home-2.webp"
     />
 

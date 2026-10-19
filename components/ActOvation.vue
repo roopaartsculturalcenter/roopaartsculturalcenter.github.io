@@ -175,7 +175,7 @@ scene(
 
         <NuxtLink
           v-if="showOtherWays"
-          to="/support"
+          to="/support/"
           data-cursor="view"
           class="group mt-10 inline-flex items-center gap-3 border-b border-chalk/30 pb-2 text-sm uppercase tracking-rubric text-chalk/82 transition-colors hover:border-spot hover:text-spot-ink"
         >

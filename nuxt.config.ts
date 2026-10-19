@@ -103,21 +103,27 @@ export default defineNuxtConfig({
 
     // The previous static site used .html URLs. Keep any existing links and
     // search results working rather than dropping them on the 404 page.
+    //
+    // Targets carry a trailing slash on purpose. The github_pages preset
+    // materialises each rule as a meta-refresh stub file, and GitHub Pages
+    // serves `about.html` for a request to `/about` — so a stub that pointed
+    // at `/about` redirected to itself forever. `/about/` resolves to
+    // `about/index.html`, the real page.
     // Note: no rule for /index.html — on a static host that file *is* `/`, so a
     // redirect there overwrites the homepage with a loop back to itself.
-    '/about.html': { redirect: { to: '/about', statusCode: 301 } },
-    '/events.html': { redirect: { to: '/events', statusCode: 301 } },
-    '/gallery.html': { redirect: { to: '/gallery', statusCode: 301 } },
-    '/donate.html': { redirect: { to: '/support', statusCode: 301 } },
-    '/programs.html': { redirect: { to: '/about', statusCode: 301 } },
-    '/archive.html': { redirect: { to: '/events', statusCode: 301 } },
-    '/contact.html': { redirect: { to: '/about', statusCode: 301 } },
-    '/productions/arudra-2026.html': { redirect: { to: '/arudra', statusCode: 301 } },
+    '/about.html': { redirect: { to: '/about/', statusCode: 301 } },
+    '/events.html': { redirect: { to: '/events/', statusCode: 301 } },
+    '/gallery.html': { redirect: { to: '/gallery/', statusCode: 301 } },
+    '/donate.html': { redirect: { to: '/support/', statusCode: 301 } },
+    '/programs.html': { redirect: { to: '/about/', statusCode: 301 } },
+    '/archive.html': { redirect: { to: '/events/', statusCode: 301 } },
+    '/contact.html': { redirect: { to: '/about/', statusCode: 301 } },
+    '/productions/arudra-2026.html': { redirect: { to: '/arudra/', statusCode: 301 } },
 
     // Routes retired by the v3 architecture.
-    '/arudra-2026': { redirect: { to: '/arudra', statusCode: 301 } },
-    '/arudra-2026/gallery': { redirect: { to: '/gallery', statusCode: 301 } },
-    '/donate': { redirect: { to: '/support', statusCode: 301 } },
-    '/productions/arudra-2025.html': { redirect: { to: '/events', statusCode: 301 } },
+    '/arudra-2026': { redirect: { to: '/arudra/', statusCode: 301 } },
+    '/arudra-2026/gallery': { redirect: { to: '/gallery/', statusCode: 301 } },
+    '/donate': { redirect: { to: '/support/', statusCode: 301 } },
+    '/productions/arudra-2025.html': { redirect: { to: '/events/', statusCode: 301 } },
   },
 })

@@ -126,14 +126,19 @@ export const galleryGroups: GalleryGroup[] = [
 export const allGalleryImages: GalleryImage[] = galleryGroups.flatMap((g) => g.images)
 
 /**
- * The Arudra posters, for the homepage fan.
+ * The poster(s) for the homepage Arudra teaser.
  *
- * Sourced from the flyer list directly, not from `galleryGroups[0]` as before —
- * that coupling meant the gallery's first group had to be the Arudra flyers, which
- * is exactly the arrangement that put marketing collateral on the photo wall.
+ * Now that 2027 is announced, the teaser shows its save-the-date alone — the
+ * 2026 collateral belongs to /events/arudra-2026/, not to a block announcing
+ * the next edition. The component lays out one poster or a fan of three, so
+ * adding more entries here brings the fan back.
  */
-export const arudraTeaserImages: GalleryImage[] =
-  ARUDRA_2026_FLYERS.map(([src, alt]) => pick(src, alt))
+export const arudraTeaserImages: GalleryImage[] = [
+  pick(
+    '/images/events/arudra-2027.webp',
+    'Save-the-date poster for Arudra 2027, Saturday, February 27, 2027, Jewish Community Center of Houston',
+  ),
+]
 
 /**
  * Arudra 2025's banners and flyer.
