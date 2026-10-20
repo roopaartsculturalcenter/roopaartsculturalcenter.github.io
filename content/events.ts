@@ -60,6 +60,12 @@ export interface RaccEventSource {
    */
   tickets?: string
   /**
+   * A past-tense paragraph for an event that has happened, shown on the detail
+   * page after the description. The card keeps the short `description`; this is
+   * the longer "how it went" that only the event's own page has room for.
+   */
+  recap?: string
+  /**
    * Long-form detail for the featured production of an event, rendered on its own
    * page rather than on a landing page.
    *
@@ -118,17 +124,26 @@ const source: RaccEventSource[] = [
     rsvpUrl: 'https://www.zeffy.com/en-US/ticketing/an-evening-of-celebrating-bhagyaraj',
   },
   {
-    title: 'Navarathri Seva Series',
+    title: 'Navarathri Seva Series 2026',
     slug: 'navarathri-seva-series',
     // First day of the run; the label carries the full span.
     date: '2026-10-15',
     dateLabel: 'October 15–19, 2026',
     artists: [],
     description:
-      'Five evenings of devotional music offered in the spirit of seva, celebrating ' +
-      'Navarathri across two cities.',
-    venue: 'Houston & Austin',
-    meta: 'Houston · Oct 15–17 | Austin · Oct 19',
+      'Four days of devotional music and dance offered in the spirit of seva, themed on ' +
+      'the Shanmatham: Ganapatyam, Shaivam, Vaishnavam, Shaktam, Kaumaram and Souryam.',
+    // The recap names what was performed, not who performed it: the full programme
+    // includes minors, so names stay out until each is confirmed for publication.
+    recap:
+      'Our Navarathri Seva Series brought together musicians and dancers across four days, ' +
+      'each offering devotional repertoire on the six paths of the Shanmatham. Carnatic ' +
+      'vocal, violin, flute, talavadyam and harikatha filled the first two evenings in ' +
+      'Sugar Land; Bharatanatyam and Kathak followed on the morning of October 17; and the ' +
+      'series closed in Austin on October 19 with Bharatanatyam, Odissi and Kuchipudi. Our ' +
+      'thanks to every artist, teacher, accompanist and family who made this seva possible.',
+    venue: 'Sugar Land & Austin, TX',
+    meta: 'Sugar Land · Oct 15–17 | Austin · Oct 19',
     flyerImage: '/images/events/navarathri-seva-series.webp',
   },
   {
@@ -228,7 +243,6 @@ const source: RaccEventSource[] = [
       'trading phrases across a single evening.',
     venue: null,
     flyerImage: '/images/events/navtar-violin-jugalbandi.webp',
-    rsvpUrl: 'https://evite.me/NVtRUQfHnt',
   },
   {
     title: 'Arudra 2026',

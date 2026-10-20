@@ -132,6 +132,10 @@ const gallery = computed(() => eventGalleries[String(route.params.slug)] ?? null
               {{ event.description }}
             </p>
 
+            <p v-if="event.recap" data-wipe class="mt-6 max-w-lg leading-relaxed text-chalk/82">
+              {{ event.recap }}
+            </p>
+
             <!-- Suppressed when a full credit block exists further down the page,
                  where the same names appear with their real roles and ordering. Events
                  without credits still need this as their only artist listing. -->
