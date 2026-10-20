@@ -147,10 +147,10 @@ const source: RaccEventSource[] = [
     flyerImage: '/images/events/navarathri-seva-series.webp',
   },
   {
-    // The slug and flyer filename predate the title change and stay as they are:
-    // the page is already linked and the image already shipped. The title itself
-    // deliberately does not name the composer being honoured.
-    title: 'Melodies of the Maestro',
+    // Rebranded from "Melodies of the Maestro" with the honouree now named up
+    // front, per the organisation. Slug and flyer filename are unchanged so
+    // existing links keep working.
+    title: 'Tamil Melodies Night: A Tribute to Ilaiyaraaja',
     slug: 'ilaiyaraaja-night',
     date: '2026-10-23',
     dateLabel: 'Friday, October 23, 2026 · 8:00–10:00 PM CT',
@@ -161,14 +161,15 @@ const source: RaccEventSource[] = [
       'with live band',
     ],
     description:
-      'An intimate live concert of timeless Tamil classics, a tribute to the music of ' +
-      'the Maestro, presented with a live band. Come relax, sing along and experience ' +
-      'the magic.',
+      'An intimate live concert of timeless Tamil classics, honouring the music of ' +
+      'Maestro Ilaiyaraaja, presented with a live band. Come relax, sing along and ' +
+      'experience the magic.',
     venue: 'ParqSOCIAL, 1641 Scottsdale Dr, Leander, TX 78641',
     meta: 'ParqSOCIAL, Leander · 8:00–10:00 PM',
     flyerImage: '/images/events/ilaiyaraaja-night-sponsor.webp',
     flyerAlt:
-      'Flyer for Melodies of the Maestro, Friday, October 23, 2026, ParqSOCIAL, Leander, TX',
+      'Flyer for Tamil Melodies Night: A Tribute to Ilaiyaraaja, Friday, October 23, 2026, ' +
+      'ParqSOCIAL, Leander, TX',
     rsvpUrl: 'https://www.zeffy.com/en-US/ticketing/ilaiyaraaja-night-timeless-tamil-melodies',
     actionLabel: 'Get tickets',
     tickets: 'VIP $100 · Platinum $50 · Gold $35 · Group discounts available.',
