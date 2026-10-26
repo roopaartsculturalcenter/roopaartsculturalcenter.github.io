@@ -20,6 +20,13 @@ on:
     branches: [architecture-v3]
   # So a deploy can be re-run without an empty commit.
   workflow_dispatch:
+  # Upcoming vs past is computed at build time, so a site that is never rebuilt
+  # drifts: an event that has ended keeps its "Next on our stage" slot and its
+  # ticket button until someone pushes. The daily build turns the date over on
+  # its own (brief 2026-10-26, ISSUE-1). 10:17 UTC is 4:17/5:17 AM Central,
+  # before the daily 7:45 AM site check.
+  schedule:
+    - cron: '17 10 * * *'
 
 permissions:
   contents: read

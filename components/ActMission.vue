@@ -24,7 +24,11 @@ scene(
     if (!el) return
 
     const lines = gsap.utils.toArray<HTMLElement>('[data-verse]', el)
-    const gold = el.querySelector('[data-gold]')
+    const gold = el.querySelector<HTMLElement>('[data-gold]')
+    // The overlay ships empty so the phrase appears exactly once in the
+    // prerendered HTML and in extracted text (ISSUE-2); its glyphs are copied
+    // from the dim twin only at runtime, right before they are needed.
+    if (gold) gold.textContent = gold.parentElement?.querySelector('span')?.textContent ?? ''
     const isMobile = window.matchMedia('(max-width: 768px)').matches
 
     // On a phone the verses simply arrive; a second 140vh pin on top of Act 2's
@@ -99,13 +103,16 @@ scene(
             <span data-verse class="relative block gpu">
               <span :class="verse.gold ? 'text-chalk/70' : 'text-chalk'">{{ verse.text }}</span>
 
-              <!-- The lit copy, stacked exactly over the dim one. -->
+              <!-- The lit copy, stacked exactly over the dim one. Deliberately
+                   empty in the markup: the scene clones the dim span's text in at
+                   runtime, so the phrase is never duplicated for crawlers or
+                   screen readers. -->
               <span
                 v-if="verse.gold"
                 data-gold
                 aria-hidden="true"
                 class="absolute inset-0 text-spot-ink opacity-0"
-              >{{ verse.text }}</span>
+              ></span>
             </span>
           </p>
         </div>

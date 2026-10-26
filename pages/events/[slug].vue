@@ -15,6 +15,18 @@ const readableDate = eventDateLabel(event)
 // Real flyer dimensions, so the optimizer never crops it to a square.
 const flyer = flyerSize(event.flyerImage)
 
+/**
+ * The season, as data, for the overview page (ISSUE-3): every dated event from
+ * July 2026 through June 2027, soonest first. Rendered only on the
+ * `seasonOverview` entry, so ordinary event pages are untouched. The window is
+ * a constant because the page itself is about one named season.
+ */
+const seasonEvents = event.seasonOverview
+  ? events
+      .filter((e) => e.date && e.date >= '2026-07-01' && e.date <= '2027-06-30')
+      .sort((a, b) => (a.date ?? '').localeCompare(b.date ?? ''))
+  : []
+
 useSeo({
   title: event.title,
   description: event.description,
@@ -108,6 +120,12 @@ const gallery = computed(() => eventGalleries[String(route.params.slug)] ?? null
           </div>
 
           <div>
+            <!-- ISSUE-1: a page for a finished event says so before it says
+                 anything else, and sells nothing below. -->
+            <p v-if="event.status === 'past'" data-wipe class="rubric mb-5 text-chalk/75">
+              Past event
+            </p>
+
             <h1 data-wipe class="font-display text-monumental text-chalk">{{ event.title }}</h1>
 
             <dl data-wipe class="mt-10 grid gap-5 border-y border-chalk/12 py-8 sm:grid-cols-2">
@@ -150,12 +168,12 @@ const gallery = computed(() => eventGalleries[String(route.params.slug)] ?? null
               </ul>
             </div>
 
-            <div v-if="event.tickets" data-wipe class="mt-10">
+            <div v-if="event.tickets && event.status !== 'past'" data-wipe class="mt-10">
               <h2 class="text-xs uppercase tracking-rubric text-chalk/66">Tickets</h2>
               <p class="mt-4 text-chalk/85">{{ event.tickets }}</p>
             </div>
 
-            <div v-if="event.rsvpUrl" data-wipe class="mt-12">
+            <div v-if="event.rsvpUrl && event.status !== 'past'" data-wipe class="mt-12">
               <a
                 ref="rsvp"
                 :href="event.rsvpUrl"
@@ -173,6 +191,48 @@ const gallery = computed(() => eventGalleries[String(route.params.slug)] ?? null
             </div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- The season, date by date (ISSUE-3). Only the `seasonOverview` entry has
+         rows here; every other event page skips this section entirely. Rows come
+         from the same events data as every other surface, so this list can never
+         disagree with the cards. -->
+    <section
+      v-if="seasonEvents.length"
+      class="bg-stage-deep py-24 lg:py-32"
+      aria-labelledby="season-list-heading"
+    >
+      <div class="stage-pad">
+        <p class="rubric">Date by date</p>
+        <h2 id="season-list-heading" class="mt-6 max-w-2xl font-display text-grand text-chalk">
+          The season, date by date.
+        </h2>
+
+        <ul class="mt-12 border-y border-chalk/12">
+          <li v-for="e in seasonEvents" :key="e.slug" class="border-b border-chalk/12 last:border-b-0">
+            <NuxtLink
+              :to="`/events/${e.slug}/`"
+              data-cursor="view"
+              class="group grid gap-2 py-6 sm:grid-cols-[11rem_1fr_auto] sm:items-baseline sm:gap-8"
+            >
+              <time v-if="e.date" :datetime="e.date" class="font-display text-lg text-spot-ink">
+                {{ eventDateLabel(e) }}
+              </time>
+              <span>
+                <span class="font-display text-lg text-chalk transition-colors duration-300 group-hover:text-spot-ink">
+                  {{ e.title }}
+                </span>
+                <span v-if="e.meta ?? e.venue" class="mt-1 block text-sm text-chalk/70">
+                  {{ e.meta ?? e.venue }}
+                </span>
+              </span>
+              <span class="rubric" :class="e.status === 'past' ? 'text-chalk/60' : 'text-spot-ink'">
+                {{ e.status === 'past' ? 'Past' : 'Upcoming' }}
+              </span>
+            </NuxtLink>
+          </li>
+        </ul>
       </div>
     </section>
 

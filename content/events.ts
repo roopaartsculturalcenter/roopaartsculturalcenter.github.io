@@ -21,12 +21,18 @@ export interface RaccEventSource {
   title: string
   slug: string
   /**
-   * ISO date, and the only thing that decides upcoming vs past.
+   * ISO date, and with `endDate` the only thing that decides upcoming vs past.
    *
-   * For a multi-day run this is the FIRST day, so the event stays upcoming for
-   * its whole length and sorts by when it opens. `null` only for undated series.
+   * For a multi-day run this is the FIRST day, so the event sorts by when it
+   * opens. `null` only for undated series.
    */
   date: string | null
+  /**
+   * Last day of a multi-day run, inclusive. Upcoming vs past is decided by
+   * `endDate ?? date`, so a series stays upcoming through its final day
+   * instead of flipping to past once its first day has gone by.
+   */
+  endDate?: string
   /**
    * Overrides the displayed date text when `date` alone would misrepresent it —
    * a run across several days, or a whole season. `date` still drives sorting and
@@ -126,8 +132,10 @@ const source: RaccEventSource[] = [
   {
     title: 'Navarathri Seva Series 2026',
     slug: 'navarathri-seva-series',
-    // First day of the run; the label carries the full span.
+    // First day of the run; the label carries the full span, the end date keeps
+    // the series upcoming through its final evening.
     date: '2026-10-15',
+    endDate: '2026-10-19',
     dateLabel: 'October 15–19, 2026',
     artists: [],
     description:
@@ -379,7 +387,7 @@ function deriveStatus(e: RaccEventSource): 'upcoming' | 'past' {
   // A season summary has no date but is not history.
   if (e.seasonOverview) return 'upcoming'
   if (!e.date) return 'past'
-  return new Date(e.date) >= startOfToday() ? 'upcoming' : 'past'
+  return new Date(e.endDate ?? e.date) >= startOfToday() ? 'upcoming' : 'past'
 }
 
 export const events: RaccEvent[] = source.map((e) => ({ ...e, status: deriveStatus(e) }))
