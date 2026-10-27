@@ -19,6 +19,9 @@ export const site = {
     { label: 'Instagram', href: 'https://www.instagram.com/roopaartsculturalcenter/' },
     { label: 'Facebook', href: 'https://www.facebook.com/roopaartsculturalcenter/' },
     { label: 'YouTube', href: 'https://www.youtube.com/@RoopaArtsCulturalCenter' },
+    // The community invite link, supplied by the organisation 2026-10-27
+    // (brief 2026-10-26, ISSUE-7).
+    { label: 'WhatsApp', href: 'https://chat.whatsapp.com/CeSjXzgl1RyCohhH9AowaI' },
   ],
 
   /**
