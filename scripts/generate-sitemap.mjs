@@ -8,7 +8,7 @@
  * that was. Redirect stubs (about.html and friends) are not index.html files,
  * so they are excluded by construction.
  */
-import { existsSync, readdirSync, statSync, writeFileSync } from 'node:fs'
+import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs'
 import { join, relative } from 'node:path'
 
 const SITE = 'https://roopaartsculturalcenter.org'
@@ -30,6 +30,10 @@ for (const dir of OUT_DIRS) {
         // _nuxt, _ipx and friends hold assets, never pages.
         if (!name.startsWith('_')) walk(p)
       } else if (name === 'index.html') {
+        // A prerendered redirect (routeRules writes meta-refresh pages for the
+        // retired routes, /donate/ and friends) is not a destination: listing
+        // one hands search engines a soft duplicate (ISSUE-10).
+        if (readFileSync(p, 'utf8').includes('<meta http-equiv="refresh"')) continue
         const rel = relative(dir, d).split('\\').join('/')
         routes.push(rel === '' ? '/' : `/${rel}/`)
       }

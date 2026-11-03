@@ -233,8 +233,8 @@ const source: RaccEventSource[] = [
     dateLabel: '2026–2027 Season',
     artists: [],
     description:
-      'Our full season lineup, from Rule of N to Arudra 2027, with more announcements ' +
-      'coming this fall.',
+      "Our full 2026–27 season, from Rule of N to Arudra 2027. New dates are added as " +
+      "they're confirmed.",
     venue: null,
     meta: 'Music · Culture · Community',
     flyerImage: '/images/events/season-at-a-glance.webp',

@@ -22,11 +22,16 @@ on:
   workflow_dispatch:
   # Upcoming vs past is computed at build time, so a site that is never rebuilt
   # drifts: an event that has ended keeps its "Next on our stage" slot and its
-  # ticket button until someone pushes. The daily build turns the date over on
-  # its own (brief 2026-10-26, ISSUE-1). 10:17 UTC is 4:17/5:17 AM Central,
-  # before the daily 7:45 AM site check.
+  # ticket button until someone pushes. The daily builds turn the date over on
+  # their own (briefs 2026-10-26 ISSUE-1 and 2026-11-02 ISSUE-11).
+  #
+  # GitHub delays scheduled runs at busy times: the previous 10:17 UTC slot ran
+  # at 15:45-16:57 UTC all week. 07:41 UTC (1:41 AM CT) is off-peak, and the
+  # 12:41 UTC second run is the safety net that keeps even a badly delayed
+  # morning before the afternoon.
   schedule:
-    - cron: '17 10 * * *'
+    - cron: '41 7 * * *'
+    - cron: '41 12 * * *'
 
 permissions:
   contents: read
