@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { upcomingEvents, pastEvents } from '~/content/events'
+import { upcomingEvents, pastEvents, liveEvents } from '~/content/events'
 
 useSeo({
   title: 'Events',
@@ -7,6 +7,19 @@ useSeo({
     'Everything currently booking at Roopa Arts Cultural Center, and everything we have staged: ' +
     'the Arudra Festival, concerts, jugalbandis, and workshops across Texas.',
   image: upcomingEvents[0]?.flyerImage ?? '/images/events/arudhara-2026.webp',
+})
+
+/**
+ * Build-time split for SSR, hydration and no-JS readers; corrected against the
+ * browser's clock after mount (ISSUE-11), so a finished event moves itself to
+ * "Previously on this stage" even when the scheduled rebuild is hours late.
+ */
+const upcoming = shallowRef(upcomingEvents)
+const past = shallowRef(pastEvents)
+onMounted(() => {
+  const live = liveEvents()
+  upcoming.value = live.upcoming
+  past.value = live.past
 })
 </script>
 
@@ -19,12 +32,12 @@ useSeo({
     />
 
     <EventGrid
-      :events="upcomingEvents"
+      :events="upcoming"
       heading="Next on our stage."
       empty="Our next season is being programmed now. The first announcement goes to Instagram."
     />
 
-    <EventGrid :events="pastEvents" heading="Previously on this stage." tone="deep" />
+    <EventGrid :events="past" heading="Previously on this stage." tone="deep" />
 
     <ActOvation show-other-ways />
   </div>

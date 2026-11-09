@@ -375,52 +375,96 @@ const source: RaccEventSource[] = [
   },
 ]
 
-/** Midnight today, so an event on today's date still counts as upcoming. */
-function startOfToday() {
-  const d = new Date()
-  d.setHours(0, 0, 0, 0)
-  return d
+/**
+ * The moment the bundle was built, injected by nuxt.config so the server and
+ * client bundles derive the SAME build-time split. Before this, the client
+ * bundle re-derived against the browser clock at module load, so a stale build
+ * hydrated against different lists than it rendered. Dev has no define; falling
+ * back to the clock is correct there.
+ */
+declare const __BUILD_TIME__: string | undefined
+const BUILD_TIME = typeof __BUILD_TIME__ !== 'undefined' ? new Date(__BUILD_TIME__) : new Date()
+
+/** The calendar date in America/Chicago for a given moment: event days are CT days. */
+export function chicagoDate(now: Date): string {
+  // en-CA formats as YYYY-MM-DD, so ISO date strings compare lexically.
+  return new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Chicago' }).format(now)
 }
 
-function deriveStatus(e: RaccEventSource): 'upcoming' | 'past' {
+/**
+ * Upcoming vs past against a given Chicago calendar date. An event stays
+ * upcoming through the end of its (last) day in Texas, not until midnight UTC.
+ */
+export function statusAsOf(e: RaccEventSource, onDate: string): 'upcoming' | 'past' {
   if (e.pinned) return 'upcoming'
   // A season summary has no date but is not history.
   if (e.seasonOverview) return 'upcoming'
   if (!e.date) return 'past'
-  return new Date(e.endDate ?? e.date) >= startOfToday() ? 'upcoming' : 'past'
+  return (e.endDate ?? e.date) >= onDate ? 'upcoming' : 'past'
 }
 
-export const events: RaccEvent[] = source.map((e) => ({ ...e, status: deriveStatus(e) }))
+function withStatus(onDate: string): RaccEvent[] {
+  return source.map((e) => ({ ...e, status: statusAsOf(e, onDate) }))
+}
 
 /**
  * Soonest first — that is the order an audience reads a "what's next" list in.
  * The season summary is pushed to the end regardless of anything else.
  */
-export const upcomingEvents = events
-  .filter((e) => e.status === 'upcoming')
-  .sort((a, b) => {
-    if (a.seasonOverview !== b.seasonOverview) return a.seasonOverview ? 1 : -1
-    return (a.date ?? '9999').localeCompare(b.date ?? '9999')
-  })
+function sortUpcoming(list: RaccEvent[]): RaccEvent[] {
+  return list
+    .filter((e) => e.status === 'upcoming')
+    .sort((a, b) => {
+      if (a.seasonOverview !== b.seasonOverview) return a.seasonOverview ? 1 : -1
+      return (a.date ?? '9999').localeCompare(b.date ?? '9999')
+    })
+}
 
 /** Most recent first, undated series last. */
-export const pastEvents = events
-  .filter((e) => e.status === 'past')
-  .sort((a, b) => (b.date ?? '0000').localeCompare(a.date ?? '0000'))
+function sortPast(list: RaccEvent[]): RaccEvent[] {
+  return list
+    .filter((e) => e.status === 'past')
+    .sort((a, b) => (b.date ?? '0000').localeCompare(a.date ?? '0000'))
+}
 
 /**
  * Drives the homepage featured scene. A pinned event always wins; the season
  * summary never does, since "next on our stage" has to name one actual night.
  */
-export const featuredEvent: RaccEvent | undefined =
-  upcomingEvents.find((e) => e.pinned)
-  ?? upcomingEvents.find((e) => !e.seasonOverview)
-  ?? pastEvents[0]
+function pickFeatured(upcoming: RaccEvent[], past: RaccEvent[]): RaccEvent | undefined {
+  return upcoming.find((e) => e.pinned) ?? upcoming.find((e) => !e.seasonOverview) ?? past[0]
+}
+
+export const events: RaccEvent[] = withStatus(chicagoDate(BUILD_TIME))
+export const upcomingEvents = sortUpcoming(events)
+export const pastEvents = sortPast(events)
+export const featuredEvent: RaccEvent | undefined = pickFeatured(upcomingEvents, pastEvents)
 
 export const getEvent = (slug: string) => events.find((e) => e.slug === slug)
 
 /** Everything under the Arudra banner, for /arudra. */
 export const arudraEvents = events.filter((e) => e.slug.includes('arudra'))
+
+/**
+ * The split re-derived against the clock in hand, for the post-hydration
+ * correction (brief 2026-11-09, ISSUE-11). GitHub delays scheduled rebuilds by
+ * hours, so the static split can be a day stale. Components render the
+ * build-time constants through SSR and hydration — which is also exactly what a
+ * no-JS visitor gets — then swap to this in onMounted, so a finished event
+ * leaves "Next on our stage" the moment the page runs, rebuild or not.
+ */
+export function liveEvents(now: Date = new Date()) {
+  const all = withStatus(chicagoDate(now))
+  const upcoming = sortUpcoming(all)
+  const past = sortPast(all)
+  return {
+    events: all,
+    upcoming,
+    past,
+    featured: pickFeatured(upcoming, past),
+    arudra: all.filter((e) => e.slug.includes('arudra')),
+  }
+}
 
 /**
  * A flyer's true pixel size, from the build manifest.

@@ -74,6 +74,13 @@ export default defineNuxtConfig({
     },
   },
 
+  // content/events.ts derives upcoming vs past from this single moment in both
+  // bundles, so the client hydrates against exactly the HTML the server
+  // rendered; the post-mount liveEvents() correction then uses the real clock.
+  vite: {
+    define: { __BUILD_TIME__: JSON.stringify(new Date().toISOString()) },
+  },
+
   // Static output: no server functions needed, so Vercel serves it from the CDN.
   nitro: {
     preset: 'vercel-static',

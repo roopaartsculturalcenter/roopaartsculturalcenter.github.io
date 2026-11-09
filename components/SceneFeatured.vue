@@ -9,7 +9,7 @@
  * The RSVP is the only primary action on this screen. "All upcoming events" is a
  * secondary link by design.
  */
-import { featuredEvent, upcomingEvents, eventDateLabel, flyerSize } from '~/content/events'
+import { featuredEvent, upcomingEvents, liveEvents, eventDateLabel, flyerSize } from '~/content/events'
 
 const { gsap, SplitText, scene } = useStage()
 
@@ -17,14 +17,16 @@ const root = ref<HTMLElement | null>(null)
 const dateEl = ref<HTMLElement | null>(null)
 
 /**
- * Keep the prerendered event intact through hydration, then refresh it from the
- * browser's current date. Without this handoff, a date rollover can update the
- * text while leaving Nuxt Image's server-rendered flyer URL behind.
+ * Keep the prerendered event intact through hydration, then refresh it against
+ * the browser's clock (ISSUE-11): scheduled rebuilds can run hours late, so the
+ * build-time featured event may already have happened. Without the handoff, a
+ * date rollover can update the text while leaving Nuxt Image's server-rendered
+ * flyer URL behind.
  */
 const event = useState('homepage-featured-event', () => featuredEvent)
 
 onMounted(() => {
-  event.value = featuredEvent
+  event.value = liveEvents().featured
 })
 
 const readableDate = computed(() => (event.value ? eventDateLabel(event.value) : null))
@@ -141,15 +143,17 @@ scene(
             {{ event.description }}
           </p>
 
-          <p v-if="event.tickets" data-feat class="mt-6 text-sm text-chalk/74">
+          <p v-if="event.tickets && event.status === 'upcoming'" data-feat class="mt-6 text-sm text-chalk/74">
             {{ event.tickets }}
           </p>
 
           <!-- The one primary action on this screen; the detail page is offered
                quietly beside it rather than competing with it. -->
           <div data-feat class="mt-12 flex flex-wrap items-center gap-x-8 gap-y-4">
+            <!-- A finished event sells nothing, even as "Most recently on our
+                 stage": only the detail link stays. -->
             <a
-              v-if="event.rsvpUrl"
+              v-if="event.rsvpUrl && event.status === 'upcoming'"
               ref="rsvp"
               :href="event.rsvpUrl"
               target="_blank"
@@ -167,7 +171,7 @@ scene(
             <NuxtLink
               :to="`/events/${event.slug}/`"
               data-cursor="view"
-              :class="event.rsvpUrl
+              :class="event.rsvpUrl && event.status === 'upcoming'
                 ? 'inline-flex items-center gap-2 border-b border-spot pb-1 text-xs uppercase tracking-rubric text-spot-ink'
                 : 'inline-flex items-center gap-3 bg-spot px-10 py-5 text-xs font-semibold uppercase tracking-rubric text-chalk transition-colors duration-500 hover:bg-spot-warm'"
             >

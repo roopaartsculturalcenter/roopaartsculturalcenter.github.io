@@ -8,7 +8,17 @@
  * grid below: /events/arudra-2026 carries the full Navagrahamum Navakailasamum
  * scenes and credits.
  */
-import { arudraEvents } from '~/content/events'
+import { arudraEvents, liveEvents } from '~/content/events'
+
+/**
+ * Build-time list for SSR, hydration and no-JS readers; corrected against the
+ * browser's clock after mount (ISSUE-11), so edition cards carry the right
+ * past/upcoming labels even when the scheduled rebuild is late.
+ */
+const editions = shallowRef(arudraEvents)
+onMounted(() => {
+  editions.value = liveEvents().arudra
+})
 import { arudraFestival } from '~/data/arudra'
 import { site } from '~/data/site'
 
@@ -81,7 +91,7 @@ useEntrance(socialRoot)
          says "every Arudra we have staged": 2027 is announced and in this grid, and
          a past-tense heading over an upcoming edition reads as a mistake. -->
     <EventGrid
-      :events="arudraEvents"
+      :events="editions"
       heading="Every Arudra, on stage and to come."
       tone="deep"
       empty="Arudra dates for the coming season are still being confirmed."

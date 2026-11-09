@@ -18,25 +18,36 @@
  * left the homepage advertising a festival that had already happened.
  */
 import { arudraTeaserImages } from '~/content/gallery'
-import { arudraEvents, eventDateLabel } from '~/content/events'
+import { arudraEvents, liveEvents, eventDateLabel } from '~/content/events'
 import { arudraFestival } from '~/data/arudra'
 
 const root = ref<HTMLElement | null>(null)
 useEntrance(root, { stagger: 0.09 })
 
-/** Next Arudra if one is booked, else the most recent, so the label stays honest. */
-const next = arudraEvents
-  .filter((e) => e.status === 'upcoming')
-  .sort((a, b) => (a.date ?? '9999').localeCompare(b.date ?? '9999'))[0]
+/**
+ * Next Arudra if one is booked, else the most recent, so the label stays
+ * honest. Build-time list through hydration, the browser's clock after mount
+ * (ISSUE-11), so the label and count never trail a late rebuild.
+ */
+const editions = shallowRef(arudraEvents)
+onMounted(() => {
+  editions.value = liveEvents().arudra
+})
 
-const latest = arudraEvents
-  .filter((e) => e.status === 'past' && e.date)
-  .sort((a, b) => (b.date ?? '0000').localeCompare(a.date ?? '0000'))[0]
-
-const edition = next ?? latest
-const editionLabel = computed(() => (next ? 'Next edition' : 'Last staged'))
-const editionDate = computed(() => (edition ? eventDateLabel(edition) : 'To be announced'))
-const editionCount = arudraEvents.filter((e) => e.status === 'past' && e.date).length
+const next = computed(() =>
+  editions.value
+    .filter((e) => e.status === 'upcoming')
+    .sort((a, b) => (a.date ?? '9999').localeCompare(b.date ?? '9999'))[0],
+)
+const latest = computed(() =>
+  editions.value
+    .filter((e) => e.status === 'past' && e.date)
+    .sort((a, b) => (b.date ?? '0000').localeCompare(a.date ?? '0000'))[0],
+)
+const edition = computed(() => next.value ?? latest.value)
+const editionLabel = computed(() => (next.value ? 'Next edition' : 'Last staged'))
+const editionDate = computed(() => (edition.value ? eventDateLabel(edition.value) : 'To be announced'))
+const editionCount = computed(() => editions.value.filter((e) => e.status === 'past' && e.date).length)
 
 /**
  * The poster board handles one poster or a fan of three. A single save-the-date

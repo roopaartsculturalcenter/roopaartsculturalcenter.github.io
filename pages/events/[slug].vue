@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { events, getEvent, eventDateLabel, flyerSize } from '~/content/events'
+import { events, getEvent, liveEvents, eventDateLabel, flyerSize } from '~/content/events'
 import { eventGalleries } from '~/content/gallery'
 import { site } from '~/data/site'
 
@@ -21,11 +21,24 @@ const flyer = flyerSize(event.flyerImage)
  * `seasonOverview` entry, so ordinary event pages are untouched. The window is
  * a constant because the page itself is about one named season.
  */
-const seasonEvents = event.seasonOverview
-  ? events
-      .filter((e) => e.date && e.date >= '2026-07-01' && e.date <= '2027-06-30')
-      .sort((a, b) => (a.date ?? '').localeCompare(b.date ?? ''))
-  : []
+const seasonWindow = (list: typeof events) =>
+  list
+    .filter((e) => e.date && e.date >= '2026-07-01' && e.date <= '2027-06-30')
+    .sort((a, b) => (a.date ?? '').localeCompare(b.date ?? ''))
+
+const seasonEvents = shallowRef(event.seasonOverview ? seasonWindow(events) : [])
+
+/**
+ * Build-time status for SSR, hydration and no-JS readers; corrected against the
+ * browser's clock after mount (ISSUE-11), so a finished event's page drops its
+ * ticket CTA and gains its "Past event" label without waiting for a rebuild.
+ */
+const status = ref(event.status)
+onMounted(() => {
+  const live = liveEvents()
+  status.value = live.events.find((e) => e.slug === event.slug)?.status ?? event.status
+  if (event.seasonOverview) seasonEvents.value = seasonWindow(live.events)
+})
 
 useSeo({
   title: event.title,
@@ -122,7 +135,7 @@ const gallery = computed(() => eventGalleries[String(route.params.slug)] ?? null
           <div>
             <!-- ISSUE-1: a page for a finished event says so before it says
                  anything else, and sells nothing below. -->
-            <p v-if="event.status === 'past'" data-wipe class="rubric mb-5 text-chalk/75">
+            <p v-if="status === 'past'" data-wipe class="rubric mb-5 text-chalk/75">
               Past event
             </p>
 
@@ -168,12 +181,12 @@ const gallery = computed(() => eventGalleries[String(route.params.slug)] ?? null
               </ul>
             </div>
 
-            <div v-if="event.tickets && event.status !== 'past'" data-wipe class="mt-10">
+            <div v-if="event.tickets && status !== 'past'" data-wipe class="mt-10">
               <h2 class="text-xs uppercase tracking-rubric text-chalk/66">Tickets</h2>
               <p class="mt-4 text-chalk/85">{{ event.tickets }}</p>
             </div>
 
-            <div v-if="event.rsvpUrl && event.status !== 'past'" data-wipe class="mt-12">
+            <div v-if="event.rsvpUrl && status !== 'past'" data-wipe class="mt-12">
               <a
                 ref="rsvp"
                 :href="event.rsvpUrl"
