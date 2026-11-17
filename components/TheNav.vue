@@ -91,6 +91,9 @@ function onKeydown(e: KeyboardEvent) {
       class="pointer-events-none fixed inset-x-0 top-0 z-[120] transition-colors duration-500 ease-silk"
       :class="!open && scrolled && 'border-b border-chalk/12 bg-stage/92 backdrop-blur-md'"
     >
+      <!-- The sitewide Arudra band lives inside the fixed header so it stays
+           in view with the nav rather than being covered by it. -->
+      <TheAnnouncement />
       <div
         class="stage-pad flex items-center justify-between transition-all duration-500 ease-silk"
         :class="scrolled ? 'py-4' : 'py-6 sm:py-8'"
